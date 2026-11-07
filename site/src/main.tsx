@@ -12,6 +12,7 @@ import Ledger from "./pages/Ledger";
 import Activity from "./pages/Activity";
 import Encounters, { EncounterPage } from "./pages/Encounters";
 import Methods from "./pages/Methods";
+import Ocean from "./pages/Ocean";
 
 function App() {
   const link = ({ isActive }: { isActive: boolean }) => (isActive ? "active" : "");
@@ -26,6 +27,7 @@ function App() {
             <NavLink to="/ledger" className={link}>Repair ledger</NavLink>
             <NavLink to="/activity" className={link}>Harbor activity</NavLink>
             <NavLink to="/encounters" className={link}>Encounters</NavLink>
+            <NavLink to="/ocean" className={link}>Weather &amp; fishing</NavLink>
             <NavLink to="/methods" className={link}>Methods</NavLink>
           </nav>
         </div>
@@ -41,6 +43,7 @@ function App() {
           <Route path="/activity" element={<Activity />} />
           <Route path="/encounters" element={<Encounters />} />
           <Route path="/encounters/:id" element={<EncounterPage />} />
+          <Route path="/ocean" element={<Ocean />} />
           <Route path="/methods" element={<Methods />} />
           <Route path="*" element={<Placeholder title="Not found" />} />
         </Routes>

@@ -1,0 +1,2896 @@
+{
+  "train_year": 2024,
+  "test_year": 2025,
+  "n_train": 15158,
+  "n_test": 14872,
+  "fished_share_test": 0.131,
+  "models": {
+    "seasonal persistence (cell x month, 2024)": {
+      "auc_fished": 0.858,
+      "mae_hours": 1.129
+    },
+    "location + month + ocean conditions": {
+      "auc_fished": 0.944,
+      "mae_hours": 0.969
+    },
+    "location + month only": {
+      "auc_fished": 0.922,
+      "mae_hours": 0.969
+    }
+  },
+  "auc_gain_from_ocean_ci95": [
+    0.019,
+    0.027
+  ],
+  "by_sst": [
+    {
+      "sst": "(8, 12]",
+      "fished_share": 0.264,
+      "hours_per_cell_week": 1.723,
+      "n": 894
+    },
+    {
+      "sst": "(12, 13]",
+      "fished_share": 0.169,
+      "hours_per_cell_week": 1.305,
+      "n": 2727
+    },
+    {
+      "sst": "(13, 14]",
+      "fished_share": 0.085,
+      "hours_per_cell_week": 0.467,
+      "n": 4965
+    },
+    {
+      "sst": "(14, 15]",
+      "fished_share": 0.084,
+      "hours_per_cell_week": 0.593,
+      "n": 6323
+    },
+    {
+      "sst": "(15, 16]",
+      "fished_share": 0.086,
+      "hours_per_cell_week": 0.615,
+      "n": 5096
+    },
+    {
+      "sst": "(16, 17]",
+      "fished_share": 0.1,
+      "hours_per_cell_week": 0.605,
+      "n": 3202
+    },
+    {
+      "sst": "(17, 18]",
+      "fished_share": 0.148,
+      "hours_per_cell_week": 1.048,
+      "n": 2584
+    },
+    {
+      "sst": "(18, 20]",
+      "fished_share": 0.225,
+      "hours_per_cell_week": 1.963,
+      "n": 3164
+    },
+    {
+      "sst": "(20, 25]",
+      "fished_share": 0.404,
+      "hours_per_cell_week": 3.302,
+      "n": 1075
+    }
+  ],
+  "by_front": [
+    {
+      "sst_front": "(0.0093, 0.645]",
+      "fished_share": 0.053,
+      "hours_per_cell_week": 0.312,
+      "n": 5292
+    },
+    {
+      "sst_front": "(0.645, 1.016]",
+      "fished_share": 0.065,
+      "hours_per_cell_week": 0.46,
+      "n": 5292
+    },
+    {
+      "sst_front": "(1.016, 1.425]",
+      "fished_share": 0.072,
+      "hours_per_cell_week": 0.529,
+      "n": 5292
+    },
+    {
+      "sst_front": "(1.425, 2.009]",
+      "fished_share": 0.094,
+      "hours_per_cell_week": 0.655,
+      "n": 5292
+    },
+    {
+      "sst_front": "(2.009, 6.765]",
+      "fished_share": 0.162,
+      "hours_per_cell_week": 0.966,
+      "n": 5292
+    }
+  ],
+  "by_wave_height": [
+    {
+      "hs_week": "(0.0, 1.0]",
+      "fishing_share_of_vessel_hours": 0.194,
+      "vessel_hours": 46188.0
+    },
+    {
+      "hs_week": "(1.0, 1.5]",
+      "fishing_share_of_vessel_hours": 0.213,
+      "vessel_hours": 40690.0
+    },
+    {
+      "hs_week": "(1.5, 2.0]",
+      "fishing_share_of_vessel_hours": 0.258,
+      "vessel_hours": 17289.0
+    },
+    {
+      "hs_week": "(2.0, 2.5]",
+      "fishing_share_of_vessel_hours": 0.28,
+      "vessel_hours": 7833.0
+    },
+    {
+      "hs_week": "(2.5, 3.0]",
+      "fishing_share_of_vessel_hours": 0.301,
+      "vessel_hours": 2249.0
+    },
+    {
+      "hs_week": "(3.0, 9.0]",
+      "fishing_share_of_vessel_hours": 0.275,
+      "vessel_hours": 688.0
+    }
+  ],
+  "weekly_corr_spearman": {
+    "cuti": 0.258,
+    "beuti": 0.171,
+    "sst": 0.468
+  },
+  "cells": [
+    {
+      "clat": 32.375,
+      "clon": -121.875,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 16.736
+    },
+    {
+      "clat": 32.375,
+      "clon": -121.625,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 16.741
+    },
+    {
+      "clat": 32.375,
+      "clon": -120.125,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 16.328
+    },
+    {
+      "clat": 32.375,
+      "clon": -119.875,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 16.336
+    },
+    {
+      "clat": 32.375,
+      "clon": -119.625,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 16.407
+    },
+    {
+      "clat": 32.375,
+      "clon": -119.375,
+      "fishing_h": 7.0,
+      "weeks": 105,
+      "sst": 16.541
+    },
+    {
+      "clat": 32.375,
+      "clon": -119.125,
+      "fishing_h": 416.0,
+      "weeks": 105,
+      "sst": 16.717
+    },
+    {
+      "clat": 32.375,
+      "clon": -118.875,
+      "fishing_h": 16.0,
+      "weeks": 105,
+      "sst": 16.912
+    },
+    {
+      "clat": 32.375,
+      "clon": -118.625,
+      "fishing_h": 15.0,
+      "weeks": 105,
+      "sst": 17.11
+    },
+    {
+      "clat": 32.375,
+      "clon": -118.375,
+      "fishing_h": 26.0,
+      "weeks": 105,
+      "sst": 17.314
+    },
+    {
+      "clat": 32.375,
+      "clon": -118.125,
+      "fishing_h": 8.0,
+      "weeks": 105,
+      "sst": 17.548
+    },
+    {
+      "clat": 32.375,
+      "clon": -117.875,
+      "fishing_h": 8.0,
+      "weeks": 105,
+      "sst": 17.775
+    },
+    {
+      "clat": 32.375,
+      "clon": -117.625,
+      "fishing_h": 7.0,
+      "weeks": 105,
+      "sst": 17.847
+    },
+    {
+      "clat": 32.375,
+      "clon": -117.375,
+      "fishing_h": 331.0,
+      "weeks": 105,
+      "sst": 17.68
+    },
+    {
+      "clat": 32.375,
+      "clon": -117.125,
+      "fishing_h": 112.0,
+      "weeks": 105,
+      "sst": 17.391
+    },
+    {
+      "clat": 32.625,
+      "clon": -122.125,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 16.536
+    },
+    {
+      "clat": 32.625,
+      "clon": -121.875,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 16.537
+    },
+    {
+      "clat": 32.625,
+      "clon": -121.625,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 16.531
+    },
+    {
+      "clat": 32.625,
+      "clon": -121.375,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 16.503
+    },
+    {
+      "clat": 32.625,
+      "clon": -121.125,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 16.452
+    },
+    {
+      "clat": 32.625,
+      "clon": -120.875,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 16.376
+    },
+    {
+      "clat": 32.625,
+      "clon": -120.625,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 16.294
+    },
+    {
+      "clat": 32.625,
+      "clon": -120.375,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 16.211
+    },
+    {
+      "clat": 32.625,
+      "clon": -120.125,
+      "fishing_h": 4.0,
+      "weeks": 105,
+      "sst": 16.145
+    },
+    {
+      "clat": 32.625,
+      "clon": -119.875,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 16.126
+    },
+    {
+      "clat": 32.625,
+      "clon": -119.625,
+      "fishing_h": 12.0,
+      "weeks": 105,
+      "sst": 16.18
+    },
+    {
+      "clat": 32.625,
+      "clon": -119.375,
+      "fishing_h": 74.0,
+      "weeks": 105,
+      "sst": 16.335
+    },
+    {
+      "clat": 32.625,
+      "clon": -119.125,
+      "fishing_h": 443.0,
+      "weeks": 105,
+      "sst": 16.57
+    },
+    {
+      "clat": 32.625,
+      "clon": -118.875,
+      "fishing_h": 38.0,
+      "weeks": 105,
+      "sst": 16.849
+    },
+    {
+      "clat": 32.625,
+      "clon": -118.625,
+      "fishing_h": 35.0,
+      "weeks": 105,
+      "sst": 17.13
+    },
+    {
+      "clat": 32.625,
+      "clon": -118.375,
+      "fishing_h": 107.0,
+      "weeks": 105,
+      "sst": 17.409
+    },
+    {
+      "clat": 32.625,
+      "clon": -118.125,
+      "fishing_h": 67.0,
+      "weeks": 105,
+      "sst": 17.692
+    },
+    {
+      "clat": 32.625,
+      "clon": -117.875,
+      "fishing_h": 261.0,
+      "weeks": 105,
+      "sst": 17.921
+    },
+    {
+      "clat": 32.625,
+      "clon": -117.625,
+      "fishing_h": 141.0,
+      "weeks": 105,
+      "sst": 17.956
+    },
+    {
+      "clat": 32.625,
+      "clon": -117.375,
+      "fishing_h": 449.0,
+      "weeks": 105,
+      "sst": 17.752
+    },
+    {
+      "clat": 32.625,
+      "clon": -117.125,
+      "fishing_h": 213.0,
+      "weeks": 105,
+      "sst": 17.409
+    },
+    {
+      "clat": 32.875,
+      "clon": -122.875,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 16.432
+    },
+    {
+      "clat": 32.875,
+      "clon": -122.375,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 16.368
+    },
+    {
+      "clat": 32.875,
+      "clon": -122.125,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 16.354
+    },
+    {
+      "clat": 32.875,
+      "clon": -121.875,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 16.338
+    },
+    {
+      "clat": 32.875,
+      "clon": -121.625,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 16.307
+    },
+    {
+      "clat": 32.875,
+      "clon": -121.375,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 16.256
+    },
+    {
+      "clat": 32.875,
+      "clon": -121.125,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 16.196
+    },
+    {
+      "clat": 32.875,
+      "clon": -120.875,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 16.126
+    },
+    {
+      "clat": 32.875,
+      "clon": -120.625,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 16.057
+    },
+    {
+      "clat": 32.875,
+      "clon": -120.375,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.972
+    },
+    {
+      "clat": 32.875,
+      "clon": -120.125,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.885
+    },
+    {
+      "clat": 32.875,
+      "clon": -119.875,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.843
+    },
+    {
+      "clat": 32.875,
+      "clon": -119.625,
+      "fishing_h": 16.0,
+      "weeks": 105,
+      "sst": 15.909
+    },
+    {
+      "clat": 32.875,
+      "clon": -119.375,
+      "fishing_h": 182.0,
+      "weeks": 105,
+      "sst": 16.124
+    },
+    {
+      "clat": 32.875,
+      "clon": -119.125,
+      "fishing_h": 82.0,
+      "weeks": 105,
+      "sst": 16.469
+    },
+    {
+      "clat": 32.875,
+      "clon": -118.875,
+      "fishing_h": 97.0,
+      "weeks": 105,
+      "sst": 16.879
+    },
+    {
+      "clat": 32.875,
+      "clon": -118.625,
+      "fishing_h": 170.0,
+      "weeks": 105,
+      "sst": 17.262
+    },
+    {
+      "clat": 32.875,
+      "clon": -118.375,
+      "fishing_h": 279.0,
+      "weeks": 105,
+      "sst": 17.584
+    },
+    {
+      "clat": 32.875,
+      "clon": -118.125,
+      "fishing_h": 52.0,
+      "weeks": 105,
+      "sst": 17.855
+    },
+    {
+      "clat": 32.875,
+      "clon": -117.875,
+      "fishing_h": 62.0,
+      "weeks": 105,
+      "sst": 18.036
+    },
+    {
+      "clat": 32.875,
+      "clon": -117.625,
+      "fishing_h": 43.0,
+      "weeks": 105,
+      "sst": 18.064
+    },
+    {
+      "clat": 32.875,
+      "clon": -117.375,
+      "fishing_h": 512.0,
+      "weeks": 105,
+      "sst": 17.946
+    },
+    {
+      "clat": 33.125,
+      "clon": -122.375,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 16.213
+    },
+    {
+      "clat": 33.125,
+      "clon": -121.875,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 16.129
+    },
+    {
+      "clat": 33.125,
+      "clon": -121.625,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 16.068
+    },
+    {
+      "clat": 33.125,
+      "clon": -121.125,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.922
+    },
+    {
+      "clat": 33.125,
+      "clon": -120.875,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.844
+    },
+    {
+      "clat": 33.125,
+      "clon": -120.625,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.757
+    },
+    {
+      "clat": 33.125,
+      "clon": -120.375,
+      "fishing_h": 4.0,
+      "weeks": 105,
+      "sst": 15.67
+    },
+    {
+      "clat": 33.125,
+      "clon": -120.125,
+      "fishing_h": 3.0,
+      "weeks": 105,
+      "sst": 15.596
+    },
+    {
+      "clat": 33.125,
+      "clon": -119.875,
+      "fishing_h": 48.0,
+      "weeks": 105,
+      "sst": 15.598
+    },
+    {
+      "clat": 33.125,
+      "clon": -119.625,
+      "fishing_h": 34.0,
+      "weeks": 105,
+      "sst": 15.738
+    },
+    {
+      "clat": 33.125,
+      "clon": -119.375,
+      "fishing_h": 44.0,
+      "weeks": 105,
+      "sst": 16.045
+    },
+    {
+      "clat": 33.125,
+      "clon": -119.125,
+      "fishing_h": 87.0,
+      "weeks": 105,
+      "sst": 16.504
+    },
+    {
+      "clat": 33.125,
+      "clon": -118.875,
+      "fishing_h": 299.0,
+      "weeks": 105,
+      "sst": 17.016
+    },
+    {
+      "clat": 33.125,
+      "clon": -118.625,
+      "fishing_h": 193.0,
+      "weeks": 105,
+      "sst": 17.435
+    },
+    {
+      "clat": 33.125,
+      "clon": -118.375,
+      "fishing_h": 21.0,
+      "weeks": 105,
+      "sst": 17.711
+    },
+    {
+      "clat": 33.125,
+      "clon": -118.125,
+      "fishing_h": 24.0,
+      "weeks": 105,
+      "sst": 17.887
+    },
+    {
+      "clat": 33.125,
+      "clon": -117.875,
+      "fishing_h": 9.0,
+      "weeks": 105,
+      "sst": 17.996
+    },
+    {
+      "clat": 33.125,
+      "clon": -117.625,
+      "fishing_h": 38.0,
+      "weeks": 105,
+      "sst": 18.043
+    },
+    {
+      "clat": 33.125,
+      "clon": -117.375,
+      "fishing_h": 214.0,
+      "weeks": 105,
+      "sst": 18.013
+    },
+    {
+      "clat": 33.375,
+      "clon": -123.375,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 16.391
+    },
+    {
+      "clat": 33.375,
+      "clon": -123.125,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 16.308
+    },
+    {
+      "clat": 33.375,
+      "clon": -122.875,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 16.228
+    },
+    {
+      "clat": 33.375,
+      "clon": -122.625,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 16.152
+    },
+    {
+      "clat": 33.375,
+      "clon": -122.375,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 16.074
+    },
+    {
+      "clat": 33.375,
+      "clon": -122.125,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.999
+    },
+    {
+      "clat": 33.375,
+      "clon": -121.875,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.917
+    },
+    {
+      "clat": 33.375,
+      "clon": -121.625,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.825
+    },
+    {
+      "clat": 33.375,
+      "clon": -121.375,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.729
+    },
+    {
+      "clat": 33.375,
+      "clon": -121.125,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.633
+    },
+    {
+      "clat": 33.375,
+      "clon": -120.875,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.518
+    },
+    {
+      "clat": 33.375,
+      "clon": -120.625,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.406
+    },
+    {
+      "clat": 33.375,
+      "clon": -120.375,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.355
+    },
+    {
+      "clat": 33.375,
+      "clon": -120.125,
+      "fishing_h": 101.0,
+      "weeks": 105,
+      "sst": 15.394
+    },
+    {
+      "clat": 33.375,
+      "clon": -119.875,
+      "fishing_h": 22.0,
+      "weeks": 105,
+      "sst": 15.543
+    },
+    {
+      "clat": 33.375,
+      "clon": -119.625,
+      "fishing_h": 71.0,
+      "weeks": 105,
+      "sst": 15.813
+    },
+    {
+      "clat": 33.375,
+      "clon": -119.375,
+      "fishing_h": 40.0,
+      "weeks": 105,
+      "sst": 16.203
+    },
+    {
+      "clat": 33.375,
+      "clon": -119.125,
+      "fishing_h": 436.0,
+      "weeks": 105,
+      "sst": 16.681
+    },
+    {
+      "clat": 33.375,
+      "clon": -118.875,
+      "fishing_h": 128.0,
+      "weeks": 105,
+      "sst": 17.156
+    },
+    {
+      "clat": 33.375,
+      "clon": -118.625,
+      "fishing_h": 332.0,
+      "weeks": 105,
+      "sst": 17.493
+    },
+    {
+      "clat": 33.375,
+      "clon": -118.375,
+      "fishing_h": 1191.0,
+      "weeks": 105,
+      "sst": 17.677
+    },
+    {
+      "clat": 33.375,
+      "clon": -118.125,
+      "fishing_h": 30.0,
+      "weeks": 105,
+      "sst": 17.753
+    },
+    {
+      "clat": 33.375,
+      "clon": -117.875,
+      "fishing_h": 36.0,
+      "weeks": 105,
+      "sst": 17.784
+    },
+    {
+      "clat": 33.375,
+      "clon": -117.625,
+      "fishing_h": 1050.0,
+      "weeks": 105,
+      "sst": 17.892
+    },
+    {
+      "clat": 33.625,
+      "clon": -122.875,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 16.129
+    },
+    {
+      "clat": 33.625,
+      "clon": -122.375,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.931
+    },
+    {
+      "clat": 33.625,
+      "clon": -122.125,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.819
+    },
+    {
+      "clat": 33.625,
+      "clon": -121.875,
+      "fishing_h": 1.0,
+      "weeks": 105,
+      "sst": 15.704
+    },
+    {
+      "clat": 33.625,
+      "clon": -121.625,
+      "fishing_h": 1.0,
+      "weeks": 105,
+      "sst": 15.594
+    },
+    {
+      "clat": 33.625,
+      "clon": -121.375,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.481
+    },
+    {
+      "clat": 33.625,
+      "clon": -121.125,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.339
+    },
+    {
+      "clat": 33.625,
+      "clon": -120.875,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.167
+    },
+    {
+      "clat": 33.625,
+      "clon": -120.625,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.03
+    },
+    {
+      "clat": 33.625,
+      "clon": -120.375,
+      "fishing_h": 4.0,
+      "weeks": 105,
+      "sst": 15.048
+    },
+    {
+      "clat": 33.625,
+      "clon": -120.125,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.263
+    },
+    {
+      "clat": 33.625,
+      "clon": -119.875,
+      "fishing_h": 223.0,
+      "weeks": 105,
+      "sst": 15.614
+    },
+    {
+      "clat": 33.625,
+      "clon": -119.625,
+      "fishing_h": 40.0,
+      "weeks": 105,
+      "sst": 16.022
+    },
+    {
+      "clat": 33.625,
+      "clon": -119.375,
+      "fishing_h": 4.0,
+      "weeks": 105,
+      "sst": 16.422
+    },
+    {
+      "clat": 33.625,
+      "clon": -119.125,
+      "fishing_h": 30.0,
+      "weeks": 105,
+      "sst": 16.819
+    },
+    {
+      "clat": 33.625,
+      "clon": -118.875,
+      "fishing_h": 21.0,
+      "weeks": 105,
+      "sst": 17.177
+    },
+    {
+      "clat": 33.625,
+      "clon": -118.625,
+      "fishing_h": 16.0,
+      "weeks": 105,
+      "sst": 17.379
+    },
+    {
+      "clat": 33.625,
+      "clon": -118.375,
+      "fishing_h": 33.0,
+      "weeks": 105,
+      "sst": 17.465
+    },
+    {
+      "clat": 33.625,
+      "clon": -118.125,
+      "fishing_h": 755.0,
+      "weeks": 105,
+      "sst": 17.533
+    },
+    {
+      "clat": 33.625,
+      "clon": -117.875,
+      "fishing_h": 853.0,
+      "weeks": 105,
+      "sst": 17.522
+    },
+    {
+      "clat": 33.875,
+      "clon": -122.875,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.987
+    },
+    {
+      "clat": 33.875,
+      "clon": -122.625,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.885
+    },
+    {
+      "clat": 33.875,
+      "clon": -122.125,
+      "fishing_h": 7.0,
+      "weeks": 105,
+      "sst": 15.623
+    },
+    {
+      "clat": 33.875,
+      "clon": -121.875,
+      "fishing_h": 4.0,
+      "weeks": 105,
+      "sst": 15.49
+    },
+    {
+      "clat": 33.875,
+      "clon": -121.625,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.374
+    },
+    {
+      "clat": 33.875,
+      "clon": -121.375,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.245
+    },
+    {
+      "clat": 33.875,
+      "clon": -121.125,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.058
+    },
+    {
+      "clat": 33.875,
+      "clon": -120.875,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 14.83
+    },
+    {
+      "clat": 33.875,
+      "clon": -120.625,
+      "fishing_h": 4.0,
+      "weeks": 105,
+      "sst": 14.687
+    },
+    {
+      "clat": 33.875,
+      "clon": -120.375,
+      "fishing_h": 14.0,
+      "weeks": 105,
+      "sst": 14.796
+    },
+    {
+      "clat": 33.875,
+      "clon": -120.125,
+      "fishing_h": 72.0,
+      "weeks": 105,
+      "sst": 15.18
+    },
+    {
+      "clat": 33.875,
+      "clon": -119.875,
+      "fishing_h": 171.0,
+      "weeks": 105,
+      "sst": 15.696
+    },
+    {
+      "clat": 33.875,
+      "clon": -119.625,
+      "fishing_h": 714.0,
+      "weeks": 105,
+      "sst": 16.158
+    },
+    {
+      "clat": 33.875,
+      "clon": -119.375,
+      "fishing_h": 216.0,
+      "weeks": 105,
+      "sst": 16.499
+    },
+    {
+      "clat": 33.875,
+      "clon": -119.125,
+      "fishing_h": 200.0,
+      "weeks": 105,
+      "sst": 16.775
+    },
+    {
+      "clat": 33.875,
+      "clon": -118.875,
+      "fishing_h": 79.0,
+      "weeks": 105,
+      "sst": 17.057
+    },
+    {
+      "clat": 33.875,
+      "clon": -118.625,
+      "fishing_h": 770.0,
+      "weeks": 105,
+      "sst": 17.16
+    },
+    {
+      "clat": 33.875,
+      "clon": -118.375,
+      "fishing_h": 2192.0,
+      "weeks": 105,
+      "sst": 17.189
+    },
+    {
+      "clat": 34.125,
+      "clon": -123.125,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.899
+    },
+    {
+      "clat": 34.125,
+      "clon": -122.625,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.699
+    },
+    {
+      "clat": 34.125,
+      "clon": -122.375,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.563
+    },
+    {
+      "clat": 34.125,
+      "clon": -122.125,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.418
+    },
+    {
+      "clat": 34.125,
+      "clon": -121.875,
+      "fishing_h": 1.0,
+      "weeks": 105,
+      "sst": 15.283
+    },
+    {
+      "clat": 34.125,
+      "clon": -121.625,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.169
+    },
+    {
+      "clat": 34.125,
+      "clon": -121.375,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.031
+    },
+    {
+      "clat": 34.125,
+      "clon": -121.125,
+      "fishing_h": 1.0,
+      "weeks": 105,
+      "sst": 14.813
+    },
+    {
+      "clat": 34.125,
+      "clon": -120.875,
+      "fishing_h": 4.0,
+      "weeks": 105,
+      "sst": 14.557
+    },
+    {
+      "clat": 34.125,
+      "clon": -120.625,
+      "fishing_h": 23.0,
+      "weeks": 105,
+      "sst": 14.442
+    },
+    {
+      "clat": 34.125,
+      "clon": -120.375,
+      "fishing_h": 30.0,
+      "weeks": 105,
+      "sst": 14.643
+    },
+    {
+      "clat": 34.125,
+      "clon": -120.125,
+      "fishing_h": 123.0,
+      "weeks": 105,
+      "sst": 15.135
+    },
+    {
+      "clat": 34.125,
+      "clon": -119.875,
+      "fishing_h": 305.0,
+      "weeks": 105,
+      "sst": 15.727
+    },
+    {
+      "clat": 34.125,
+      "clon": -119.625,
+      "fishing_h": 630.0,
+      "weeks": 105,
+      "sst": 16.158
+    },
+    {
+      "clat": 34.125,
+      "clon": -119.375,
+      "fishing_h": 911.0,
+      "weeks": 105,
+      "sst": 16.376
+    },
+    {
+      "clat": 34.125,
+      "clon": -119.125,
+      "fishing_h": 691.0,
+      "weeks": 105,
+      "sst": 16.553
+    },
+    {
+      "clat": 34.375,
+      "clon": -123.375,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.815
+    },
+    {
+      "clat": 34.375,
+      "clon": -123.125,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.72
+    },
+    {
+      "clat": 34.375,
+      "clon": -122.875,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.624
+    },
+    {
+      "clat": 34.375,
+      "clon": -122.625,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.508
+    },
+    {
+      "clat": 34.375,
+      "clon": -122.375,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.372
+    },
+    {
+      "clat": 34.375,
+      "clon": -122.125,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.229
+    },
+    {
+      "clat": 34.375,
+      "clon": -121.875,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.104
+    },
+    {
+      "clat": 34.375,
+      "clon": -121.625,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 14.998
+    },
+    {
+      "clat": 34.375,
+      "clon": -121.375,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 14.851
+    },
+    {
+      "clat": 34.375,
+      "clon": -121.125,
+      "fishing_h": 2.0,
+      "weeks": 105,
+      "sst": 14.606
+    },
+    {
+      "clat": 34.375,
+      "clon": -120.875,
+      "fishing_h": 8.0,
+      "weeks": 105,
+      "sst": 14.335
+    },
+    {
+      "clat": 34.375,
+      "clon": -120.625,
+      "fishing_h": 16.0,
+      "weeks": 105,
+      "sst": 14.254
+    },
+    {
+      "clat": 34.375,
+      "clon": -120.375,
+      "fishing_h": 27.0,
+      "weeks": 105,
+      "sst": 14.577
+    },
+    {
+      "clat": 34.375,
+      "clon": -120.125,
+      "fishing_h": 36.0,
+      "weeks": 105,
+      "sst": 15.117
+    },
+    {
+      "clat": 34.375,
+      "clon": -119.875,
+      "fishing_h": 354.0,
+      "weeks": 105,
+      "sst": 15.702
+    },
+    {
+      "clat": 34.375,
+      "clon": -119.625,
+      "fishing_h": 495.0,
+      "weeks": 105,
+      "sst": 16.068
+    },
+    {
+      "clat": 34.375,
+      "clon": -119.375,
+      "fishing_h": 22.0,
+      "weeks": 105,
+      "sst": 16.17
+    },
+    {
+      "clat": 34.625,
+      "clon": -123.375,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.663
+    },
+    {
+      "clat": 34.625,
+      "clon": -123.125,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.555
+    },
+    {
+      "clat": 34.625,
+      "clon": -122.875,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.448
+    },
+    {
+      "clat": 34.625,
+      "clon": -122.625,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.329
+    },
+    {
+      "clat": 34.625,
+      "clon": -122.375,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.197
+    },
+    {
+      "clat": 34.625,
+      "clon": -122.125,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.065
+    },
+    {
+      "clat": 34.625,
+      "clon": -121.875,
+      "fishing_h": 17.0,
+      "weeks": 105,
+      "sst": 14.952
+    },
+    {
+      "clat": 34.625,
+      "clon": -121.625,
+      "fishing_h": 83.0,
+      "weeks": 105,
+      "sst": 14.843
+    },
+    {
+      "clat": 34.625,
+      "clon": -121.375,
+      "fishing_h": 57.0,
+      "weeks": 105,
+      "sst": 14.681
+    },
+    {
+      "clat": 34.625,
+      "clon": -121.125,
+      "fishing_h": 130.0,
+      "weeks": 105,
+      "sst": 14.421
+    },
+    {
+      "clat": 34.625,
+      "clon": -120.875,
+      "fishing_h": 11.0,
+      "weeks": 105,
+      "sst": 14.154
+    },
+    {
+      "clat": 34.625,
+      "clon": -120.625,
+      "fishing_h": 54.0,
+      "weeks": 105,
+      "sst": 14.04
+    },
+    {
+      "clat": 34.875,
+      "clon": -123.125,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.391
+    },
+    {
+      "clat": 34.875,
+      "clon": -122.875,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.272
+    },
+    {
+      "clat": 34.875,
+      "clon": -122.625,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.15
+    },
+    {
+      "clat": 34.875,
+      "clon": -122.375,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.027
+    },
+    {
+      "clat": 34.875,
+      "clon": -122.125,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 14.912
+    },
+    {
+      "clat": 34.875,
+      "clon": -121.875,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 14.804
+    },
+    {
+      "clat": 34.875,
+      "clon": -121.625,
+      "fishing_h": 5.0,
+      "weeks": 105,
+      "sst": 14.677
+    },
+    {
+      "clat": 34.875,
+      "clon": -121.375,
+      "fishing_h": 57.0,
+      "weeks": 105,
+      "sst": 14.481
+    },
+    {
+      "clat": 34.875,
+      "clon": -121.125,
+      "fishing_h": 54.0,
+      "weeks": 105,
+      "sst": 14.215
+    },
+    {
+      "clat": 34.875,
+      "clon": -120.875,
+      "fishing_h": 12.0,
+      "weeks": 105,
+      "sst": 13.97
+    },
+    {
+      "clat": 34.875,
+      "clon": -120.625,
+      "fishing_h": 23.0,
+      "weeks": 105,
+      "sst": 13.895
+    },
+    {
+      "clat": 35.125,
+      "clon": -123.375,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.348
+    },
+    {
+      "clat": 35.125,
+      "clon": -123.125,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.223
+    },
+    {
+      "clat": 35.125,
+      "clon": -122.875,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.098
+    },
+    {
+      "clat": 35.125,
+      "clon": -122.625,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 14.979
+    },
+    {
+      "clat": 35.125,
+      "clon": -122.375,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 14.866
+    },
+    {
+      "clat": 35.125,
+      "clon": -122.125,
+      "fishing_h": 3.0,
+      "weeks": 105,
+      "sst": 14.759
+    },
+    {
+      "clat": 35.125,
+      "clon": -121.875,
+      "fishing_h": 8.0,
+      "weeks": 105,
+      "sst": 14.636
+    },
+    {
+      "clat": 35.125,
+      "clon": -121.625,
+      "fishing_h": 26.0,
+      "weeks": 105,
+      "sst": 14.456
+    },
+    {
+      "clat": 35.125,
+      "clon": -121.375,
+      "fishing_h": 16.0,
+      "weeks": 105,
+      "sst": 14.2
+    },
+    {
+      "clat": 35.125,
+      "clon": -121.125,
+      "fishing_h": 111.0,
+      "weeks": 105,
+      "sst": 13.929
+    },
+    {
+      "clat": 35.125,
+      "clon": -120.875,
+      "fishing_h": 77.0,
+      "weeks": 105,
+      "sst": 13.737
+    },
+    {
+      "clat": 35.125,
+      "clon": -120.625,
+      "fishing_h": 13.0,
+      "weeks": 105,
+      "sst": 13.744
+    },
+    {
+      "clat": 35.375,
+      "clon": -123.375,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 15.165
+    },
+    {
+      "clat": 35.375,
+      "clon": -123.125,
+      "fishing_h": 1.0,
+      "weeks": 105,
+      "sst": 15.055
+    },
+    {
+      "clat": 35.375,
+      "clon": -122.875,
+      "fishing_h": 2.0,
+      "weeks": 105,
+      "sst": 14.939
+    },
+    {
+      "clat": 35.375,
+      "clon": -122.625,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 14.824
+    },
+    {
+      "clat": 35.375,
+      "clon": -122.375,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 14.709
+    },
+    {
+      "clat": 35.375,
+      "clon": -122.125,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 14.59
+    },
+    {
+      "clat": 35.375,
+      "clon": -121.875,
+      "fishing_h": 8.0,
+      "weeks": 105,
+      "sst": 14.421
+    },
+    {
+      "clat": 35.375,
+      "clon": -121.625,
+      "fishing_h": 61.0,
+      "weeks": 105,
+      "sst": 14.167
+    },
+    {
+      "clat": 35.375,
+      "clon": -121.375,
+      "fishing_h": 131.0,
+      "weeks": 105,
+      "sst": 13.86
+    },
+    {
+      "clat": 35.375,
+      "clon": -121.125,
+      "fishing_h": 114.0,
+      "weeks": 105,
+      "sst": 13.611
+    },
+    {
+      "clat": 35.375,
+      "clon": -120.875,
+      "fishing_h": 162.0,
+      "weeks": 105,
+      "sst": 13.524
+    },
+    {
+      "clat": 35.625,
+      "clon": -123.375,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 14.972
+    },
+    {
+      "clat": 35.625,
+      "clon": -123.125,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 14.886
+    },
+    {
+      "clat": 35.625,
+      "clon": -122.875,
+      "fishing_h": 13.0,
+      "weeks": 105,
+      "sst": 14.785
+    },
+    {
+      "clat": 35.625,
+      "clon": -122.625,
+      "fishing_h": 1.0,
+      "weeks": 105,
+      "sst": 14.667
+    },
+    {
+      "clat": 35.625,
+      "clon": -122.375,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 14.526
+    },
+    {
+      "clat": 35.625,
+      "clon": -122.125,
+      "fishing_h": 143.0,
+      "weeks": 105,
+      "sst": 14.354
+    },
+    {
+      "clat": 35.625,
+      "clon": -121.875,
+      "fishing_h": 297.0,
+      "weeks": 105,
+      "sst": 14.123
+    },
+    {
+      "clat": 35.625,
+      "clon": -121.625,
+      "fishing_h": 94.0,
+      "weeks": 105,
+      "sst": 13.825
+    },
+    {
+      "clat": 35.625,
+      "clon": -121.375,
+      "fishing_h": 137.0,
+      "weeks": 105,
+      "sst": 13.535
+    },
+    {
+      "clat": 35.625,
+      "clon": -121.125,
+      "fishing_h": 40.0,
+      "weeks": 105,
+      "sst": 13.393
+    },
+    {
+      "clat": 35.875,
+      "clon": -123.125,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 14.723
+    },
+    {
+      "clat": 35.875,
+      "clon": -122.875,
+      "fishing_h": 1.0,
+      "weeks": 105,
+      "sst": 14.63
+    },
+    {
+      "clat": 35.875,
+      "clon": -122.625,
+      "fishing_h": 2.0,
+      "weeks": 105,
+      "sst": 14.489
+    },
+    {
+      "clat": 35.875,
+      "clon": -122.375,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 14.276
+    },
+    {
+      "clat": 35.875,
+      "clon": -122.125,
+      "fishing_h": 111.0,
+      "weeks": 105,
+      "sst": 14.015
+    },
+    {
+      "clat": 35.875,
+      "clon": -121.875,
+      "fishing_h": 25.0,
+      "weeks": 105,
+      "sst": 13.735
+    },
+    {
+      "clat": 35.875,
+      "clon": -121.625,
+      "fishing_h": 90.0,
+      "weeks": 105,
+      "sst": 13.466
+    },
+    {
+      "clat": 35.875,
+      "clon": -121.375,
+      "fishing_h": 50.0,
+      "weeks": 105,
+      "sst": 13.301
+    },
+    {
+      "clat": 36.125,
+      "clon": -123.125,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 14.57
+    },
+    {
+      "clat": 36.125,
+      "clon": -122.875,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 14.478
+    },
+    {
+      "clat": 36.125,
+      "clon": -122.625,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 14.295
+    },
+    {
+      "clat": 36.125,
+      "clon": -122.375,
+      "fishing_h": 1.0,
+      "weeks": 105,
+      "sst": 14.006
+    },
+    {
+      "clat": 36.125,
+      "clon": -122.125,
+      "fishing_h": 2.0,
+      "weeks": 105,
+      "sst": 13.712
+    },
+    {
+      "clat": 36.125,
+      "clon": -121.875,
+      "fishing_h": 24.0,
+      "weeks": 105,
+      "sst": 13.47
+    },
+    {
+      "clat": 36.125,
+      "clon": -121.625,
+      "fishing_h": 4.0,
+      "weeks": 105,
+      "sst": 13.3
+    },
+    {
+      "clat": 36.375,
+      "clon": -123.125,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 14.421
+    },
+    {
+      "clat": 36.375,
+      "clon": -122.875,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 14.327
+    },
+    {
+      "clat": 36.375,
+      "clon": -122.625,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 14.112
+    },
+    {
+      "clat": 36.375,
+      "clon": -122.375,
+      "fishing_h": 1.0,
+      "weeks": 105,
+      "sst": 13.818
+    },
+    {
+      "clat": 36.375,
+      "clon": -122.125,
+      "fishing_h": 76.0,
+      "weeks": 105,
+      "sst": 13.575
+    },
+    {
+      "clat": 36.375,
+      "clon": -121.875,
+      "fishing_h": 15.0,
+      "weeks": 105,
+      "sst": 13.451
+    },
+    {
+      "clat": 36.625,
+      "clon": -123.375,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 14.314
+    },
+    {
+      "clat": 36.625,
+      "clon": -123.125,
+      "fishing_h": 1.0,
+      "weeks": 105,
+      "sst": 14.265
+    },
+    {
+      "clat": 36.625,
+      "clon": -122.875,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 14.146
+    },
+    {
+      "clat": 36.625,
+      "clon": -122.625,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 13.914
+    },
+    {
+      "clat": 36.625,
+      "clon": -122.375,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 13.687
+    },
+    {
+      "clat": 36.625,
+      "clon": -122.125,
+      "fishing_h": 135.0,
+      "weeks": 105,
+      "sst": 13.544
+    },
+    {
+      "clat": 36.625,
+      "clon": -121.875,
+      "fishing_h": 1719.0,
+      "weeks": 105,
+      "sst": 13.514
+    },
+    {
+      "clat": 36.875,
+      "clon": -123.375,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 14.156
+    },
+    {
+      "clat": 36.875,
+      "clon": -123.125,
+      "fishing_h": 1.0,
+      "weeks": 105,
+      "sst": 14.074
+    },
+    {
+      "clat": 36.875,
+      "clon": -122.875,
+      "fishing_h": 9.0,
+      "weeks": 105,
+      "sst": 13.908
+    },
+    {
+      "clat": 36.875,
+      "clon": -122.625,
+      "fishing_h": 76.0,
+      "weeks": 105,
+      "sst": 13.686
+    },
+    {
+      "clat": 36.875,
+      "clon": -122.375,
+      "fishing_h": 404.0,
+      "weeks": 105,
+      "sst": 13.563
+    },
+    {
+      "clat": 36.875,
+      "clon": -122.125,
+      "fishing_h": 399.0,
+      "weeks": 105,
+      "sst": 13.553
+    },
+    {
+      "clat": 36.875,
+      "clon": -121.875,
+      "fishing_h": 400.0,
+      "weeks": 105,
+      "sst": 13.596
+    },
+    {
+      "clat": 37.125,
+      "clon": -123.375,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 13.94
+    },
+    {
+      "clat": 37.125,
+      "clon": -123.125,
+      "fishing_h": 31.0,
+      "weeks": 105,
+      "sst": 13.818
+    },
+    {
+      "clat": 37.125,
+      "clon": -122.875,
+      "fishing_h": 130.0,
+      "weeks": 105,
+      "sst": 13.651
+    },
+    {
+      "clat": 37.125,
+      "clon": -122.625,
+      "fishing_h": 368.0,
+      "weeks": 105,
+      "sst": 13.47
+    },
+    {
+      "clat": 37.125,
+      "clon": -122.375,
+      "fishing_h": 135.0,
+      "weeks": 105,
+      "sst": 13.417
+    },
+    {
+      "clat": 37.375,
+      "clon": -123.375,
+      "fishing_h": 0.0,
+      "weeks": 105,
+      "sst": 13.594
+    },
+    {
+      "clat": 37.375,
+      "clon": -123.125,
+      "fishing_h": 149.0,
+      "weeks": 105,
+      "sst": 13.482
+    },
+    {
+      "clat": 37.375,
+      "clon": -122.875,
+      "fishing_h": 566.0,
+      "weeks": 105,
+      "sst": 13.415
+    },
+    {
+      "clat": 37.375,
+      "clon": -122.625,
+      "fishing_h": 228.0,
+      "weeks": 105,
+      "sst": 13.35
+    },
+    {
+      "clat": 37.375,
+      "clon": -122.375,
+      "fishing_h": 48.0,
+      "weeks": 105,
+      "sst": 13.374
+    },
+    {
+      "clat": 37.625,
+      "clon": -123.375,
+      "fishing_h": 1.0,
+      "weeks": 105,
+      "sst": 13.169
+    },
+    {
+      "clat": 37.625,
+      "clon": -123.125,
+      "fishing_h": 109.0,
+      "weeks": 105,
+      "sst": 13.109
+    },
+    {
+      "clat": 37.625,
+      "clon": -122.875,
+      "fishing_h": 428.0,
+      "weeks": 105,
+      "sst": 13.216
+    },
+    {
+      "clat": 37.625,
+      "clon": -122.625,
+      "fishing_h": 146.0,
+      "weeks": 105,
+      "sst": 13.309
+    },
+    {
+      "clat": 37.875,
+      "clon": -123.375,
+      "fishing_h": 18.0,
+      "weeks": 105,
+      "sst": 12.778
+    },
+    {
+      "clat": 37.875,
+      "clon": -123.125,
+      "fishing_h": 213.0,
+      "weeks": 105,
+      "sst": 12.772
+    },
+    {
+      "clat": 37.875,
+      "clon": -122.875,
+      "fishing_h": 599.0,
+      "weeks": 105,
+      "sst": 13.094
+    },
+    {
+      "clat": 37.875,
+      "clon": -122.625,
+      "fishing_h": 497.0,
+      "weeks": 105,
+      "sst": 13.331
+    },
+    {
+      "clat": 38.125,
+      "clon": -123.375,
+      "fishing_h": 6.0,
+      "weeks": 105,
+      "sst": 12.446
+    },
+    {
+      "clat": 38.125,
+      "clon": -123.125,
+      "fishing_h": 182.0,
+      "weeks": 105,
+      "sst": 12.392
+    },
+    {
+      "clat": 38.375,
+      "clon": -123.375,
+      "fishing_h": 9.0,
+      "weeks": 105,
+      "sst": 12.15
+    },
+    {
+      "clat": 38.375,
+      "clon": -123.125,
+      "fishing_h": 494.0,
+      "weeks": 105,
+      "sst": 12.18
+    },
+    {
+      "clat": 38.625,
+      "clon": -123.375,
+      "fishing_h": 7.0,
+      "weeks": 105,
+      "sst": 11.884
+    }
+  ],
+  "weekly": [
+    {
+      "week": "2024-01-01",
+      "fishing_h": 137.0,
+      "cuti": null,
+      "beuti": null,
+      "sst": 15.266
+    },
+    {
+      "week": "2024-01-08",
+      "fishing_h": 188.0,
+      "cuti": 0.419,
+      "beuti": 0.328,
+      "sst": 14.42
+    },
+    {
+      "week": "2024-01-15",
+      "fishing_h": 393.0,
+      "cuti": 0.754,
+      "beuti": 2.053,
+      "sst": 14.225
+    },
+    {
+      "week": "2024-01-22",
+      "fishing_h": 397.0,
+      "cuti": -0.207,
+      "beuti": -1.094,
+      "sst": 14.546
+    },
+    {
+      "week": "2024-01-29",
+      "fishing_h": 185.0,
+      "cuti": -0.09,
+      "beuti": -0.47,
+      "sst": 14.823
+    },
+    {
+      "week": "2024-02-05",
+      "fishing_h": 130.0,
+      "cuti": -0.392,
+      "beuti": -1.076,
+      "sst": 14.373
+    },
+    {
+      "week": "2024-02-12",
+      "fishing_h": 305.0,
+      "cuti": 0.194,
+      "beuti": 0.596,
+      "sst": 14.429
+    },
+    {
+      "week": "2024-02-19",
+      "fishing_h": 190.0,
+      "cuti": -0.114,
+      "beuti": -0.633,
+      "sst": 14.638
+    },
+    {
+      "week": "2024-02-26",
+      "fishing_h": 85.0,
+      "cuti": -0.26,
+      "beuti": -1.041,
+      "sst": 14.829
+    },
+    {
+      "week": "2024-03-04",
+      "fishing_h": 158.0,
+      "cuti": 0.008,
+      "beuti": -0.029,
+      "sst": 14.578
+    },
+    {
+      "week": "2024-03-11",
+      "fishing_h": 151.0,
+      "cuti": 0.409,
+      "beuti": 1.128,
+      "sst": 14.527
+    },
+    {
+      "week": "2024-03-18",
+      "fishing_h": 101.0,
+      "cuti": 0.28,
+      "beuti": 0.9,
+      "sst": 14.547
+    },
+    {
+      "week": "2024-03-25",
+      "fishing_h": 114.0,
+      "cuti": 0.26,
+      "beuti": 1.089,
+      "sst": 14.029
+    },
+    {
+      "week": "2024-04-01",
+      "fishing_h": 235.0,
+      "cuti": 0.544,
+      "beuti": 2.73,
+      "sst": 14.019
+    },
+    {
+      "week": "2024-04-08",
+      "fishing_h": 114.0,
+      "cuti": 0.589,
+      "beuti": 3.906,
+      "sst": 13.742
+    },
+    {
+      "week": "2024-04-15",
+      "fishing_h": 160.0,
+      "cuti": 0.39,
+      "beuti": 3.261,
+      "sst": 14.007
+    },
+    {
+      "week": "2024-04-22",
+      "fishing_h": 205.0,
+      "cuti": 0.449,
+      "beuti": 4.095,
+      "sst": 14.09
+    },
+    {
+      "week": "2024-04-29",
+      "fishing_h": 157.0,
+      "cuti": 0.937,
+      "beuti": 7.338,
+      "sst": 13.624
+    },
+    {
+      "week": "2024-05-06",
+      "fishing_h": 341.0,
+      "cuti": 1.485,
+      "beuti": 20.766,
+      "sst": 13.654
+    },
+    {
+      "week": "2024-05-13",
+      "fishing_h": 296.0,
+      "cuti": 0.519,
+      "beuti": 6.068,
+      "sst": 14.051
+    },
+    {
+      "week": "2024-05-20",
+      "fishing_h": 219.0,
+      "cuti": 0.37,
+      "beuti": 3.791,
+      "sst": 14.155
+    },
+    {
+      "week": "2024-05-27",
+      "fishing_h": 206.0,
+      "cuti": 1.163,
+      "beuti": 13.201,
+      "sst": 13.943
+    },
+    {
+      "week": "2024-06-03",
+      "fishing_h": 215.0,
+      "cuti": 1.087,
+      "beuti": 13.522,
+      "sst": 14.315
+    },
+    {
+      "week": "2024-06-10",
+      "fishing_h": 228.0,
+      "cuti": 0.354,
+      "beuti": 5.165,
+      "sst": 14.9
+    },
+    {
+      "week": "2024-06-17",
+      "fishing_h": 402.0,
+      "cuti": 0.865,
+      "beuti": 12.393,
+      "sst": 14.595
+    },
+    {
+      "week": "2024-06-24",
+      "fishing_h": 325.0,
+      "cuti": 1.123,
+      "beuti": 15.69,
+      "sst": 15.435
+    },
+    {
+      "week": "2024-07-01",
+      "fishing_h": 430.0,
+      "cuti": 0.616,
+      "beuti": 6.919,
+      "sst": 16.093
+    },
+    {
+      "week": "2024-07-08",
+      "fishing_h": 383.0,
+      "cuti": 0.34,
+      "beuti": 3.404,
+      "sst": 16.302
+    },
+    {
+      "week": "2024-07-15",
+      "fishing_h": 297.0,
+      "cuti": 0.238,
+      "beuti": 2.268,
+      "sst": 17.006
+    },
+    {
+      "week": "2024-07-22",
+      "fishing_h": 329.0,
+      "cuti": 0.697,
+      "beuti": 5.323,
+      "sst": 16.569
+    },
+    {
+      "week": "2024-07-29",
+      "fishing_h": 295.0,
+      "cuti": 0.668,
+      "beuti": 5.174,
+      "sst": 15.994
+    },
+    {
+      "week": "2024-08-05",
+      "fishing_h": 293.0,
+      "cuti": 0.76,
+      "beuti": 6.931,
+      "sst": 16.19
+    },
+    {
+      "week": "2024-08-12",
+      "fishing_h": 441.0,
+      "cuti": 0.729,
+      "beuti": 9.965,
+      "sst": 16.538
+    },
+    {
+      "week": "2024-08-19",
+      "fishing_h": 432.0,
+      "cuti": 0.775,
+      "beuti": 9.706,
+      "sst": 17.371
+    },
+    {
+      "week": "2024-08-26",
+      "fishing_h": 318.0,
+      "cuti": 0.719,
+      "beuti": 4.7,
+      "sst": 17.662
+    },
+    {
+      "week": "2024-09-02",
+      "fishing_h": 318.0,
+      "cuti": 0.441,
+      "beuti": 2.619,
+      "sst": 17.835
+    },
+    {
+      "week": "2024-09-09",
+      "fishing_h": 299.0,
+      "cuti": 0.686,
+      "beuti": 4.186,
+      "sst": 17.394
+    },
+    {
+      "week": "2024-09-16",
+      "fishing_h": 345.0,
+      "cuti": 0.943,
+      "beuti": 4.734,
+      "sst": 17.104
+    },
+    {
+      "week": "2024-09-23",
+      "fishing_h": 270.0,
+      "cuti": 0.489,
+      "beuti": 1.885,
+      "sst": 17.09
+    },
+    {
+      "week": "2024-09-30",
+      "fishing_h": 421.0,
+      "cuti": 0.403,
+      "beuti": 1.669,
+      "sst": 17.2
+    },
+    {
+      "week": "2024-10-07",
+      "fishing_h": 395.0,
+      "cuti": 0.396,
+      "beuti": 2.476,
+      "sst": 16.852
+    },
+    {
+      "week": "2024-10-14",
+      "fishing_h": 334.0,
+      "cuti": 0.542,
+      "beuti": 4.323,
+      "sst": 16.811
+    },
+    {
+      "week": "2024-10-21",
+      "fishing_h": 294.0,
+      "cuti": 0.868,
+      "beuti": 3.923,
+      "sst": 16.739
+    },
+    {
+      "week": "2024-10-28",
+      "fishing_h": 244.0,
+      "cuti": 0.481,
+      "beuti": 2.256,
+      "sst": 15.979
+    },
+    {
+      "week": "2024-11-04",
+      "fishing_h": 395.0,
+      "cuti": 1.201,
+      "beuti": 4.971,
+      "sst": 15.55
+    },
+    {
+      "week": "2024-11-11",
+      "fishing_h": 270.0,
+      "cuti": 0.678,
+      "beuti": 4.821,
+      "sst": 15.13
+    },
+    {
+      "week": "2024-11-18",
+      "fishing_h": 333.0,
+      "cuti": 1.186,
+      "beuti": 5.571,
+      "sst": 14.452
+    },
+    {
+      "week": "2024-11-25",
+      "fishing_h": 338.0,
+      "cuti": 0.4,
+      "beuti": 2.06,
+      "sst": 14.69
+    },
+    {
+      "week": "2024-12-02",
+      "fishing_h": 247.0,
+      "cuti": 0.166,
+      "beuti": 1.127,
+      "sst": 14.683
+    },
+    {
+      "week": "2024-12-09",
+      "fishing_h": 296.0,
+      "cuti": 0.443,
+      "beuti": 2.59,
+      "sst": 14.401
+    },
+    {
+      "week": "2024-12-16",
+      "fishing_h": 291.0,
+      "cuti": 0.419,
+      "beuti": 1.625,
+      "sst": 14.534
+    },
+    {
+      "week": "2024-12-23",
+      "fishing_h": 144.0,
+      "cuti": 0.401,
+      "beuti": 1.569,
+      "sst": 14.387
+    },
+    {
+      "week": "2024-12-30",
+      "fishing_h": 221.0,
+      "cuti": 0.738,
+      "beuti": 3.155,
+      "sst": 14.141
+    },
+    {
+      "week": "2025-01-06",
+      "fishing_h": 477.0,
+      "cuti": 1.082,
+      "beuti": 7.096,
+      "sst": 13.919
+    },
+    {
+      "week": "2025-01-13",
+      "fishing_h": 364.0,
+      "cuti": 0.759,
+      "beuti": 6.038,
+      "sst": 13.477
+    },
+    {
+      "week": "2025-01-20",
+      "fishing_h": 234.0,
+      "cuti": 0.271,
+      "beuti": 2.423,
+      "sst": 13.526
+    },
+    {
+      "week": "2025-01-27",
+      "fishing_h": 282.0,
+      "cuti": 0.387,
+      "beuti": 2.776,
+      "sst": 13.459
+    },
+    {
+      "week": "2025-02-03",
+      "fishing_h": 259.0,
+      "cuti": 0.367,
+      "beuti": 2.346,
+      "sst": 13.693
+    },
+    {
+      "week": "2025-02-10",
+      "fishing_h": 143.0,
+      "cuti": 0.358,
+      "beuti": 2.682,
+      "sst": 13.183
+    },
+    {
+      "week": "2025-02-17",
+      "fishing_h": 190.0,
+      "cuti": 1.038,
+      "beuti": 7.987,
+      "sst": 13.087
+    },
+    {
+      "week": "2025-02-24",
+      "fishing_h": 159.0,
+      "cuti": 0.735,
+      "beuti": 7.735,
+      "sst": 13.293
+    },
+    {
+      "week": "2025-03-03",
+      "fishing_h": 127.0,
+      "cuti": 0.844,
+      "beuti": 8.27,
+      "sst": 12.915
+    },
+    {
+      "week": "2025-03-10",
+      "fishing_h": 94.0,
+      "cuti": 1.347,
+      "beuti": 15.506,
+      "sst": 13.123
+    },
+    {
+      "week": "2025-03-17",
+      "fishing_h": 122.0,
+      "cuti": 0.417,
+      "beuti": 4.283,
+      "sst": 13.202
+    },
+    {
+      "week": "2025-03-24",
+      "fishing_h": 138.0,
+      "cuti": 1.254,
+      "beuti": 13.809,
+      "sst": 13.712
+    },
+    {
+      "week": "2025-03-31",
+      "fishing_h": 141.0,
+      "cuti": 0.629,
+      "beuti": 7.562,
+      "sst": 13.553
+    },
+    {
+      "week": "2025-04-07",
+      "fishing_h": 118.0,
+      "cuti": 1.396,
+      "beuti": 16.069,
+      "sst": 13.856
+    },
+    {
+      "week": "2025-04-14",
+      "fishing_h": 120.0,
+      "cuti": 1.201,
+      "beuti": 16.91,
+      "sst": 14.175
+    },
+    {
+      "week": "2025-04-21",
+      "fishing_h": 123.0,
+      "cuti": 0.371,
+      "beuti": 5.477,
+      "sst": 14.36
+    },
+    {
+      "week": "2025-04-28",
+      "fishing_h": 144.0,
+      "cuti": 0.701,
+      "beuti": 8.791,
+      "sst": 13.956
+    },
+    {
+      "week": "2025-05-05",
+      "fishing_h": 345.0,
+      "cuti": 1.348,
+      "beuti": 11.465,
+      "sst": 14.125
+    },
+    {
+      "week": "2025-05-12",
+      "fishing_h": 373.0,
+      "cuti": 0.963,
+      "beuti": 9.999,
+      "sst": 14.198
+    },
+    {
+      "week": "2025-05-19",
+      "fishing_h": 374.0,
+      "cuti": 1.477,
+      "beuti": 12.595,
+      "sst": 14.419
+    },
+    {
+      "week": "2025-05-26",
+      "fishing_h": 260.0,
+      "cuti": 1.555,
+      "beuti": 17.882,
+      "sst": 14.654
+    },
+    {
+      "week": "2025-06-02",
+      "fishing_h": 392.0,
+      "cuti": 0.965,
+      "beuti": 10.913,
+      "sst": 15.286
+    },
+    {
+      "week": "2025-06-09",
+      "fishing_h": 331.0,
+      "cuti": 0.295,
+      "beuti": 3.49,
+      "sst": 15.109
+    },
+    {
+      "week": "2025-06-16",
+      "fishing_h": 343.0,
+      "cuti": 1.296,
+      "beuti": 13.654,
+      "sst": 14.707
+    },
+    {
+      "week": "2025-06-23",
+      "fishing_h": 577.0,
+      "cuti": 1.912,
+      "beuti": 19.206,
+      "sst": 14.355
+    },
+    {
+      "week": "2025-06-30",
+      "fishing_h": 456.0,
+      "cuti": 0.757,
+      "beuti": 10.169,
+      "sst": 15.06
+    },
+    {
+      "week": "2025-07-07",
+      "fishing_h": 306.0,
+      "cuti": 0.609,
+      "beuti": 8.097,
+      "sst": 15.395
+    },
+    {
+      "week": "2025-07-14",
+      "fishing_h": 368.0,
+      "cuti": 0.669,
+      "beuti": 7.122,
+      "sst": 15.838
+    },
+    {
+      "week": "2025-07-21",
+      "fishing_h": 300.0,
+      "cuti": 0.084,
+      "beuti": 0.68,
+      "sst": 16.796
+    },
+    {
+      "week": "2025-07-28",
+      "fishing_h": 265.0,
+      "cuti": 0.426,
+      "beuti": 2.242,
+      "sst": 16.736
+    },
+    {
+      "week": "2025-08-04",
+      "fishing_h": 333.0,
+      "cuti": 1.091,
+      "beuti": 10.3,
+      "sst": 16.703
+    },
+    {
+      "week": "2025-08-11",
+      "fishing_h": 232.0,
+      "cuti": 0.913,
+      "beuti": 6.635,
+      "sst": 16.621
+    },
+    {
+      "week": "2025-08-18",
+      "fishing_h": 412.0,
+      "cuti": 0.688,
+      "beuti": 4.161,
+      "sst": 17.416
+    },
+    {
+      "week": "2025-08-25",
+      "fishing_h": 384.0,
+      "cuti": 0.765,
+      "beuti": 2.747,
+      "sst": 18.231
+    },
+    {
+      "week": "2025-09-01",
+      "fishing_h": 429.0,
+      "cuti": 0.391,
+      "beuti": 0.755,
+      "sst": 18.572
+    },
+    {
+      "week": "2025-09-08",
+      "fishing_h": 273.0,
+      "cuti": 0.764,
+      "beuti": 1.407,
+      "sst": 18.653
+    },
+    {
+      "week": "2025-09-15",
+      "fishing_h": 304.0,
+      "cuti": 0.776,
+      "beuti": 1.056,
+      "sst": 18.627
+    },
+    {
+      "week": "2025-09-22",
+      "fishing_h": 364.0,
+      "cuti": 0.441,
+      "beuti": 1.068,
+      "sst": 18.819
+    },
+    {
+      "week": "2025-09-29",
+      "fishing_h": 311.0,
+      "cuti": 0.486,
+      "beuti": 1.23,
+      "sst": 19.183
+    },
+    {
+      "week": "2025-10-06",
+      "fishing_h": 295.0,
+      "cuti": 0.667,
+      "beuti": 0.801,
+      "sst": 18.661
+    },
+    {
+      "week": "2025-10-13",
+      "fishing_h": 301.0,
+      "cuti": 0.746,
+      "beuti": 0.834,
+      "sst": 17.786
+    },
+    {
+      "week": "2025-10-20",
+      "fishing_h": 295.0,
+      "cuti": 0.547,
+      "beuti": 0.886,
+      "sst": 17.865
+    },
+    {
+      "week": "2025-10-27",
+      "fishing_h": 313.0,
+      "cuti": 0.558,
+      "beuti": 0.727,
+      "sst": 17.234
+    },
+    {
+      "week": "2025-11-03",
+      "fishing_h": 344.0,
+      "cuti": 0.986,
+      "beuti": 2.758,
+      "sst": 16.922
+    },
+    {
+      "week": "2025-11-10",
+      "fishing_h": 401.0,
+      "cuti": 0.342,
+      "beuti": 0.722,
+      "sst": 16.95
+    },
+    {
+      "week": "2025-11-17",
+      "fishing_h": 249.0,
+      "cuti": 0.059,
+      "beuti": -0.141,
+      "sst": 16.446
+    },
+    {
+      "week": "2025-11-24",
+      "fishing_h": 187.0,
+      "cuti": 0.345,
+      "beuti": 0.279,
+      "sst": 16.227
+    },
+    {
+      "week": "2025-12-01",
+      "fishing_h": 313.0,
+      "cuti": 0.398,
+      "beuti": 0.242,
+      "sst": 16.179
+    },
+    {
+      "week": "2025-12-08",
+      "fishing_h": 231.0,
+      "cuti": 0.378,
+      "beuti": 0.491,
+      "sst": 16.112
+    },
+    {
+      "week": "2025-12-15",
+      "fishing_h": 235.0,
+      "cuti": 0.391,
+      "beuti": 0.483,
+      "sst": 15.916
+    },
+    {
+      "week": "2025-12-22",
+      "fishing_h": 151.0,
+      "cuti": 0.702,
+      "beuti": 0.478,
+      "sst": 15.675
+    },
+    {
+      "week": "2025-12-29",
+      "fishing_h": 122.0,
+      "cuti": -0.187,
+      "beuti": -0.882,
+      "sst": 15.631
+    }
+  ],
+  "notes": [
+    "Fishing hours are inferred from speed (1-5 kn) and turning; only AIS-equipped boats are seen.",
+    "Global Fishing Watch data is not used (non-commercial licence).",
+    "Ocean data: NOAA OISST v2.1, NOAA VIIRS chlorophyll 8-day, CUTI/BEUTI upwelling indices."
+  ]
+}

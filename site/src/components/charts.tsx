@@ -77,7 +77,8 @@ export function HBar({ rows, fmt, color = SERIES[0], label }: {
               <rect className="hit" x={0} y={y} width={width} height={rowH} />
               <text className="label" x={left - 8} y={y + rowH / 2 + 4} textAnchor="end">{clip(r.key, maxChars)}</text>
               <rect x={x0} y={y + 5} width={Math.max(1, x1 - x0)} height={rowH - 10} rx={4} fill={color} />
-              <text x={r.value >= 0 ? x1 + 6 : x0 - 6} y={y + rowH / 2 + 4} textAnchor={r.value >= 0 ? "start" : "end"}>{fmt(r.value)}</text>
+              {/* negative values: label to the right of the zero line so it never collides with the row name */}
+              <text x={x1 + 6} y={y + rowH / 2 + 4} textAnchor="start">{fmt(r.value)}</text>
             </g>
           );
         })}
@@ -140,9 +141,12 @@ export function LineChart({ xs, series, fmt, height = 260, label }: {
   const [hover, setHover] = useState<number | null>(null);
   const left = 48, right = width >= 500 ? 90 : 12, top = 14, bottom = 30;
   const all = series.flatMap((s) => s.values.filter((v): v is number => v !== null));
-  const max = Math.max(1, ...all) * 1.05;
+  const hasNeg = all.some((v) => v < 0);
+  const rawMax = Math.max(hasNeg ? 0 : 1, ...all), rawMin = Math.min(0, ...all);
+  const pad = (rawMax - rawMin || 1) * 0.06;
+  const max = rawMax + pad, min = hasNeg ? rawMin - pad : 0;
   const x = (i: number) => left + (xs.length === 1 ? 0.5 : i / (xs.length - 1)) * (width - left - right);
-  const y = (v: number) => height - bottom - (v / max) * (height - top - bottom);
+  const y = (v: number) => height - bottom - ((v - min) / (max - min)) * (height - top - bottom);
   return (
     <div className="chart-wrap" ref={ref}>
       {series.length > 1 && (
@@ -150,12 +154,13 @@ export function LineChart({ xs, series, fmt, height = 260, label }: {
       )}
       <svg className="chart" viewBox={`0 0 ${width} ${height}`} width={width} height={height} role="img" aria-label={label}
         onMouseLeave={() => { setHover(null); t.hide(); }}>
-        {ticks(0, max, 4).map((v) => (
+        {ticks(min, max, 4).map((v) => (
           <g key={v}>
             <line className="gridline" x1={left} x2={width - right} y1={y(v)} y2={y(v)} />
             <text x={left - 6} y={y(v) + 4} textAnchor="end">{fmt(v)}</text>
           </g>
         ))}
+        {hasNeg && <line className="axisline" x1={left} x2={width - right} y1={y(0)} y2={y(0)} />}
         {xs.map((lab, i) => i % every === 0 && <text key={lab} x={x(i)} y={height - 10} textAnchor="middle">{lab}</text>)}
         {series.map((s, si) => {
           const pts = s.values.map((v, i) => (v === null ? null : `${x(i)},${y(v)}`)).filter(Boolean).join(" ");

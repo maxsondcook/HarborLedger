@@ -158,7 +158,9 @@ def export(out=OUT):
         _w(os.path.join(out, "ledger.json"), led)
     for src, dst in (("growth_model_results.json", "growth_model.json"),
                      ("psix_match_results.json", "psix_match.json"),
-                     ("results.json", "identity_tests.json")):
+                     ("results.json", "identity_tests.json"),
+                     ("weather_results.json", "weather.json"),
+                     ("fishing_results.json", "fishing.json")):
         p = os.path.join(ROOT, "eval", src)
         if os.path.exists(p):
             shutil.copy(p, os.path.join(out, dst))

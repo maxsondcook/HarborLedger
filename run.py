@@ -13,6 +13,9 @@ Commands:
     match-psix             gated AIS -> USCG PSIX matching for CA commercial vessels
     tug-activity [YEAR..]  AIS tug hours by mode, region and DAC proximity, per AIS year (default: all)
     encounters [YEAR..]    close-quarters encounters (CPA/TCPA) + validation, per AIS year (default: all)
+    weather-join [YEAR..]  hourly vessel tracks joined to nearest NOAA buoy waves and wind, per AIS year
+    weather                speed loss, coastal-leg delay model, small-craft departures, operability
+    fishing                fishing activity vs SST, fronts, chlorophyll, upwelling and sea state
     export                 write static JSON for the website to site/public/data/
     growth                 build the availability ledger and run the weeks 3-4 growth model
 """
@@ -69,6 +72,19 @@ def main(argv):
             print(f"== encounters {y}", flush=True)
             encounters.run(y, log=lambda s: print(s, flush=True))
             print(encounters.validate(y), flush=True)
+    elif cmd == "weather-join":
+        from harborledger import weather, years
+        for y in ([int(a) for a in args] or years.years_available()):
+            print(f"== vessel-hours + sea conditions {y}", flush=True)
+            weather.run(y)
+    elif cmd == "weather":
+        from harborledger import weather
+        r = weather.analyze()
+        print({k: r[k] for k in ("coverage", "legs")}, r["leg_model"]["mae_hours"], flush=True)
+    elif cmd == "fishing":
+        from harborledger import fishing
+        r = fishing.run()
+        print(r["models"], r["auc_gain_from_ocean_ci95"], flush=True)
     elif cmd == "export":
         from harborledger import export
         export.export()

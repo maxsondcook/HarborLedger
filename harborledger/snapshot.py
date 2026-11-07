@@ -17,6 +17,8 @@ LICENSES = {
     "marinecadastre": "CC0-1.0 (NOAA/BOEM MarineCadastre AIS)",
     "psix": "U.S. federal work, presumed public domain (USCG CGMIX PSIX; no terms page found)",
     "uscg_mvus": "U.S. federal work, presumed public domain (USCG Merchant Vessels of the U.S.; owner PII pre-redacted by USCG)",
+    "ndbc": "U.S. federal data, public domain (NOAA National Data Buoy Center)",
+    "erddap": "U.S. federal data, public domain (NOAA CoastWatch / SWFSC ERDDAP)",
     "calepa":"CalEPA/OEHHA public data (SB 535 disadvantaged communities; verify terms)",
     "derived": "Derived from sources listed on edge",
 }
@@ -66,3 +68,23 @@ def http_json(url, body=None, timeout=90, retries=3, backoff=5.0):
             last = e
             time.sleep(backoff * (attempt + 1))
     raise RuntimeError(f"request failed after {retries} tries: {url}: {last}")
+
+
+def json_safe(obj):
+    """Replace NaN/inf with None recursively so the output is valid JSON for browsers."""
+    import math
+    if isinstance(obj, float):
+        return None if (math.isnan(obj) or math.isinf(obj)) else obj
+    if isinstance(obj, dict):
+        return {k: json_safe(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [json_safe(v) for v in obj]
+    try:
+        import numpy as np
+        if isinstance(obj, np.floating):
+            return json_safe(float(obj))
+        if isinstance(obj, np.integer):
+            return int(obj)
+    except ImportError:
+        pass
+    return obj

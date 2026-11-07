@@ -22,3 +22,8 @@ site/node_modules/
 site/dist/
 site/*.tsbuildinfo
 data/derived/encounters*.csv
+data/derived/vessel_hours*.parquet
+data/raw/ndbc/
+data/raw/erddap/
+data/derived/coastal_legs.parquet
+data/derived/fishing_panel.parquet
