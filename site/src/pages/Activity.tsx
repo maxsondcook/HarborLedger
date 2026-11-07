@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { HBar, LineChart, SERIES } from "../components/charts";
-import { Async, Stat, useTitle } from "../components/ui";
-import { useData } from "../data";
+import { Async, Stat, useTitle, YearSelect } from "../components/ui";
+import { useData, useYear } from "../data";
 import { num } from "../format";
 
 type Summary = {
@@ -26,9 +26,10 @@ const MODE_LABEL: Record<string, string> = { idle: "Idle (< 0.5 kn)", assist: "S
 
 export default function Activity() {
   useTitle("Harbor activity");
-  const s = useData<Summary>("activity.json");
-  const m = useData<Monthly>("activity_monthly.json");
-  const tugs = useData<Tug[]>("activity_tugs.json");
+  const [year, setYear, years] = useYear();
+  const s = useData<Summary>(year ? `activity_${year}.json` : null);
+  const m = useData<Monthly>(year ? `activity_monthly_${year}.json` : null);
+  const tugs = useData<Tug[]>(year ? `activity_tugs_${year}.json` : null);
   return (
     <>
       <h1>Harbor activity: tugs</h1>
@@ -37,6 +38,7 @@ export default function Activity() {
         and month. AIS shows movement, not engine state, so these are <b>activity hours</b>, not engine hours. Each
         position is weighted by the time to the vessel's next report, capped at 10 minutes so gaps are not credited.
       </p>
+      <div className="controls"><YearSelect year={year} years={years} onChange={setYear} /></div>
       <Async state={s}>{(sum) => <Body s={sum} monthly={m.data} tugs={tugs.data} />}</Async>
     </>
   );

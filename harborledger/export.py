@@ -8,7 +8,10 @@ Files:
   yards/<firm>.json         one page per firm: parents (dated), legal entities, contracts, availabilities
   ledger.json               the availability cost-growth ledger
   growth_model.json         weeks 3-4 model results (copied from eval/)
-  activity.json             tug activity summary and monthly series
+  years.json                AIS years available; per-year files carry a _YYYY suffix:
+  activity_YYYY.json        tug activity summary (+ activity_tugs_YYYY, activity_monthly_YYYY)
+  encounters_YYYY.json      encounter summary (+ encounter_daily_YYYY, encounter_scenarios_YYYY,
+                            encounter_validation_YYYY; scenario tracks in encounters/<id>.json)
 
 Publication rules: only sources whose licence permits redistribution (see CLAUDE.md); owner
 names only for organizations (the USCG register already redacts individuals).
@@ -154,35 +157,43 @@ def export(out=OUT):
             r["hull_slug"] = slug("hull:" + r["hull"])
         _w(os.path.join(out, "ledger.json"), led)
     for src, dst in (("growth_model_results.json", "growth_model.json"),
-                     ("tug_activity_results.json", "activity.json"),
                      ("psix_match_results.json", "psix_match.json"),
-                     ("results.json", "identity_tests.json"),
-                     ("encounter_validation.json", "encounter_validation.json")):
+                     ("results.json", "identity_tests.json")):
         p = os.path.join(ROOT, "eval", src)
         if os.path.exists(p):
             shutil.copy(p, os.path.join(out, dst))
-    tug = os.path.join(ROOT, "eval", "tug_activity_by_vessel.csv")
-    act = os.path.join(ROOT, "eval", "tug_activity_results.json")
-    if os.path.exists(tug):
-        import pandas as pd
-        t = pd.read_csv(tug)
-        assist = set(json.load(open(act)).get("assist_tug_mmsi", [])) if os.path.exists(act) else set()
-        t["assist_tug"] = t.mmsi.isin(assist)
-        t["name"] = t["name"].fillna("")
-        _w(os.path.join(out, "activity_tugs.json"),
-           t[["mmsi", "name", "days_seen", "hours_active", "hours_assist", "hours_active_dac", "spb_share",
-              "active_hours_annualized", "assist_tug"]].round(1).to_dict("records"))
-    mon = os.path.join(ROOT, "data", "derived", "tug_activity_monthly.csv")
-    if os.path.exists(mon):
-        import pandas as pd
-        m = pd.read_csv(mon)
-        m = m.groupby(["month", "region", "mode", "near_dac"]).hours.sum().reset_index()
-        _w(os.path.join(out, "activity_monthly.json"), m.round(2).to_dict("records"))
 
-    # ---------- encounters ----------
-    enc_csv = os.path.join(ROOT, "data", "derived", "encounters.csv")
-    if os.path.exists(enc_csv):
-        export_encounters(out, enc_csv)
+    # ---------- per-year AIS products (activity, encounters) ----------
+    import glob as _glob
+    import pandas as pd
+    from .years import by_year
+    years = sorted({int(os.path.splitext(f)[0].rsplit("_", 1)[1])
+                    for f in _glob.glob(os.path.join(ROOT, "eval", "tug_activity_results_*.json"))
+                    + _glob.glob(os.path.join(ROOT, "eval", "encounter_results_*.json"))})
+    for y in years:
+        for src, dst in (("tug_activity_results.json", "activity.json"),
+                         ("encounter_validation.json", "encounter_validation.json")):
+            p = by_year(os.path.join(ROOT, "eval", src), y)
+            if os.path.exists(p):
+                shutil.copy(p, by_year(os.path.join(out, dst), y))
+        tug = by_year(os.path.join(ROOT, "eval", "tug_activity_by_vessel.csv"), y)
+        act = by_year(os.path.join(ROOT, "eval", "tug_activity_results.json"), y)
+        if os.path.exists(tug):
+            t = pd.read_csv(tug)
+            assist = set(json.load(open(act)).get("assist_tug_mmsi", [])) if os.path.exists(act) else set()
+            t["assist_tug"] = t.mmsi.isin(assist)
+            t["name"] = t["name"].fillna("")
+            _w(by_year(os.path.join(out, "activity_tugs.json"), y),
+               t[["mmsi", "name", "days_seen", "hours_active", "hours_assist", "hours_active_dac", "spb_share",
+                  "active_hours_annualized", "assist_tug"]].round(1).to_dict("records"))
+        mon = by_year(os.path.join(ROOT, "data", "derived", "tug_activity_monthly.csv"), y)
+        if os.path.exists(mon):
+            m = pd.read_csv(mon).groupby(["month", "region", "mode", "near_dac"]).hours.sum().reset_index()
+            _w(by_year(os.path.join(out, "activity_monthly.json"), y), m.round(2).to_dict("records"))
+        enc_csv = by_year(os.path.join(ROOT, "data", "derived", "encounters.csv"), y)
+        if os.path.exists(enc_csv):
+            export_encounters(out, enc_csv, y)
+    _w(os.path.join(out, "years.json"), {"years": years, "latest": years[-1] if years else None})
 
     # ---------- meta ----------
     man = read_manifest()
@@ -207,14 +218,15 @@ def export(out=OUT):
     return meta
 
 
-def export_encounters(out, enc_csv, n_scenarios=200):
-    """Summary, daily counts, and the closest large-vessel traffic encounters with raw tracks."""
+def export_encounters(out, enc_csv, year, n_scenarios=200):
+    """Summary, daily counts, and the closest large-vessel traffic encounters with raw tracks (one year)."""
     import pandas as pd
     from . import encounters as en
+    from .years import by_year
     df = pd.read_csv(enc_csv)
-    p = os.path.join(ROOT, "eval", "encounter_results.json")
+    p = by_year(os.path.join(ROOT, "eval", "encounter_results.json"), year)
     if os.path.exists(p):
-        shutil.copy(p, os.path.join(out, "encounters.json"))
+        shutil.copy(p, by_year(os.path.join(out, "encounters.json"), year))
     tr = df[(df.service == 0) & (df.realized == 1)].copy()
     lg = (tr.large_involved == 1) & (tr.pleasure_involved == 0)
     if "launch_involved" in tr:
@@ -223,7 +235,7 @@ def export_encounters(out, enc_csv, n_scenarios=200):
                .groupby(["day", "region"])
                .agg(encounters=("realized", "size"), within_185m=("t185", "sum"), within_93m=("t93", "sum"),
                     large_no_pleasure=("lg", "sum")).reset_index())
-    _w(os.path.join(out, "encounter_daily.json"), daily.to_dict("records"))
+    _w(by_year(os.path.join(out, "encounter_daily.json"), year), daily.to_dict("records"))
     # candidates: closest 3x by the 1-minute grid; then rank by the more conservative of the grid value
     # and the report-time check, because interpolating across long reporting gaps can make
     # near-zero distances that never happened
@@ -260,4 +272,4 @@ def export_encounters(out, enc_csv, n_scenarios=200):
                     conservative_min_sep_m=round(max(e["min_sep_obs_m"], raw if raw is not None else 0), 1))
         _w(os.path.join(out, "encounters", sid + ".json"), dict(meta, tracks=tracks))
         rows.append(meta)
-    _w(os.path.join(out, "encounter_scenarios.json"), rows)
+    _w(by_year(os.path.join(out, "encounter_scenarios.json"), year), rows)

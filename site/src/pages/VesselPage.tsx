@@ -20,13 +20,20 @@ const SCHEME: Record<string, string> = {
   psix_vessel_id: "PSIX vessel ID", uscg_identification: "USCG identification",
 };
 
+function seenYears(v: AisVessel): string {
+  const ys = v.identifiers.flatMap((i) => [i.valid_from, i.valid_to]).filter((d): d is string => !!d).map((d) => d.slice(0, 4));
+  if (!ys.length) return "";
+  const lo = ys.reduce((a, b) => (a < b ? a : b)), hi = ys.reduce((a, b) => (a > b ? a : b));
+  return lo === hi ? `in ${lo}` : `${lo}–${hi}`;
+}
+
 function Ais({ v }: { v: AisVessel }) {
   const r = v.register;
   return (
     <>
       <h1>{v.name || "(no name)"}</h1>
       <p className="lede">
-        {GROUP_LABEL[v.group] ?? v.group} · {v.flag === "US" ? "U.S.-flag" : "foreign-flag"} · seen in California AIS during 2024
+        {GROUP_LABEL[v.group] ?? v.group} · {v.flag === "US" ? "U.S.-flag" : "foreign-flag"} · seen in California AIS {seenYears(v)}
       </p>
       <div className="cards-2">
         <div className="card">
@@ -76,7 +83,7 @@ function Ais({ v }: { v: AisVessel }) {
       </div>
       {v.active_in.length > 0 && (
         <>
-          <h2>Activity (tug hours, 2024)</h2>
+          <h2>Activity (tug hours by year)</h2>
           <ul>{v.active_in.map((a) => <li key={a.dst}><b>{a.dst.replace("area:", "").replace(/_/g, " ")}</b>: <span className="muted">{a.evidence}</span></li>)}</ul>
         </>
       )}

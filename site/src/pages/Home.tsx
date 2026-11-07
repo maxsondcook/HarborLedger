@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Async, Stat, useTitle } from "../components/ui";
-import { useData, type Meta } from "../data";
+import { useData, type Meta, type YearsInfo } from "../data";
 import { num, pct } from "../format";
 
 export default function Home() {
@@ -59,8 +59,9 @@ type Gm = { windows: { window_days: number; label: string; models: Record<string
 /** Headline findings, each computed from the exported data so the home page never drifts from the analysis. */
 function Findings() {
   const led = useData<LedgerRow[]>("ledger.json").data;
-  const enc = useData<Enc>("encounters.json").data;
-  const act = useData<Act>("activity.json").data;
+  const latest = useData<YearsInfo>("years.json").data?.latest ?? null;
+  const enc = useData<Enc>(latest ? `encounters_${latest}.json` : null).data;
+  const act = useData<Act>(latest ? `activity_${latest}.json` : null).data;
   const px = useData<Px>("psix_match.json").data;
   const gm = useData<Gm>("growth_model.json").data;
   const g = (led ?? []).filter((r) => r.closed && r.g_exopt !== null).map((r) => r.g_exopt as number).sort((a, b) => a - b);
@@ -71,6 +72,7 @@ function Findings() {
   return (
     <>
       <h2>What the data shows</h2>
+      {latest && <p className="muted small">Ship-tracking findings use AIS year {latest}; earlier years are on each page.</p>}
       <ul className="findings">
         {med !== null && w180 && (
           <li>

@@ -21,4 +21,4 @@ data/raw/marad/
 site/node_modules/
 site/dist/
 site/*.tsbuildinfo
-data/derived/encounters.csv
+data/derived/encounters*.csv

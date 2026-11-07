@@ -203,8 +203,9 @@ def day_encounters(path, region):
     return out, {"vessel_minutes_moving": int(vessel_minutes), "moving_vessels": int(r.mmsi.nunique())}
 
 
-def run(files=None, regions=tuple(REGIONS), log=print):
-    files = files or sorted(glob.glob(os.path.join(CA_DIR, "ais-ca-*.parquet")))
+def run(year, files=None, regions=tuple(REGIONS), log=print):
+    from .years import by_year, files_for
+    files = files or files_for(year)
     allev, exposure = [], collections.defaultdict(lambda: collections.Counter())
     for f in files:
         day = os.path.basename(f)[7:17]
@@ -222,8 +223,9 @@ def run(files=None, regions=tuple(REGIONS), log=print):
     launches = set(summ.get("likely_launch_vessels", []))
     if not df.empty:
         df["launch_involved"] = (df.mmsi_a.isin(launches) | df.mmsi_b.isin(launches)).astype(int)
-    df.to_csv(os.path.join(OUT_DIR, "encounters.csv"), index=False)
-    with open(os.path.join(ROOT, "eval", "encounter_results.json"), "w") as fh:
+    summ["year"] = year
+    df.to_csv(by_year(os.path.join(OUT_DIR, "encounters.csv"), year), index=False)
+    with open(by_year(os.path.join(ROOT, "eval", "encounter_results.json"), year), "w") as fh:
         json.dump(summ, fh, indent=2)
     return df, summ
 
@@ -351,11 +353,12 @@ def raw_min_separation(tr, mmsi_a, mmsi_b, t0, t1, max_gap=MAX_INTERP_GAP_S):
     return None if best is None else float(best)
 
 
-def validate(n=400, seed=2026):
+def validate(year, n=400, seed=2026):
     """Independent check on a random sample of traffic alerts: recompute the closest pass from raw
     AIS reports (other vessel interpolated to each report time) and compare with the detector's
     1-minute value, and check whether the 'realized' label would change."""
-    df = pd.read_csv(os.path.join(OUT_DIR, "encounters.csv"))
+    from .years import by_year
+    df = pd.read_csv(by_year(os.path.join(OUT_DIR, "encounters.csv"), year))
     tr = df[df.service == 0].sample(n=min(n, (df.service == 0).sum()), random_state=seed)
     rows = []
     for e in tr.to_dict("records"):
@@ -377,7 +380,8 @@ def validate(n=400, seed=2026):
                                                           & ((ok.min_sep_obs_m - CPA_NM * NM).abs() <= 100)
                                                           & ((ok.raw_min_sep_m - CPA_NM * NM).abs() <= 100))).sum()),
            "note": "check = other vessel interpolated to each report time (bracketing reports <= 300 s apart, same limit as the detector); MarineCadastre thins AIS to ~1 report per 1-3 min, so this measures time-grid sensitivity, not independence from interpolation; signed diff = check - 1-minute grid"}
-    v.to_csv(os.path.join(ROOT, "eval", "encounter_validation_sample.csv"), index=False)
-    with open(os.path.join(ROOT, "eval", "encounter_validation.json"), "w") as fh:
+    res["year"] = year
+    v.to_csv(by_year(os.path.join(ROOT, "eval", "encounter_validation_sample.csv"), year), index=False)
+    with open(by_year(os.path.join(ROOT, "eval", "encounter_validation.json"), year), "w") as fh:
         json.dump(res, fh, indent=2)
     return res

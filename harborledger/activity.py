@@ -166,8 +166,9 @@ def summarize(df, n_days):
     return out, df[keep].sort_values("hours_active", ascending=False)
 
 
-def run():
-    df, n = accumulate()
+def run(year):
+    from .years import by_year, files_for
+    df, n = accumulate(files_for(year))
     out, per = summarize(df, n)
     mon = accumulate.monthly
     out["coverage_days"] = n
@@ -176,11 +177,12 @@ def run():
         vals = [v["mean_active_hours_per_tug_per_30d"] for v in out["by_month_spb_assist"].values()]
         out["seasonality_peak_to_trough"] = round(max(vals) / max(min(vals), 1e-9), 2)
     os.makedirs(os.path.join(ROOT, "eval"), exist_ok=True)
-    per.round(2).to_csv(os.path.join(ROOT, "eval", "tug_activity_by_vessel.csv"), index=False)
+    out["year"] = year
+    per.round(2).to_csv(by_year(os.path.join(ROOT, "eval", "tug_activity_by_vessel.csv"), year), index=False)
     os.makedirs(os.path.join(ROOT, "data", "derived"), exist_ok=True)
-    df.to_csv(os.path.join(ROOT, "data", "derived", "tug_activity_full.csv"), index=False)
-    mon.round(3).to_csv(os.path.join(ROOT, "data", "derived", "tug_activity_monthly.csv"), index=False)
-    with open(os.path.join(ROOT, "eval", "tug_activity_results.json"), "w") as f:
+    df.to_csv(by_year(os.path.join(ROOT, "data", "derived", "tug_activity_full.csv"), year), index=False)
+    mon.round(3).to_csv(by_year(os.path.join(ROOT, "data", "derived", "tug_activity_monthly.csv"), year), index=False)
+    with open(by_year(os.path.join(ROOT, "eval", "tug_activity_results.json"), year), "w") as f:
         json.dump(out, f, indent=2)
     print(json.dumps(out, indent=2))
     return out

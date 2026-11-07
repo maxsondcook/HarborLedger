@@ -223,10 +223,11 @@ def build_maritime(con):
         stats["ais_vessels"] = int(len(m))
         stats["same_as"] = int((m.rel == "SAME_AS").sum())
         stats["possible_same_as"] = int((m.rel == "POSSIBLE_SAME_AS").sum())
-    apath = os.path.join(DERIVED, "tug_activity_full.csv")
-    if os.path.exists(apath):
+    import glob as _glob
+    n = 0
+    for apath in sorted(_glob.glob(os.path.join(DERIVED, "tug_activity_full_*.csv"))):
+        year = os.path.splitext(apath)[0].rsplit("_", 1)[1]
         a = pd.read_csv(apath)
-        n = 0
         for r in a.to_dict("records"):
             for reg in activity.REGIONS:
                 cols = [c for c in a.columns if c.startswith(reg + "|")]
@@ -235,9 +236,10 @@ def build_maritime(con):
                 if h > 0:
                     cur.execute("INSERT INTO edge VALUES (?,?,?,?,?,?,?,?,?,?)", (
                         f"mmsi:{r['mmsi']}", "ACTIVE_IN", f"area:{reg}", 1.0, "ais_activity_hours",
-                        "data/derived/tug_activity_full.csv", None, None, LICENSES["marinecadastre"],
-                        f"observed_h={h:.1f} active_h={act:.1f} days={r['days_seen']}"))
+                        os.path.relpath(apath, ROOT), f"{year}-01-01", f"{year}-12-31", LICENSES["marinecadastre"],
+                        f"year={year} observed_h={h:.1f} active_h={act:.1f} days={r['days_seen']}"))
                     n += 1
+    if n:
         stats["tug_active_in_edges"] = n
     return stats
 

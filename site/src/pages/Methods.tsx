@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { Async, useTitle } from "../components/ui";
-import { useData, type Meta } from "../data";
+import { useData, type Meta, type YearsInfo } from "../data";
 import { num, pct } from "../format";
 
 // Every number below is read from the exported test results, so this page stays in step with the data.
@@ -32,8 +32,10 @@ export default function Methods() {
   const id = useData<Identity>("identity_tests.json");
   const px = useData<Psix>("psix_match.json");
   const gm = useData<Model>("growth_model.json");
-  const ev = useData<EncVal>("encounter_validation.json");
-  const en = useData<Enc>("encounters.json");
+  const yi = useData<YearsInfo>("years.json").data;
+  const latest = yi?.latest ?? null;
+  const ev = useData<EncVal>(latest ? `encounter_validation_${latest}.json` : null);
+  const en = useData<Enc>(latest ? `encounters_${latest}.json` : null);
   const w90 = gm.data?.windows.find((w) => w.window_days === 90 && w.label === "g_exopt");
   const w180 = gm.data?.windows.find((w) => w.window_days === 180 && w.label === "g_exopt");
   const d90 = gm.data?.delay.find((d) => d.window_days === 90);
@@ -151,6 +153,7 @@ export default function Methods() {
       </Section>
 
       <Section id="encounters" title="Close-quarters encounters">
+        {yi && <p className="muted small">AIS years processed: {yi.years.join(", ")}. Figures below are for {latest}; each year is validated separately.</p>}
         <p>
           Moving vessels (≥ {en.data?.definition.min_sog_kn ?? 1} kn) are resampled to a 1-minute grid (gaps up to 5 minutes bridged).
           Each minute, pairs within {en.data?.definition.search_nm ?? 2} nm are found with a spatial grid, and CPA/TCPA are projected from

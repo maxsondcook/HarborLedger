@@ -35,3 +35,13 @@ export function useTitle(title: string | null | undefined) {
     document.title = title ? `${title} · HarborLedger` : "HarborLedger";
   }, [title]);
 }
+
+/** Year picker for the per-year AIS views; hidden when only one year exists. */
+export function YearSelect({ year, years, onChange }: { year: number | null; years: number[]; onChange: (y: number) => void }) {
+  if (years.length < 2 || year === null) return year ? <span className="badge accent">AIS year {year}</span> : null;
+  return (
+    <select value={year} onChange={(e) => onChange(Number(e.target.value))} aria-label="AIS year">
+      {years.map((y) => <option key={y} value={y}>AIS year {y}</option>)}
+    </select>
+  );
+}

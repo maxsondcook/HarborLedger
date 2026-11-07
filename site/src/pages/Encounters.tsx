@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { HBar, LineChart, SERIES } from "../components/charts";
-import { Async, Stat, useTitle } from "../components/ui";
-import { useData } from "../data";
+import { Async, Stat, useTitle, YearSelect } from "../components/ui";
+import { useData, useYear } from "../data";
 import { num } from "../format";
 
 type Tier = { all: number; large_no_pleasure: number; large_no_pleasure_per_1000_h: number };
@@ -33,9 +33,10 @@ const fmtTime = (ts: number) => new Date(ts * 1000).toISOString().slice(11, 16) 
 
 export default function Encounters() {
   useTitle("Close-quarters encounters");
-  const s = useData<Summary>("encounters.json");
-  const d = useData<Daily[]>("encounter_daily.json");
-  const sc = useData<Scenario[]>("encounter_scenarios.json");
+  const [year, setYear, years] = useYear();
+  const s = useData<Summary>(year ? `encounters_${year}.json` : null);
+  const d = useData<Daily[]>(year ? `encounter_daily_${year}.json` : null);
+  const sc = useData<Scenario[]>(year ? `encounter_scenarios_${year}.json` : null);
   return (
     <>
       <h1>Close-quarters encounters</h1>
@@ -46,6 +47,7 @@ export default function Encounters() {
         becomes an <i>encounter</i> when the vessels actually come that close. Tug, pilot, dredging, diving and law-enforcement
         work is close by design and is kept separate.
       </p>
+      <div className="controls"><YearSelect year={year} years={years} onChange={setYear} /></div>
       <Async state={s}>{(sum) => <Body s={sum} daily={d.data} scenarios={sc.data} />}</Async>
     </>
   );

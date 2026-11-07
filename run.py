@@ -11,8 +11,8 @@ Commands:
     evaluate               run the week 1-2 success tests
     pull-ais START END     download national AIS days, keep California waters
     match-psix             gated AIS -> USCG PSIX matching for CA commercial vessels
-    tug-activity           AIS tug hours by mode, region and DAC proximity
-    encounters [PREFIX..]  close-quarters encounters (CPA/TCPA) from CA AIS; optional day prefixes
+    tug-activity [YEAR..]  AIS tug hours by mode, region and DAC proximity, per AIS year (default: all)
+    encounters [YEAR..]    close-quarters encounters (CPA/TCPA) + validation, per AIS year (default: all)
     export                 write static JSON for the website to site/public/data/
     growth                 build the availability ledger and run the weeks 3-4 growth model
 """
@@ -52,8 +52,10 @@ def main(argv):
         from harborledger import ais
         ais.fetch_range(dt.date.fromisoformat(args[0]), dt.date.fromisoformat(args[1]))
     elif cmd == "tug-activity":
-        from harborledger import activity
-        activity.run()
+        from harborledger import activity, years
+        for y in ([int(a) for a in args] or years.years_available()):
+            print(f"== tug activity {y}", flush=True)
+            activity.run(y)
     elif cmd == "match-psix":
         import glob
         from harborledger import psix, ais
@@ -62,12 +64,11 @@ def main(argv):
         psix.run_matching(files, os.path.join(HERE, "data", "derived", "psix_matches.csv"),
                           log=lambda s: print(s, flush=True))
     elif cmd == "encounters":
-        import glob
-        from harborledger import encounters, ais
-        files = sorted(glob.glob(os.path.join(ais.CA_DIR, "ais-ca-*.parquet")))
-        if args:
-            files = [f for f in files if any(os.path.basename(f)[7:7 + len(a)] == a for a in args)]
-        encounters.run(files, log=lambda s: print(s, flush=True))
+        from harborledger import encounters, years
+        for y in ([int(a) for a in args] or years.years_available()):
+            print(f"== encounters {y}", flush=True)
+            encounters.run(y, log=lambda s: print(s, flush=True))
+            print(encounters.validate(y), flush=True)
     elif cmd == "export":
         from harborledger import export
         export.export()

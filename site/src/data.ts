@@ -83,3 +83,31 @@ export type Meta = {
   counts: Record<string, number>;
   sources: Record<string, { license: string; files: number; latest_fetch: string }>;
 };
+
+export type YearsInfo = { years: number[]; latest: number | null };
+
+const YEAR_KEY = "harborledger.year";
+
+/** AIS year shown on the activity and encounter pages: remembered per browser, latest by default. */
+export function useYear(): [number | null, (y: number) => void, number[]] {
+  const info = useData<YearsInfo>("years.json").data;
+  const [chosen, setChosen] = useState<number | null>(() => {
+    try {
+      const v = localStorage.getItem(YEAR_KEY);
+      return v ? Number(v) : null;
+    } catch {
+      return null;
+    }
+  });
+  const years = info?.years ?? [];
+  const year = chosen !== null && years.includes(chosen) ? chosen : info?.latest ?? null;
+  const set = (y: number) => {
+    setChosen(y);
+    try {
+      localStorage.setItem(YEAR_KEY, String(y));
+    } catch {
+      /* storage unavailable: keep the choice for this page view only */
+    }
+  };
+  return [year, set, years];
+}
