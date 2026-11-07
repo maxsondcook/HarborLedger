@@ -1,0 +1,130 @@
+{
+  "firm_coverage": {
+    "dollar_share_mapped": 0.9873,
+    "awards_mapped": 1661,
+    "awards": 1965,
+    "recipients_mapped": 69,
+    "recipients": 207,
+    "firms_with_multiple_ueis": {
+      "firm:BOLLINGER": 2,
+      "firm:EPSILON": 2,
+      "firm:GD_NASSCO_NORFOLK": 3,
+      "firm:HII_SHIPBUILDING": 3,
+      "firm:NAVANTIA": 2,
+      "firm:RTX": 2,
+      "firm:VIGOR": 2
+    },
+    "pass": true
+  },
+  "hull_sample_2026.csv": {
+    "sample_file": "eval/hull_sample_2026.csv",
+    "precision": 1.0,
+    "precision_ci95": [
+      0.867,
+      1.0
+    ],
+    "recall": 0.893,
+    "recall_ci95": [
+      0.728,
+      0.963
+    ],
+    "tp": 25,
+    "fp": 0,
+    "fn": 3,
+    "by_method": {
+      "gazetteer": {
+        "correct": 4,
+        "n": 4,
+        "precision": 1.0
+      },
+      "regex_hull": {
+        "correct": 21,
+        "n": 21,
+        "precision": 1.0
+      }
+    },
+    "errors": [
+      [
+        "FN",
+        "0011",
+        "LCS-2",
+        "",
+        "PLANNING MAINTENANCE FOR LCS 2&4"
+      ],
+      [
+        "FN",
+        "N0002408C4416",
+        "CVN-74",
+        "",
+        "EXECUTION PLANNING FOR CVN 72 FY09 PIA.  BASE AWARD FOR THE PLANNING AND ACCOMPLISHMENT OF"
+      ],
+      [
+        "FN",
+        "N0002408C4416",
+        "CVN-68",
+        "",
+        "EXECUTION PLANNING FOR CVN 72 FY09 PIA.  BASE AWARD FOR THE PLANNING AND ACCOMPLISHMENT OF"
+      ]
+    ],
+    "pass": true
+  },
+  "hull_sample_2027.csv": {
+    "sample_file": "eval/hull_sample_2027.csv",
+    "precision": 1.0,
+    "precision_ci95": [
+      0.871,
+      1.0
+    ],
+    "recall": 0.867,
+    "recall_ci95": [
+      0.703,
+      0.947
+    ],
+    "tp": 26,
+    "fp": 0,
+    "fn": 4,
+    "by_method": {
+      "gazetteer": {
+        "correct": 6,
+        "n": 6,
+        "precision": 1.0
+      },
+      "regex_hull": {
+        "correct": 20,
+        "n": 20,
+        "precision": 1.0
+      }
+    },
+    "errors": [
+      [
+        "FN",
+        "N0016721F0120",
+        "SSN-809",
+        "",
+        "SSN 807-809 FWD ASSEMBLY MATERIAL"
+      ],
+      [
+        "FN",
+        "N0016721F0120",
+        "SSN-808",
+        "",
+        "SSN 807-809 FWD ASSEMBLY MATERIAL"
+      ],
+      [
+        "FN",
+        "N0002413C2400",
+        "LCAC-88",
+        "",
+        "SERVICE LIFE EXTENSION PROGRAM AVAILABILITY FOR LCAC 88 AND 89"
+      ],
+      [
+        "FN",
+        "N0002413C2400",
+        "LCAC-89",
+        "",
+        "SERVICE LIFE EXTENSION PROGRAM AVAILABILITY FOR LCAC 88 AND 89"
+      ]
+    ],
+    "pass": true
+  }
+}

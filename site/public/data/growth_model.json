@@ -1,0 +1,317 @@
+{
+  "ledger_funnel": {
+    "contracts": 1965,
+    "single_vessel": 954,
+    "repair_type": 522,
+    "non_nuclear": 514,
+    "not_planning": 509,
+    "base_ge_5m": 436,
+    "closed": 397
+  },
+  "censoring": {
+    "by_start_fy": [
+      {
+        "start_fy": 2012,
+        "n": 1,
+        "closed": 1
+      },
+      {
+        "start_fy": 2013,
+        "n": 1,
+        "closed": 1
+      },
+      {
+        "start_fy": 2014,
+        "n": 7,
+        "closed": 7
+      },
+      {
+        "start_fy": 2015,
+        "n": 13,
+        "closed": 13
+      },
+      {
+        "start_fy": 2016,
+        "n": 28,
+        "closed": 28
+      },
+      {
+        "start_fy": 2017,
+        "n": 26,
+        "closed": 26
+      },
+      {
+        "start_fy": 2018,
+        "n": 29,
+        "closed": 29
+      },
+      {
+        "start_fy": 2019,
+        "n": 41,
+        "closed": 41
+      },
+      {
+        "start_fy": 2020,
+        "n": 43,
+        "closed": 43
+      },
+      {
+        "start_fy": 2021,
+        "n": 48,
+        "closed": 48
+      },
+      {
+        "start_fy": 2022,
+        "n": 39,
+        "closed": 39
+      },
+      {
+        "start_fy": 2023,
+        "n": 47,
+        "closed": 47
+      },
+      {
+        "start_fy": 2024,
+        "n": 42,
+        "closed": 41
+      },
+      {
+        "start_fy": 2025,
+        "n": 40,
+        "closed": 26
+      },
+      {
+        "start_fy": 2026,
+        "n": 31,
+        "closed": 7
+      }
+    ],
+    "open_availabilities": {
+      "n": 39,
+      "mean_growth_so_far": 0.292
+    },
+    "closed_definition": "PoP end <= 2026-08-08 (data cut-off 2026-11-06 minus 90-day DoD lag)",
+    "latest_action_in_data": "2026-10-27",
+    "note": "Recent closed availabilities are biased toward short, quick ones; long FY24-26 availabilities are still open, so later-year test labels under-represent long jobs."
+  },
+  "windows": [
+    {
+      "window_days": 90,
+      "label": "g_exopt",
+      "n_train": 237,
+      "n_test": 160,
+      "train_fy": "<= 2021",
+      "test_fy": ">= 2022",
+      "test_label_median": 0.10444132452210167,
+      "models": {
+        "global_median": {
+          "mae": 0.2058,
+          "medae": 0.1107,
+          "mae_vs_global_median": 0.0
+        },
+        "median_by_type": {
+          "mae": 0.2092,
+          "medae": 0.1083,
+          "mae_vs_global_median": -0.017
+        },
+        "persistence": {
+          "mae": 0.1878,
+          "medae": 0.0915,
+          "mae_vs_global_median": 0.088
+        },
+        "persistence_plus_median_remaining": {
+          "mae": 0.1791,
+          "medae": 0.0802,
+          "mae_vs_global_median": 0.13
+        },
+        "gbm": {
+          "mae": 0.1756,
+          "medae": 0.1036,
+          "mae_vs_global_median": 0.147
+        }
+      },
+      "pass_preregistered": false,
+      "beats_persistence": true,
+      "gbm_minus_persistence_mae_gain_ci95": [
+        -0.0026,
+        0.0267
+      ],
+      "gbm_vs_global_median_gain_ci95": [
+        0.04,
+        0.251
+      ]
+    },
+    {
+      "window_days": 90,
+      "label": "g_exopt_noC",
+      "n_train": 237,
+      "n_test": 160,
+      "train_fy": "<= 2021",
+      "test_fy": ">= 2022",
+      "test_label_median": 0.09317518753944927,
+      "models": {
+        "global_median": {
+          "mae": 0.2094,
+          "medae": 0.0967,
+          "mae_vs_global_median": 0.0
+        },
+        "median_by_type": {
+          "mae": 0.2138,
+          "medae": 0.1036,
+          "mae_vs_global_median": -0.021
+        },
+        "persistence": {
+          "mae": 0.1821,
+          "medae": 0.085,
+          "mae_vs_global_median": 0.131
+        },
+        "persistence_plus_median_remaining": {
+          "mae": 0.1756,
+          "medae": 0.0741,
+          "mae_vs_global_median": 0.162
+        },
+        "gbm": {
+          "mae": 0.1713,
+          "medae": 0.0857,
+          "mae_vs_global_median": 0.182
+        }
+      },
+      "pass_preregistered": true,
+      "beats_persistence": true,
+      "gbm_minus_persistence_mae_gain_ci95": [
+        -0.0009,
+        0.0224
+      ],
+      "gbm_vs_global_median_gain_ci95": [
+        0.094,
+        0.278
+      ]
+    },
+    {
+      "window_days": 180,
+      "label": "g_exopt",
+      "n_train": 237,
+      "n_test": 159,
+      "train_fy": "<= 2021",
+      "test_fy": ">= 2022",
+      "test_label_median": 0.10503295402308815,
+      "models": {
+        "global_median": {
+          "mae": 0.2067,
+          "medae": 0.1116,
+          "mae_vs_global_median": 0.0
+        },
+        "median_by_type": {
+          "mae": 0.2102,
+          "medae": 0.1084,
+          "mae_vs_global_median": -0.017
+        },
+        "persistence": {
+          "mae": 0.1055,
+          "medae": 0.0307,
+          "mae_vs_global_median": 0.49
+        },
+        "persistence_plus_median_remaining": {
+          "mae": 0.1055,
+          "medae": 0.0307,
+          "mae_vs_global_median": 0.49
+        },
+        "gbm": {
+          "mae": 0.1035,
+          "medae": 0.0404,
+          "mae_vs_global_median": 0.499
+        }
+      },
+      "pass_preregistered": true,
+      "beats_persistence": true,
+      "gbm_minus_persistence_mae_gain_ci95": [
+        -0.0037,
+        0.0079
+      ],
+      "gbm_vs_global_median_gain_ci95": [
+        0.405,
+        0.599
+      ]
+    },
+    {
+      "window_days": 180,
+      "label": "g_exopt_noC",
+      "n_train": 237,
+      "n_test": 159,
+      "train_fy": "<= 2021",
+      "test_fy": ">= 2022",
+      "test_label_median": 0.09370965136931987,
+      "models": {
+        "global_median": {
+          "mae": 0.2105,
+          "medae": 0.0973,
+          "mae_vs_global_median": 0.0
+        },
+        "median_by_type": {
+          "mae": 0.2151,
+          "medae": 0.1037,
+          "mae_vs_global_median": -0.022
+        },
+        "persistence": {
+          "mae": 0.1034,
+          "medae": 0.0184,
+          "mae_vs_global_median": 0.509
+        },
+        "persistence_plus_median_remaining": {
+          "mae": 0.1034,
+          "medae": 0.0184,
+          "mae_vs_global_median": 0.509
+        },
+        "gbm": {
+          "mae": 0.1,
+          "medae": 0.0285,
+          "mae_vs_global_median": 0.525
+        }
+      },
+      "pass_preregistered": true,
+      "beats_persistence": true,
+      "gbm_minus_persistence_mae_gain_ci95": [
+        -0.0014,
+        0.0083
+      ],
+      "gbm_vs_global_median_gain_ci95": [
+        0.423,
+        0.636
+      ]
+    }
+  ],
+  "delay": [
+    {
+      "window_days": 90,
+      "label": "delay/penalty keyword in a mod after day W",
+      "n_train": 237,
+      "n_test": 160,
+      "rate_train": 0.477,
+      "rate_test": 0.412,
+      "auc_gbm": 0.716,
+      "auc_growth_so_far": 0.425,
+      "auc_n_mods_so_far": 0.547,
+      "auc_office_rate_only": 0.72,
+      "brier_gbm": 0.2371,
+      "brier_base_rate": 0.2465,
+      "median_final_growth_if_late": 0.105,
+      "median_final_growth_if_not": 0.073
+    },
+    {
+      "window_days": 180,
+      "label": "delay/penalty keyword in a mod after day W",
+      "n_train": 237,
+      "n_test": 159,
+      "rate_train": 0.304,
+      "rate_test": 0.296,
+      "auc_gbm": 0.797,
+      "auc_growth_so_far": 0.399,
+      "auc_n_mods_so_far": 0.55,
+      "auc_office_rate_only": 0.751,
+      "brier_gbm": 0.1557,
+      "brier_base_rate": 0.2083,
+      "median_final_growth_if_late": 0.148,
+      "median_final_growth_if_not": 0.072
+    }
+  ]
+}

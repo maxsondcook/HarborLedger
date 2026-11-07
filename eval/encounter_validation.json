@@ -1,0 +1,11 @@
+{
+  "n_sampled": 400,
+  "n_comparable": 400,
+  "median_abs_diff_m": 28.3,
+  "p90_abs_diff_m": 335.1,
+  "median_signed_diff_m": -6.6,
+  "label_agreement": 0.902,
+  "label_disagreements": 39,
+  "disagreements_within_100m_of_threshold": 13,
+  "note": "check = other vessel interpolated to each report time (bracketing reports <= 300 s apart, same limit as the detector); MarineCadastre thins AIS to ~1 report per 1-3 min, so this measures time-grid sensitivity, not independence from interpolation; signed diff = check - 1-minute grid"
+}

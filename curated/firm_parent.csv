@@ -1,0 +1,21 @@
+child_firm,parent_firm,valid_from,valid_to,confidence,source
+GD_EB,GD,,,0.99,public company filings
+GD_BIW,GD,,,0.99,public company filings
+GD_NASSCO,GD,,,0.99,public company filings
+GD_NASSCO_NORFOLK,GD,2011-01-01,,0.95,GD acquired Metro Machine 2011
+GD_IT,GD,,,0.99,public company filings
+HII_SHIPBUILDING,HII,,,0.99,public company filings
+HII_FLEET_SUPPORT,HII,,,0.99,public company filings
+BAE_NORFOLK,BAE,,,0.98,public company filings
+BAE_SAN_DIEGO,BAE,,,0.98,public company filings
+BAE_JACKSONVILLE,BAE,,,0.9,verify current ownership
+BAE_HAWAII,BAE,,,0.95,
+BAE_LAND_ARMAMENTS,BAE,,,0.98,
+AUSTAL_USA,AUSTAL,,,0.99,public company filings (SAM parent 'Computershare' is wrong)
+FMM,FINCANTIERI,,,0.99,
+TOTE_SERVICES,SALTCHUK,,,0.95,
+CONTINENTAL_MARITIME,HII,,2020-02-01,0.9,Marine Log: HII contributed yard to Titan Acquisition Holdings Feb 2020
+CONTINENTAL_MARITIME,TITAN_AH,2020-02-01,2023-01-01,0.7,Marine Log 2020; end date approximate
+CONTINENTAL_MARITIME,VIGOR,2023-01-01,,0.6,gCaptain (single trade-press source); research notes p6bc
+VIGOR,LONE_STAR,2019-01-01,2026-08-01,0.6,trade press; dates approximate - verify
+VIGOR,ANTIN,2026-08-01,,0.8,Antin-Vigor deal announced Feb 2026 closed Aug 2026 (research notes p6d)

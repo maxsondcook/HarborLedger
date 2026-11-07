@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+
+# Large or re-pullable data (rebuild with run.py; provenance is in data/raw/manifest.jsonl)
+data/raw/ais_ca/
+data/raw/ais_tmp/
+data/raw/psix/
+data/raw/usaspending/
+data/raw/calepa/
+data/*.sqlite
+data/*.npz
+data/*.log
+
+# OS
+.DS_Store
+data/raw/mvus/
+data/raw/marad/
+site/node_modules/
+site/dist/
+site/*.tsbuildinfo
+data/derived/encounters.csv

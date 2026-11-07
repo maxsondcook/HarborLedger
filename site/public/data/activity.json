@@ -1,0 +1,115 @@
+{
+  "days": 366,
+  "tugs_seen": 248,
+  "mode_hours_all_tugs": {
+    "idle": 665110.0,
+    "assist": 27709.6,
+    "maneuver": 46796.4,
+    "transit": 99670.4
+  },
+  "region_active_hours": {
+    "san_pedro_bay": 45375.0,
+    "sf_bay": 61292.7,
+    "san_diego": 9754.1,
+    "other": 57754.6
+  },
+  "share_active_hours_within_2mi_dac": 0.586,
+  "spb_assist_tugs": {
+    "n": 14,
+    "active_hours_annualized_mean": 1837.0,
+    "active_hours_annualized_median": 1653.0,
+    "active_hours_annualized_iqr": [
+      1494.0,
+      2130.0
+    ],
+    "dac_share_of_active": 0.926,
+    "days_seen_median": 336.5,
+    "e4_cap_1300_dac_hours_exceeded_annualized": 12,
+    "e4_cap_2600_total_hours_exceeded_annualized": 3
+  },
+  "assist_tug_mmsi": [
+    303466000,
+    366755010,
+    366755020,
+    366892000,
+    366998840,
+    367175860,
+    367401030,
+    367569830,
+    367625810,
+    367661930,
+    368010330,
+    368013040,
+    368084540,
+    368136950
+  ],
+  "benchmarks": {
+    "POLA_2023_inventory_assist_tug_avg_hours": 1387,
+    "POLA_note": "operator-reported engine hours, 11 assist tugs, Port of LA 2023 inventory (Starcrest)",
+    "CARB_2021_ship_assist_main_engine_hours": 2676
+  },
+  "coverage_days": 366,
+  "by_month_spb_assist": {
+    "2024-01": {
+      "days_of_ais": 31,
+      "mean_active_hours_per_tug_per_30d": 141.5,
+      "median": 155.7
+    },
+    "2024-02": {
+      "days_of_ais": 29,
+      "mean_active_hours_per_tug_per_30d": 155.7,
+      "median": 165.2
+    },
+    "2024-03": {
+      "days_of_ais": 31,
+      "mean_active_hours_per_tug_per_30d": 162.5,
+      "median": 179.9
+    },
+    "2024-04": {
+      "days_of_ais": 30,
+      "mean_active_hours_per_tug_per_30d": 156.8,
+      "median": 185.6
+    },
+    "2024-05": {
+      "days_of_ais": 31,
+      "mean_active_hours_per_tug_per_30d": 162.6,
+      "median": 187.4
+    },
+    "2024-06": {
+      "days_of_ais": 30,
+      "mean_active_hours_per_tug_per_30d": 158.8,
+      "median": 170.9
+    },
+    "2024-07": {
+      "days_of_ais": 31,
+      "mean_active_hours_per_tug_per_30d": 155.2,
+      "median": 165.8
+    },
+    "2024-08": {
+      "days_of_ais": 31,
+      "mean_active_hours_per_tug_per_30d": 155.9,
+      "median": 161.0
+    },
+    "2024-09": {
+      "days_of_ais": 30,
+      "mean_active_hours_per_tug_per_30d": 128.7,
+      "median": 149.2
+    },
+    "2024-10": {
+      "days_of_ais": 31,
+      "mean_active_hours_per_tug_per_30d": 142.7,
+      "median": 161.5
+    },
+    "2024-11": {
+      "days_of_ais": 30,
+      "mean_active_hours_per_tug_per_30d": 142.7,
+      "median": 171.4
+    },
+    "2024-12": {
+      "days_of_ais": 31,
+      "mean_active_hours_per_tug_per_30d": 148.9,
+      "median": 167.1
+    }
+  },
+  "seasonality_peak_to_trough": 1.26
+}

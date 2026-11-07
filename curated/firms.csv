@@ -1,0 +1,70 @@
+firm_id,firm_name,kind,notes
+GD,General Dynamics Corporation,parent,
+GD_EB,General Dynamics Electric Boat,yard,Groton CT / Quonset RI
+GD_BIW,General Dynamics Bath Iron Works,yard,Bath ME
+GD_NASSCO,General Dynamics NASSCO,yard,San Diego CA; also Norfolk and Mayport repair
+GD_NASSCO_NORFOLK,General Dynamics NASSCO-Norfolk (formerly Metro Machine),yard,Metro Machine Corp UEIs
+GD_IT,General Dynamics Information Technology,services,
+HII,HII (Huntington Ingalls Industries),parent,
+HII_SHIPBUILDING,HII Newport News / Ingalls shipbuilding,yard,USAspending UEIs do not split NNS vs Ingalls reliably; kept together
+HII_FLEET_SUPPORT,HII Fleet Support Group,services,
+BAE,BAE Systems plc,parent,
+BAE_NORFOLK,BAE Systems Norfolk Ship Repair,yard,
+BAE_SAN_DIEGO,BAE Systems San Diego Ship Repair,yard,
+BAE_JACKSONVILLE,BAE Systems Jacksonville Ship Repair,yard,
+BAE_HAWAII,BAE Systems Hawaii Shipyards,yard,
+BAE_LAND_ARMAMENTS,BAE Systems Land & Armaments,manufacturer,
+AUSTAL,Austal Limited,parent,
+AUSTAL_USA,Austal USA,yard,Mobile AL; San Diego repair site
+LOCKHEED,Lockheed Martin Corporation,prime,LCS Freedom-variant prime
+FINCANTIERI,Fincantieri S.p.A.,parent,
+FMM,Fincantieri Marinette Marine,yard,Marinette WI
+BECHTEL_BPMI,Bechtel Plant Machinery,manufacturer,naval nuclear propulsion components
+VIGOR,Vigor (Vigor Marine Group),yard_group,Ownership dated in firm_parent.csv
+CONTINENTAL_MARITIME,Continental Maritime of San Diego,yard,Ownership dated in firm_parent.csv
+BOLLINGER,Bollinger Shipyards,yard_group,
+TEXTRON,Textron Systems,prime,
+SALTCHUK,Saltchuk Resources,parent,
+TOTE_SERVICES,TOTE Services,operator,
+MHI_LLC,Marine Hydraulics International,yard,Norfolk VA
+DETYENS,Detyens Shipyards,yard,Charleston SC
+BLUEFORGE,BlueForge Alliance,nonprofit,
+VSE,VSE Corporation,services,
+NORTHSTAR,NorthStar Maritime Dismantlement Services,services,
+ALABAMA_SHIPYARD,Alabama Shipyard,yard,Mobile AL
+RTX,RTX (Raytheon),prime,
+IMIA,IMIA LLC,services,
+EAST_COAST_REPAIR,East Coast Repair & Fabrication,yard,Norfolk VA
+COLONNAS,Colonna's Ship Yard,yard,Norfolk VA
+QED,QED Systems,services,
+DELPHINUS,Delphinus Engineering,services,
+SEATRIUM,Seatrium Repairs & Upgrades,yard,Singapore
+NAVANTIA,Navantia,yard_group,Spain; incl. San Fernando repair yard
+CONRAD,Conrad Shipyard,yard,
+PACIFIC_SHIPYARDS,Pacific Shipyards International,yard,Honolulu HI
+OWL,OWL International,services,
+MAPC,Maritime Applied Physics Corporation,manufacturer,
+EPSILON,Epsilon Systems Solutions,services,San Diego tier-2; two UEIs
+TELEDYNE_BROWN,Teledyne Brown Engineering,manufacturer,
+BOSTON_SHIP_REPAIR,Boston Ship Repair,yard,
+MARE_ISLAND_DD,Mare Island Dry Dock,yard,Vallejo CA; Chapter 11 Feb 2026 (E.D. Cal. 26-20777)
+TECNICO,Tecnico Corporation,yard,
+L3HARRIS,L3Harris Technologies,prime,
+DAKOTA_CREEK,Dakota Creek Industries,yard,Anacortes WA
+VIKTOR_LENAC,Brodogradiliste Viktor Lenac,yard,Croatia
+EARL,Earl Industries,yard,
+THOMA_SEA,Thoma-Sea Marine Constructors,yard,
+PRISM,Prism Maritime,services,
+AMENTUM,Amentum,services,
+SUMITOMO,Sumitomo Heavy Industries,yard,Japan
+NORTHROP,Northrop Grumman,prime,
+SWIFTSHIPS,Swiftships,yard,
+OCEANEERING,Oceaneering International,services,
+HORNBECK,Hornbeck Offshore Services,operator,
+CABRAS,Cabras Marine,yard,Guam
+MGBW,Marine Group Boat Works,yard,Chula Vista CA
+GE,General Electric,manufacturer,
+LYON,Lyon Shipyard,yard,Norfolk VA
+LONE_STAR,Lone Star Funds,investor,
+ANTIN,Antin Infrastructure Partners,investor,
+TITAN_AH,Titan Acquisition Holdings,investor_vehicle,HII + Vigor/Titan JV formed Feb 2020
