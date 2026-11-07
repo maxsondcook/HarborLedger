@@ -1,5 +1,7 @@
 # HarborLedger: case study
 
+**Live site:** https://maxsondcook.github.io/HarborLedger/ · **Code:** https://github.com/maxsondcook/HarborLedger
+
 **What it is:** a public website and data pipeline that links California's maritime public records into one graph. The records never shared a key: Navy repair and shipbuilding contracts, ship tracking (AIS), Coast Guard inspection and documentation records, shipyard ownership and port activity. Each link carries a confidence score, the method that made it, its source and its licence.
 
 **Stack:** Python (pandas, NumPy, scikit-learn, SciPy, SQLite), React + TypeScript + Vite, custom SVG charts, GitHub Actions and GitHub Pages. Every input is public.

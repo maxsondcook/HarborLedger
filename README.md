@@ -1,8 +1,10 @@
 # HarborLedger
 
+**Live site:** https://maxsondcook.github.io/HarborLedger/
+
 **Case study and résumé bullets:** [docs/CASE_STUDY.md](docs/CASE_STUDY.md)
 
-**Website plan (in progress):** a React site in `site/` that reads static JSON exported from the graph.
+**Website:** a React site in `site/` that reads static JSON exported from the graph.
 It has vessel and shipyard pages, the repair cost ledger, harbor activity, and a close-quarters
 **encounter dataset** from AIS. Build it with
 `python3 -I run.py export && npm --prefix site run build`.
