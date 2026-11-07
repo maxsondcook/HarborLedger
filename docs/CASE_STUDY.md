@@ -20,7 +20,7 @@ Maritime data is plentiful but fragmented. A Navy repair contract names a ship i
 2. **A confidence-scored graph (SQLite).** Typed nodes, and one edge table in which every link records confidence, method, source record, validity window and licence. Links below 0.5 are kept for audit but not counted.
 3. **Entity resolution with measured precision:**
    - **Contract text → Navy hull:** regex plus a name gazetteer. 26/26 correct on a held-out hand sample.
-   - **AIS → Coast Guard:** call-sign matching gated on IMO or name agreement. 120/120 correct across two random review samples, with 2,717 of 3,309 vessels matched.
+   - **AIS → Coast Guard:** call-sign matching gated on IMO or name agreement. 180/180 correct across three random review samples, with 4,117 of 4,922 vessels matched (2024–2025).
    - **Legal entities → curated firms:** dated ownership, covering 98.7% of award dollars.
 4. **Three analyses on top of the graph:**
    - **Navy repair cost-growth ledger** (436 availabilities). It feeds an early-warning model tested on later years, with leakage controls (only actions dated within the first 90 or 180 days are used). It is compared against honest baselines, and unfinished jobs are handled as censored.
@@ -88,6 +88,6 @@ Maritime data is plentiful but fragmented. A Navy repair contract names a ship i
   rest.
 
 - Built **HarborLedger**, a public-data maritime intelligence site. It links 1,965 Navy contracts (130K modifications), a year of California AIS and Coast Guard records into a confidence-scored graph, with provenance and licence tracking on every link. Stack: Python, SQLite, React/TypeScript, GitHub Pages.
-- Designed **entity-resolution rules** across sources with no shared key, and measured their precision on random samples: 120/120 AIS-to-Coast-Guard matches correct (2,717 of 3,309 vessels linked), and 100% hull extraction on a held-out sample.
+- Designed **entity-resolution rules** across sources with no shared key, and measured their precision on random samples: 180/180 AIS-to-Coast-Guard matches correct (4,117 of 4,922 vessels linked), and 100% hull extraction on a held-out sample.
 - Created a **Navy repair cost-growth ledger** (436 availabilities, median +8.3% growth) and tested an early-warning model with time-based splits, leakage controls and pre-registered targets. I reported where it missed and showed that "growth so far" is the baseline to beat.
 - Built a **vectorized close-quarters encounter detector** (CPA/TCPA, about 2 s per AIS day). It found that straight-line alerts come true 57% of the time, and that 59% of apparent large-ship close calls in San Pedro Bay involve service boats that AIS types don't identify.

@@ -193,6 +193,8 @@ python3 -I harborledger/run.py build
 
 ### AIS → USCG PSIX matching (`data/derived/psix_matches.csv`, `eval/psix_match_results.json`)
 
+**Two-year update (2024–2025).** 4,922 commercial vessels: 4,117 `SAME_AS` (83.6%; foreign 94.7%, U.S. 50.3%), 100 held back, and 180/180 correct across three random review samples (Wilson 95% CI 97.9–100%). Graph: 10,070 vessel nodes, 8,689 edges.
+
 **Full-year update (2024).** The run covered 3,309 commercial vessels.
 - **Matched:** 2,717 `SAME_AS` (82.1%): foreign ships 93.9%, U.S. vessels 54.1%.
 - **Held back:** 67 matches, as `POSSIBLE_SAME_AS`.

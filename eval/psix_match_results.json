@@ -1,22 +1,23 @@
 {
   "review_samples": [
-    "eval/psix_review_sample_2026.csv (60 random SAME_AS from July, seed 2026)",
-    "eval/psix_review_sample_2027.csv (60 random SAME_AS first seen outside July, seed 2027)"
+    "eval/psix_review_sample_2026.csv (60 random SAME_AS from July 2024)",
+    "eval/psix_review_sample_2027.csv (60 first seen in 2024 outside July)",
+    "eval/psix_review_sample_2028.csv (60 first seen in 2025)"
   ],
-  "correct": 120,
-  "n": 120,
+  "correct": 180,
+  "n": 180,
   "precision": 1.0,
   "precision_ci95": [
-    0.969,
+    0.979,
     1.0
   ],
   "pass_ge_0.97": true,
-  "vessels": 3309,
-  "same_as": 2717,
-  "possible_same_as_held_back": 67,
-  "recall_same_as": 0.821,
-  "recall_us": 0.541,
-  "recall_foreign": 0.939,
-  "period": "2024 (366 days of California AIS)",
+  "vessels": 4922,
+  "same_as": 4117,
+  "possible_same_as_held_back": 100,
+  "recall_same_as": 0.836,
+  "recall_us": 0.503,
+  "recall_foreign": 0.947,
+  "period": "2024-2025 (731 days of California AIS)",
   "note": "Reviewer could only check name, IMO, call sign and service type; two different vessels sharing name AND call sign at the same time would not be detectable."
 }
