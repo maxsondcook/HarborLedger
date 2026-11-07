@@ -27,3 +27,5 @@ data/raw/ndbc/
 data/raw/erddap/
 data/derived/coastal_legs.parquet
 data/derived/fishing_panel.parquet
+data/raw/gfswave/
+data/benchmark/

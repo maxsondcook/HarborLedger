@@ -4,6 +4,26 @@
 
 **Case study and résumé bullets:** [docs/CASE_STUDY.md](docs/CASE_STUDY.md)
 
+**Write-ups:** [collision alerts](docs/findings/collision-alerts-real-traffic-baseline.md) ·
+[service boats](docs/findings/service-boats-inflate-near-miss-counts.md) ·
+[tug hours](docs/findings/harbor-tugs-busier-than-inventory.md) ·
+[weather and trip time](docs/findings/weather-adds-little-to-coastal-trips.md) ·
+**Open benchmark:** [data card](docs/benchmark/README.md), with a sample in `docs/benchmark_sample/`
+
+## Weather, forecasts, fishing and the collision-risk model
+
+```bash
+python3 -I run.py weather-join 2024 2025   # vessel-hours + nearest NOAA buoy (waves, wind)
+python3 -I run.py forecast-fetch           # archived GFS-Wave forecasts (byte-range GRIB2, 8 workers)
+python3 -I run.py forecast-legs            # forecast features along the reference route per coastal leg
+python3 -I run.py weather                  # speed loss, leg-duration models, small craft, operability
+python3 -I run.py fishing                  # fishing vs SST, fronts, chlorophyll, upwelling
+python3 -I -c "import sys; sys.path.insert(0, '.'); from harborledger import collision, benchmark; collision.run(); benchmark.build()"
+```
+
+The full benchmark (`data/benchmark/harborledger-encounters-v1.zip`, about 96 MB) is too large for
+git and is published as a GitHub Release asset.
+
 **Website:** a React site in `site/` that reads static JSON exported from the graph.
 It has vessel and shipyard pages, the repair cost ledger, harbor activity, and a close-quarters
 **encounter dataset** from AIS. Build it with

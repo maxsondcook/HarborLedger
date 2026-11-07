@@ -49,6 +49,7 @@ export default function Encounters() {
       </p>
       <div className="controls"><YearSelect year={year} years={years} onChange={setYear} /></div>
       <Async state={s}>{(sum) => <Body s={sum} daily={d.data} scenarios={sc.data} />}</Async>
+      <RiskModel />
     </>
   );
 }
@@ -216,5 +217,70 @@ function TrackPlot({ tracks, names, tMin }: { tracks: ScenarioPage["tracks"]; na
         <line x1={W - 20} x2={W - 20} y1={30} y2={50} stroke="var(--text)" strokeWidth={1.5} />
       </svg>
     </div>
+  );
+}
+
+
+type Collision = {
+  n_train: number; n_test: number; straight_line_precision: number;
+  models: { model: string; auc: number; precision_at_90pct_recall: number; precision_at_75pct_recall: number }[];
+  gain_over_kinematic: { auc: number[]; precision_at_90pct_recall: number[] };
+  by_lookahead: { minutes: string; n: number; straight_line_precision: number; kinematic_auc: number; model_auc: number; kinematic_p90: number; model_p90: number }[];
+  unseen_pairs: { share_of_test: number; auc: number; kinematic_auc: number };
+  large_vessel_alerts?: { n: number; kinematic_auc: number; model_auc: number };
+  importance_auc_drop: { feature: string; drop: number }[];
+};
+
+const REPO = "https://github.com/maxsondcook/HarborLedger/blob/main/";
+
+function RiskModel() {
+  const c = useData<Collision>("collision.json");
+  return (
+    <Async state={c}>
+      {(r) => {
+        const kin = r.models.find((m) => m.model.startsWith("kinematic"))!;
+        const full = r.models.find((m) => m.model === "full model")!;
+        const fa = (p: number) => (1 - p) / p;              // false alarms per true alert
+        return (
+          <>
+            <h2>Which alerts come true? A collision-risk model</h2>
+            <p className="lede">
+              Trained on {num(r.n_train)} alerts from 2024 and tested on {num(r.n_test)} from 2025, using only what is known when
+              the alert fires: predicted CPA and TCPA, distance, speeds, courses, vessel types and sizes, location, time,
+              nearby traffic and sea state. Alerts whose vessels were already within a quarter mile are left out.
+            </p>
+            <div className="grid">
+              <Stat k="Straight-line alerts that came true" v={`${Math.round(r.straight_line_precision * 100)}%`} />
+              <Stat k="Ranking quality (AUC)" v={`${kin.auc.toFixed(2)} → ${full.auc.toFixed(2)}`} sub="CPA/TCPA only → full model" />
+              <Stat k="False alarms at 90% catch rate" v={`−${Math.round((1 - fa(full.precision_at_90pct_recall) / fa(kin.precision_at_90pct_recall)) * 100)}%`} sub={`at 75%: −${Math.round((1 - fa(full.precision_at_75pct_recall) / fa(kin.precision_at_75pct_recall)) * 100)}%`} />
+              <Stat k="Vessel pairs never seen in training" v={`AUC ${r.unseen_pairs.auc.toFixed(2)}`} sub={`vs ${r.unseen_pairs.kinematic_auc.toFixed(2)} kinematic · ${Math.round(r.unseen_pairs.share_of_test * 100)}% of test`} />
+            </div>
+            <div className="figure">
+              <h3>Ranking quality by look-ahead time (AUC, 2025)</h3>
+              <div className="tablewrap">
+                <table>
+                  <thead><tr><th>Look-ahead</th><th className="num">Alerts</th><th className="num">Came true</th><th className="num">CPA/TCPA only</th><th className="num">Full model</th></tr></thead>
+                  <tbody>
+                    {r.by_lookahead.map((b) => (
+                      <tr key={b.minutes}><td>{b.minutes} min</td><td className="num">{num(b.n)}</td><td className="num">{Math.round(b.straight_line_precision * 100)}%</td><td className="num">{b.kinematic_auc.toFixed(2)}</td><td className="num"><b>{b.model_auc.toFixed(2)}</b></td></tr>
+                    ))}
+                    {r.large_vessel_alerts && <tr><td>Large-vessel alerts</td><td className="num">{num(r.large_vessel_alerts.n)}</td><td /><td className="num">{r.large_vessel_alerts.kinematic_auc.toFixed(2)}</td><td className="num"><b>{r.large_vessel_alerts.model_auc.toFixed(2)}</b></td></tr>}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div className="figure">
+              <h3>What the model relies on</h3>
+              <p className="cap">Drop in AUC when each feature is shuffled (2025 sample).</p>
+              <HBar rows={r.importance_auc_drop.slice(0, 8).map((f) => ({ key: f.feature.replace(/_/g, " "), value: f.drop }))} fmt={(v) => v.toFixed(3)} color={SERIES[2]} label="Feature importance" />
+            </div>
+            <p className="small">
+              Data: <a href={REPO + "docs/benchmark/README.md"}>open encounter benchmark (data card)</a> · Write-up:{" "}
+              <a href={REPO + "docs/findings/collision-alerts-real-traffic-baseline.md"}>collision alerts against a real-traffic baseline</a>
+            </p>
+          </>
+        );
+      }}
+    </Async>
   );
 }

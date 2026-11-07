@@ -10,6 +10,7 @@ type Weather = {
   coverage: { vessel_hours: number; with_waves: number; with_wind: number; big_ship_open_water_hours: number; big_ships: number };
   speed_loss: SpeedRow[];
   legs: { n: number; ships: number; northbound: number; southbound: number; median_hours: number; median_track_nm: number };
+  leg_model_forecast?: { mae_hours: Record<string, number>; gain_from_conditions_hours: number; gain_ci95: [number, number] } | null;
   leg_model: {
     n_train: number; n_test: number; mae_hours: Record<string, number>; gain_from_conditions_hours: number; gain_ci95: [number, number];
     median_leg_hours_test: number;
@@ -94,10 +95,21 @@ function WeatherBody({ d }: { d: Weather }) {
       </p>
       <div className="figure">
         <h3>Mean error predicting leg duration (hours, lower is better)</h3>
-        <HBar rows={order.filter((k) => lm.mae_hours[k] !== undefined).map((k) => ({ key: k, value: lm.mae_hours[k] }))} fmt={(v) => `${v.toFixed(1)} h`} label="Leg duration error by method" />
+        <HBar rows={[
+          ...order.filter((k) => lm.mae_hours[k] !== undefined && k !== "model with sea conditions").map((k) => ({ key: k, value: lm.mae_hours[k] })),
+          ...(d.leg_model_forecast ? [{ key: "model + NOAA forecast at departure", value: d.leg_model_forecast.mae_hours["model with sea conditions"] }] : []),
+          { key: "model + actual conditions (ceiling)", value: lm.mae_hours["model with sea conditions"] },
+        ]} fmt={(v) => `${v.toFixed(2)} h`} label="Leg duration error by method" />
       </div>
+      {d.leg_model_forecast && (
+        <div className="note">
+          With the NOAA GFS-Wave forecast available at departure (archived runs, sampled along the route), the error falls by
+          {" "}{d.leg_model_forecast.gain_from_conditions_hours} hours (95% CI {d.leg_model_forecast.gain_ci95[0]}–{d.leg_model_forecast.gain_ci95[1]}): a real forecast captures about
+          {" "}{Math.round((d.leg_model_forecast.gain_from_conditions_hours / lm.gain_from_conditions_hours) * 100)}% of the perfect-knowledge gain.
+        </div>
+      )}
       <div className="note">
-        Sea conditions cut the error by {lm.gain_from_conditions_hours} hours (95% CI {lm.gain_ci95[0]}–{lm.gain_ci95[1]}) on a typical
+        Actual conditions cut the error by {lm.gain_from_conditions_hours} hours (95% CI {lm.gain_ci95[0]}–{lm.gain_ci95[1]}) on a typical
         {" "}{lm.median_leg_hours_test}-hour leg. The model uses the conditions that actually occurred, so this is the most a perfect
         forecast could achieve. Most of the remaining spread is not weather: ships routinely slow down to arrive
         when their berth is ready.

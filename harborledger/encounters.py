@@ -155,9 +155,14 @@ def day_encounters(path, region):
     k = dist <= cell
     i, j, dx, dy, dist = i[k], j[k], dx[k], dy[k], dist[k]
     cpa, tcpa = cpa_tcpa(dx, dy, r.vx.values[j] - r.vx.values[i], r.vy.values[j] - r.vy.values[i])
+    dvx, dvy = r.vx.values[j] - r.vx.values[i], r.vy.values[j] - r.vy.values[i]
     pm = pd.DataFrame({"m1": M[i], "m2": M[j], "t": T[i], "dist": dist, "cpa": cpa, "tcpa": tcpa,
                        "cog1": r.cog.values[i], "cog2": r.cog.values[j], "dx": dx, "dy": dy,
-                       "sog1": r.sog.values[i], "sog2": r.sog.values[j]})
+                       "sog1": r.sog.values[i], "sog2": r.sog.values[j], "dvx": dvx, "dvy": dvy})
+    # alert-time context: moving vessels in the area that minute, and each vessel's neighbours within 2 nm
+    area_n = r.groupby("t").size()
+    nb = pd.concat([pm[["m1", "t"]].rename(columns={"m1": "m"}), pm[["m2", "t"]].rename(columns={"m2": "m"})])
+    nb_n = nb.groupby(["m", "t"]).size()
     flag = (pm.cpa < CPA_NM * NM) & (pm.tcpa >= 0) & (pm.tcpa <= TCPA_MIN * 60)
     hits = pm[flag].sort_values(["m1", "m2", "t"])
     if hits.empty:
@@ -194,6 +199,12 @@ def day_encounters(path, region):
             "tcpa_pred_s": round(float(f.tcpa), 1), "min_sep_obs_m": None if min_sep is None else round(min_sep, 1),
             "t_min_sep": t_min, "geometry": geo, "service": int(ta in SERVICE_TYPES or tb in SERVICE_TYPES),
             "sog_a": round(float(f.sog1), 1), "sog_b": round(float(f.sog2), 1),
+            # features known at the first alert (for the collision-risk model; nothing from later minutes)
+            "cog_a": round(float(f.cog1), 1), "cog_b": round(float(f.cog2), 1),
+            "rel_x_m": round(float(f.dx), 1), "rel_y_m": round(float(f.dy), 1),
+            "rel_speed_kn": round(float(np.hypot(f.dvx, f.dvy) * 3600 / NM), 2),
+            "area_moving_vessels": int(area_n.get(int(row.t0), 0)),
+            "neighbours_a": int(nb_n.get((m1, int(row.t0)), 0)), "neighbours_b": int(nb_n.get((m2, int(row.t0)), 0)),
             # an alert is "realized" when the vessels actually came within the CPA threshold
             "realized": int(min_sep is not None and min_sep <= CPA_NM * NM),
             "large_involved": int(_large(ta, la) or _large(tb, lb)),

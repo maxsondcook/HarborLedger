@@ -205,7 +205,11 @@ def coastal_legs(vc):
     return pd.DataFrame(legs)
 
 
-def leg_model(legs, big, train_year=2024, test_year=2025, seed=7):
+OBS_COND = ["hs_mean", "hs_max", "head_share", "head_hs_mean", "wind_mean"]
+FC_COND = ["fc_hs_mean", "fc_hs_max", "fc_head_share", "fc_head_hs_mean"]
+
+
+def leg_model(legs, big, train_year=2024, test_year=2025, seed=7, cond=OBS_COND):
     """Predict coastal-leg duration from sea conditions along the leg. Calm-weather speed comes from
     the training year only (hours with waves < 1.5 m), so no test information leaks in. Conditions
     are the observed buoy values along the route, i.e. a perfect-forecast upper bound."""
@@ -223,8 +227,7 @@ def leg_model(legs, big, train_year=2024, test_year=2025, seed=7):
     L["northbound"] = (L["to"] == "SF").astype(int)
     L["month"] = L.depart.dt.month
     tr, te = L[L.year == train_year], L[L.year == test_year]
-    feats = ["calm_hours", "track_nm", "northbound", "hs_mean", "hs_max", "head_share", "head_hs_mean",
-             "wind_mean", "month", "length"]
+    feats = ["calm_hours", "track_nm", "northbound", "month", "length"] + list(cond)
     base_feats = ["calm_hours", "track_nm", "northbound", "month", "length"]
     mk = lambda: HistGradientBoostingRegressor(loss="absolute_error", max_depth=3, learning_rate=0.05,
                                                 max_iter=300, min_samples_leaf=20, random_state=seed)
@@ -246,14 +249,17 @@ def leg_model(legs, big, train_year=2024, test_year=2025, seed=7):
     gains = [e_b[i].mean() - e_f[i].mean() for i in (rng.integers(0, len(te), len(te)) for _ in range(2000))]
     # weather effect: predicted hours for each test leg under its real conditions vs calm conditions
     calm_te = te[feats].copy()
-    calm_te[["hs_mean", "hs_max", "head_hs_mean"]] = [1.0, 1.5, 0.0]
-    calm_te["head_share"] = 0.0
-    calm_te["wind_mean"] = np.nanpercentile(tr.wind_mean, 25)
+    pre = "fc_" if cond is FC_COND else ""
+    calm_te[[pre + "hs_mean", pre + "hs_max", pre + "head_hs_mean"]] = [1.0, 1.5, 0.0]
+    calm_te[pre + "head_share"] = 0.0
+    if "wind_mean" in feats:
+        calm_te["wind_mean"] = np.nanpercentile(tr.wind_mean, 25)
     te = te.assign(pred=preds["model with sea conditions"], pred_calm=m_full.predict(calm_te))
     te["weather_added_h"] = te.pred - te.pred_calm
-    by_hs = te.assign(hs_bin=pd.cut(te.head_hs_mean, [-0.01, 0.5, 1.5, 2, 2.5, 3, 9])).groupby(
+    by_hs = te.assign(hs_bin=pd.cut(te[pre + "head_hs_mean"], [-0.01, 0.5, 1.5, 2, 2.5, 3, 9])).groupby(
         ["northbound", "hs_bin"], observed=True).weather_added_h.agg(["median", "size"]).reset_index()
     return {
+        "conditions": "forecast at departure (GFS-Wave)" if cond is FC_COND else "observed along the route (NDBC buoys)",
         "train_year": train_year, "test_year": test_year, "n_train": int(len(tr)), "n_test": int(len(te)),
         "calm_speed_from_own_history_share": round(float((te.calm_from == "own").mean()), 3),
         "mae_hours": mae,
@@ -333,6 +339,13 @@ def analyze(years=(2024, 2025)):
     legs = coastal_legs(v)
     legs.to_parquet(os.path.join(OUT, "coastal_legs.parquet"), index=False)
     leg_res, te = leg_model(legs, big)
+    leg_fc_res = None
+    fc_path = os.path.join(OUT, "coastal_legs_forecast.parquet")
+    if os.path.exists(fc_path):
+        lf = pd.read_parquet(fc_path)
+        lf = lf[lf.fc_steps > 0]
+        leg_fc_res, _ = leg_model(lf, big, cond=FC_COND)
+        leg_fc_res["legs_with_forecast"] = int(len(lf))
     days = small_craft_days(v)
     res = {
         "years": list(years),
@@ -345,6 +358,7 @@ def analyze(years=(2024, 2025)):
                  "median_hours": round(float(legs.hours.median()), 1),
                  "median_track_nm": round(float(legs.track_nm.median()), 0)},
         "leg_model": leg_res,
+        "leg_model_forecast": leg_fc_res,
         "small_craft": departures_vs_seastate(days),
         "operability": operability(),
         "notes": ["Conditions are from the nearest NOAA buoy, not at the ship.",

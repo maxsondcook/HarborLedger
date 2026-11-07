@@ -36,6 +36,9 @@ export default function Methods() {
   const latest = yi?.latest ?? null;
   const ev = useData<EncVal>(latest ? `encounter_validation_${latest}.json` : null);
   const en = useData<Enc>(latest ? `encounters_${latest}.json` : null);
+  const col = useData<{ n_train: number; n_test: number; straight_line_precision: number; models: { model: string; auc: number; precision_at_90pct_recall: number }[]; unseen_pairs: { auc: number; kinematic_auc: number } }>("collision.json").data;
+  const wx = useData<{ leg_model: { mae_hours: Record<string, number>; gain_from_conditions_hours: number }; leg_model_forecast?: { mae_hours: Record<string, number>; gain_from_conditions_hours: number; gain_ci95: number[] } | null }>("weather.json").data;
+  const fi = useData<{ models: Record<string, { auc_fished: number }>; auc_gain_from_ocean_ci95: number[] }>("fishing.json").data;
   const w90 = gm.data?.windows.find((w) => w.window_days === 90 && w.label === "g_exopt");
   const w180 = gm.data?.windows.find((w) => w.window_days === 180 && w.label === "g_exopt");
   const d90 = gm.data?.delay.find((d) => d.window_days === 90);
@@ -51,7 +54,7 @@ export default function Methods() {
       </p>
       <nav className="small" style={{ display: "flex", gap: 14, flexWrap: "wrap", margin: "4px 0 10px" }}>
         {[["sources", "Sources"], ["pipeline", "Pipeline"], ["identity", "Entity resolution"], ["ledger", "Cost-growth ledger"],
-          ["activity", "Tug activity"], ["encounters", "Encounters"], ["tests", "Test scorecard"], ["limits", "Limitations"], ["privacy", "Privacy and licences"]]
+          ["activity", "Tug activity"], ["encounters", "Encounters"], ["risk", "Collision-risk model"], ["weather", "Weather and fishing"], ["tests", "Test scorecard"], ["limits", "Limitations"], ["privacy", "Privacy and licences"]]
           .map(([a, t]) => <a key={a} href={`#/methods`} onClick={(e) => { e.preventDefault(); document.getElementById(a)?.scrollIntoView({ behavior: "smooth" }); }}>{t}</a>)}
       </nav>
 
@@ -167,6 +170,43 @@ export default function Methods() {
           <li>Validation on {ev.data?.n_sampled ?? "—"} random alerts: closest pass recomputed at each actual report time differs from the 1-minute grid by a median of {ev.data?.median_abs_diff_m ?? "—"} m (90th percentile {ev.data?.p90_abs_diff_m ?? "—"} m); the encounter label agrees in {ev.data ? pct(ev.data.label_agreement, 1).replace("+", "") : "—"} of cases{ev.data?.label_disagreements !== undefined ? ` (${ev.data.label_disagreements} disagreements, ${ev.data.disagreements_within_100m_of_threshold} within 100 m of the threshold; the rest come from interpolating across reporting gaps). Roughly one alert in ten therefore has an uncertain label` : ""}.</li>
           <li>MarineCadastre thins AIS to roughly one report per 1–3 minutes, so that check measures sensitivity to the time grid rather than being free of interpolation. Interpolation across long gaps can manufacture near-zero distances; scenario pages are ranked by the more conservative of the two estimates.</li>
         </ul>
+      </Section>
+
+      <Section id="risk" title="Collision-risk model">
+        <p>
+          Task: for traffic alerts whose vessels are still more than 0.25 nm apart when the alert fires, predict whether they
+          will actually come that close. Features are known at the first alert only; alert duration and the year-level
+          launch flag are excluded because they depend on what happened next. Gradient boosting is compared with logistic
+          regression on predicted CPA and TCPA, training on 2024 and testing on 2025, with a separate score on vessel pairs
+          never seen in training.
+        </p>
+        {col && (
+          <ul>
+            <li>{num(col.n_train)} training alerts, {num(col.n_test)} test alerts; {Math.round(col.straight_line_precision * 100)}% of test alerts came true.</li>
+            {col.models.map((m) => <li key={m.model}>{m.model}: AUC {m.auc.toFixed(3)}, precision at 90% recall {m.precision_at_90pct_recall.toFixed(3)}</li>)}
+            <li>Unseen vessel pairs: AUC {col.unseen_pairs.auc.toFixed(3)} (CPA/TCPA only: {col.unseen_pairs.kinematic_auc.toFixed(3)}).</li>
+          </ul>
+        )}
+        <p className="muted small">The alerts, features and labels are released as an open benchmark; see the data card linked on the Encounters page.</p>
+      </Section>
+
+      <Section id="weather" title="Weather, forecasts and fishing">
+        <p>
+          Each vessel-hour is joined to the nearest NOAA NDBC buoy within 75 km for waves and wind. Big-ship speed is compared
+          with the same ship's usual speed in the same 0.5° cell and season. Coastal legs between the Los Angeles/Long Beach and
+          San Francisco approaches are modelled with conditions observed along the route, which is a perfect-knowledge ceiling,
+          and separately with archived NOAA GFS-Wave forecasts from the last run before departure. Only the wave-height and
+          direction GRIB2 messages are fetched by byte range and decoded with a small JPEG2000 reader. Fishing hours are AIS
+          fishing vessels at 1–5 kn on turning tracks, set against NOAA OISST, VIIRS chlorophyll and the CUTI/BEUTI upwelling
+          indices.
+        </p>
+        {wx && (
+          <ul>
+            <li>Leg duration error, observed conditions: {wx.leg_model.mae_hours["model with sea conditions"]} h (gain {wx.leg_model.gain_from_conditions_hours} h).</li>
+            {wx.leg_model_forecast && <li>Leg duration error, forecast at departure: {wx.leg_model_forecast.mae_hours["model with sea conditions"]} h (gain {wx.leg_model_forecast.gain_from_conditions_hours} h, 95% CI {wx.leg_model_forecast.gain_ci95[0]}–{wx.leg_model_forecast.gain_ci95[1]}).</li>}
+          </ul>
+        )}
+        {fi && <p className="small">Fishing: AUC gain from ocean conditions in predicting which cells are fished, 95% CI +{fi.auc_gain_from_ocean_ci95[0]} to +{fi.auc_gain_from_ocean_ci95[1]}.</p>}
       </Section>
 
       <Section id="tests" title="Test scorecard">

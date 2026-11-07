@@ -160,7 +160,8 @@ def export(out=OUT):
                      ("psix_match_results.json", "psix_match.json"),
                      ("results.json", "identity_tests.json"),
                      ("weather_results.json", "weather.json"),
-                     ("fishing_results.json", "fishing.json")):
+                     ("fishing_results.json", "fishing.json"),
+                     ("collision_model_results.json", "collision.json")):
         p = os.path.join(ROOT, "eval", src)
         if os.path.exists(p):
             shutil.copy(p, os.path.join(out, dst))

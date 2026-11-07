@@ -17,6 +17,7 @@ LICENSES = {
     "marinecadastre": "CC0-1.0 (NOAA/BOEM MarineCadastre AIS)",
     "psix": "U.S. federal work, presumed public domain (USCG CGMIX PSIX; no terms page found)",
     "uscg_mvus": "U.S. federal work, presumed public domain (USCG Merchant Vessels of the U.S.; owner PII pre-redacted by USCG)",
+    "gfswave": "U.S. federal data, public domain (NOAA GFS-Wave via NOAA Open Data Dissemination on AWS)",
     "ndbc": "U.S. federal data, public domain (NOAA National Data Buoy Center)",
     "erddap": "U.S. federal data, public domain (NOAA CoastWatch / SWFSC ERDDAP)",
     "calepa":"CalEPA/OEHHA public data (SB 535 disadvantaged communities; verify terms)",

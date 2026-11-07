@@ -27,6 +27,14 @@ export default function Home() {
         )}
       </Async>
       <Findings />
+      <h2>Write-ups</h2>
+      <ul className="findings small">
+        <li><a href="https://github.com/maxsondcook/HarborLedger/blob/main/docs/findings/collision-alerts-real-traffic-baseline.md">Straight-line collision alerts are right about half the time; context makes them better</a></li>
+        <li><a href="https://github.com/maxsondcook/HarborLedger/blob/main/docs/findings/service-boats-inflate-near-miss-counts.md">Most "close calls" with large ships are service boats doing their job</a></li>
+        <li><a href="https://github.com/maxsondcook/HarborLedger/blob/main/docs/findings/harbor-tugs-busier-than-inventory.md">Busy harbor tugs move more than the port's emissions inventory assumes</a></li>
+        <li><a href="https://github.com/maxsondcook/HarborLedger/blob/main/docs/findings/weather-adds-little-to-coastal-trips.md">Weather adds about an hour to a big ship's coastal trip; schedules add far more</a></li>
+        <li><a href="https://github.com/maxsondcook/HarborLedger/blob/main/docs/benchmark/README.md">Open close-quarters encounter benchmark (data card)</a></li>
+      </ul>
       <h2>Explore</h2>
       <div className="cards-2">
         <div className="card">
@@ -85,7 +93,8 @@ function Findings() {
           <li>
             <b>Straight-line collision alerts come true {pc(enc.alert_precision_traffic)} of the time</b>:{" "}
             {pc(enc.alert_precision_by_tcpa_min["0-2"])} when raised under 2 minutes ahead, {pc(enc.alert_precision_by_tcpa_min["5-10"])} at 5–10 minutes.
-            That is the baseline a collision-avoidance model has to beat. <Link to="/encounters">Encounters →</Link>
+            A model using only what is known when the alert fires ranks them much better (AUC 0.73 vs 0.61 for CPA/TCPA alone, tested on the
+            following year), and the data is released as an open benchmark. <Link to="/encounters">Encounters →</Link>
           </li>
         )}
         {enc && spb !== undefined && spb !== null && (

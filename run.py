@@ -16,6 +16,8 @@ Commands:
     weather-join [YEAR..]  hourly vessel tracks joined to nearest NOAA buoy waves and wind, per AIS year
     weather                speed loss, coastal-leg delay model, small-craft departures, operability
     fishing                fishing activity vs SST, fronts, chlorophyll, upwelling and sea state
+    forecast-fetch         download archived NOAA GFS-Wave forecasts for every coastal-leg departure
+    forecast-legs          GFS-Wave forecast features along the reference route for each leg's departure
     export                 write static JSON for the website to site/public/data/
     growth                 build the availability ledger and run the weeks 3-4 growth model
 """
@@ -85,6 +87,22 @@ def main(argv):
         from harborledger import fishing
         r = fishing.run()
         print(r["models"], r["auc_gain_from_ocean_ci95"], flush=True)
+    elif cmd == "forecast-fetch":
+        import pandas as pd
+        from harborledger import forecast as fc
+        legs = pd.read_parquet(os.path.join(HERE, "data", "derived", "coastal_legs.parquet"))
+        fc.fetch_cycles([fc.cycle_for(t) for t in legs.depart], log=lambda s: print(s, flush=True))
+    elif cmd == "forecast-legs":
+        import pandas as pd
+        from harborledger import forecast as fc, weather
+        legs = pd.read_parquet(os.path.join(HERE, "data", "derived", "coastal_legs.parquet"))
+        v = pd.concat([pd.read_parquet(os.path.join(HERE, "data", "derived", f"vessel_hours_conditions_{y}.parquet"))
+                       for y in (2024, 2025)])
+        route = fc.reference_route(weather.open_water_big(v))
+        route.to_csv(os.path.join(HERE, "eval", "reference_route.csv"), index=False)
+        out = fc.leg_features(legs, route)
+        out.to_parquet(os.path.join(HERE, "data", "derived", "coastal_legs_forecast.parquet"), index=False)
+        print(len(out), "legs;", int((out.fc_steps > 0).sum()), "with forecasts", flush=True)
     elif cmd == "export":
         from harborledger import export
         export.export()

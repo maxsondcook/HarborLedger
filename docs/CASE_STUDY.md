@@ -30,6 +30,18 @@ Maritime data is plentiful but fragmented. A Navy repair contract names a ship i
 
 ## Results
 
+- **Collision alerts.** A model using only information available when a close-quarters alert fires
+  ranks alerts much better than predicted CPA and TCPA alone: AUC **0.73 against 0.61**, trained on
+  2024 and tested on 752,017 alerts from 2025. At the same 90% catch rate it raises about 17% fewer
+  false alarms. It holds on vessel pairs never seen in training, and it is well calibrated. The
+  alerts are released as an **open benchmark** with a data card.
+- **Weather and trip time.** On 2,373 coastal legs, an archived NOAA wave forecast available at
+  departure cuts trip-time error by 0.22 hours (95% CI 0.08–0.38). That is about 40% of the
+  perfect-knowledge ceiling, against roughly 7 hours of scheduling-driven variation. Big ships lose
+  3–7% of their speed only in head seas of 3.5 m or more.
+- **Fishing and ocean conditions.** Sea-surface temperature fronts, chlorophyll and upwelling add a
+  small, significant gain in predicting where AIS fishing vessels work (AUC 0.922 → 0.944).
+
 - **Repair cost growth.** Navy surface-ship repair jobs grow a median **+8.3%** beyond their base award and pre-priced options; one in ten grows **+47%** or more.
 - **Early warning.** Growth shows up early in public modification records. By day 180, "growth so far" alone cuts forecast error by 49%, and a gradient-boosted model adds no significant improvement.
 - **Collision alerts.** Straight-line alerts come true **57%** of the time: 80% when raised under 2 minutes ahead, 44% at 5–10 minutes. This is the false-alarm baseline any collision-avoidance model has to beat.
@@ -55,6 +67,9 @@ Maritime data is plentiful but fragmented. A Navy repair contract names a ship i
 
 ## What I would do next
 
+- Get feedback from autonomy and port practitioners on the encounter benchmark, and add
+  higher-rate AIS to remove its interpolation label noise.
+
 - Get **engine-hour or fuel data** from a tug operator, to turn activity hours into emissions.
 - Use a **higher-rate AIS source**, to remove the interpolation uncertainty in encounters.
 - Add a **partner label** for repair jobs (the Navy's estimate or schedule days), so the model forecasts something public records don't already show.
@@ -62,6 +77,15 @@ Maritime data is plentiful but fragmented. A Navy repair contract names a ship i
 ---
 
 ## Résumé bullets
+
+- Built a **collision-risk model** on 1.5 million real-traffic close-quarters alerts from public
+  AIS. It beat the standard CPA/TCPA projection (AUC 0.73 vs 0.61; about 17% fewer false alarms at
+  90% recall), was validated on the following year and on unseen vessel pairs, and is published as
+  an open benchmark dataset.
+- Joined 3.75 million vessel-hours to NOAA buoy observations and archived GFS-Wave forecasts, using
+  a custom GRIB2/JPEG2000 decoder. Quantified big-ship speed loss in head seas, and showed that
+  forecasts recover about 40% of the weather-driven trip-time error, while schedules dominate the
+  rest.
 
 - Built **HarborLedger**, a public-data maritime intelligence site. It links 1,965 Navy contracts (130K modifications), a year of California AIS and Coast Guard records into a confidence-scored graph, with provenance and licence tracking on every link. Stack: Python, SQLite, React/TypeScript, GitHub Pages.
 - Designed **entity-resolution rules** across sources with no shared key, and measured their precision on random samples: 120/120 AIS-to-Coast-Guard matches correct (2,717 of 3,309 vessels linked), and 100% hull extraction on a held-out sample.

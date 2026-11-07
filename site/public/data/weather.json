@@ -318,6 +318,7 @@
     "median_track_nm": 375.0
   },
   "leg_model": {
+    "conditions": "observed along the route (NDBC buoys)",
     "train_year": 2024,
     "test_year": 2025,
     "n_train": 1178,
@@ -328,12 +329,12 @@
       "median for direction": 7.5,
       "ship's own median leg": 6.99,
       "model without sea conditions": 7.11,
-      "model with sea conditions": 6.63
+      "model with sea conditions": 6.59
     },
-    "gain_from_conditions_hours": 0.48,
+    "gain_from_conditions_hours": 0.52,
     "gain_ci95": [
-      0.34,
-      0.61
+      0.38,
+      0.66
     ],
     "median_leg_hours_test": 36.0,
     "weather_added_hours_by_head_sea": [
@@ -341,87 +342,174 @@
         "northbound": false,
         "head_hs_lo": -0.01,
         "head_hs_hi": 0.5,
-        "median_added_h": 0.16,
+        "median_added_h": 0.11,
         "n": 216
       },
       {
         "northbound": false,
         "head_hs_lo": 0.5,
         "head_hs_hi": 1.5,
-        "median_added_h": 0.63,
+        "median_added_h": 0.51,
         "n": 104
       },
       {
         "northbound": false,
         "head_hs_lo": 1.5,
         "head_hs_hi": 2.0,
-        "median_added_h": 1.9,
+        "median_added_h": 1.88,
         "n": 18
       },
       {
         "northbound": false,
         "head_hs_lo": 2.0,
         "head_hs_hi": 2.5,
-        "median_added_h": 1.35,
+        "median_added_h": 1.93,
         "n": 9
       },
       {
         "northbound": false,
         "head_hs_lo": 2.5,
         "head_hs_hi": 3.0,
-        "median_added_h": 0.06,
+        "median_added_h": 0.4,
         "n": 6
       },
       {
         "northbound": false,
         "head_hs_lo": 3.0,
         "head_hs_hi": 9.0,
-        "median_added_h": 1.88,
+        "median_added_h": 2.46,
         "n": 10
       },
       {
         "northbound": true,
         "head_hs_lo": -0.01,
         "head_hs_hi": 0.5,
-        "median_added_h": 0.41,
+        "median_added_h": 0.12,
         "n": 3
       },
       {
         "northbound": true,
         "head_hs_lo": 0.5,
         "head_hs_hi": 1.5,
-        "median_added_h": 0.42,
+        "median_added_h": 0.13,
         "n": 287
       },
       {
         "northbound": true,
         "head_hs_lo": 1.5,
         "head_hs_hi": 2.0,
-        "median_added_h": 0.96,
+        "median_added_h": 0.56,
         "n": 275
       },
       {
         "northbound": true,
         "head_hs_lo": 2.0,
         "head_hs_hi": 2.5,
-        "median_added_h": 0.81,
+        "median_added_h": 0.47,
         "n": 169
       },
       {
         "northbound": true,
         "head_hs_lo": 2.5,
         "head_hs_hi": 3.0,
-        "median_added_h": -0.16,
+        "median_added_h": -0.58,
         "n": 70
       },
       {
         "northbound": true,
         "head_hs_lo": 3.0,
         "head_hs_hi": 9.0,
-        "median_added_h": 1.99,
+        "median_added_h": 1.84,
         "n": 28
       }
     ]
+  },
+  "leg_model_forecast": {
+    "conditions": "forecast at departure (GFS-Wave)",
+    "train_year": 2024,
+    "test_year": 2025,
+    "n_train": 1178,
+    "n_test": 1195,
+    "calm_speed_from_own_history_share": 0.702,
+    "mae_hours": {
+      "distance / calm speed": 7.6,
+      "median for direction": 7.5,
+      "ship's own median leg": 6.99,
+      "model without sea conditions": 7.11,
+      "model with sea conditions": 6.89
+    },
+    "gain_from_conditions_hours": 0.22,
+    "gain_ci95": [
+      0.08,
+      0.38
+    ],
+    "median_leg_hours_test": 36.0,
+    "weather_added_hours_by_head_sea": [
+      {
+        "northbound": false,
+        "head_hs_lo": -0.01,
+        "head_hs_hi": 0.5,
+        "median_added_h": 0.24,
+        "n": 112
+      },
+      {
+        "northbound": false,
+        "head_hs_lo": 0.5,
+        "head_hs_hi": 1.5,
+        "median_added_h": 0.69,
+        "n": 18
+      },
+      {
+        "northbound": false,
+        "head_hs_lo": 1.5,
+        "head_hs_hi": 2.0,
+        "median_added_h": 1.73,
+        "n": 11
+      },
+      {
+        "northbound": false,
+        "head_hs_lo": 2.0,
+        "head_hs_hi": 2.5,
+        "median_added_h": 0.93,
+        "n": 8
+      },
+      {
+        "northbound": false,
+        "head_hs_lo": 3.0,
+        "head_hs_hi": 9.0,
+        "median_added_h": 0.23,
+        "n": 1
+      },
+      {
+        "northbound": true,
+        "head_hs_lo": -0.01,
+        "head_hs_hi": 0.5,
+        "median_added_h": 0.35,
+        "n": 14
+      },
+      {
+        "northbound": true,
+        "head_hs_lo": 0.5,
+        "head_hs_hi": 1.5,
+        "median_added_h": 0.61,
+        "n": 65
+      },
+      {
+        "northbound": true,
+        "head_hs_lo": 1.5,
+        "head_hs_hi": 2.0,
+        "median_added_h": 2.46,
+        "n": 23
+      },
+      {
+        "northbound": true,
+        "head_hs_lo": 3.0,
+        "head_hs_hi": 9.0,
+        "median_added_h": 2.85,
+        "n": 4
+      }
+    ],
+    "legs_with_forecast": 2373
   },
   "small_craft": [
     {
