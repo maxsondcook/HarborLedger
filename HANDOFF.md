@@ -5,6 +5,7 @@
 - **Repo:** https://github.com/maxsondcook/HarborLedger is public. It was recreated with a fresh single-commit history so the research notes never became public. The old history is kept locally on branch `archive/pre-public` (never pushed).
 - **Research notes** live outside the repo at `~/Desktop/HarborLedger research`.
 - **Data:** all of 2024 California AIS is processed. Large raw files and `data/derived/encounters.csv` (262 MB) are local and gitignored; rebuild them with the run commands in the README.
+- **Benchmark release:** https://github.com/maxsondcook/HarborLedger/releases/tag/encounters-v1 holds the 27 benchmark files (24 monthly alert Parquets, scenario tracks, data card, SHA256SUMS), uploaded 2026-11-07 with the GitHub CLI and checked by downloading them again (all checksums match). The released data card must stay byte-identical to `SHA256SUMS`, so the release link is added only to the docs copy (`docs/benchmark/README.md`), not to `benchmark.py`'s generator.
 - **Deploy Actions** are pinned by SHA to their Node 24 majors (checkout v6, setup-node v6, configure-pages v6, upload-pages-artifact v5, deploy-pages v5).
 - **Week 4 is done:** mobile and light-mode check, readable charts on phones, page titles, favicon, home-page findings, methods page, Pages deploy, and `docs/CASE_STUDY.md` with résumé bullets.
 

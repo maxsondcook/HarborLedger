@@ -8,7 +8,7 @@
 [service boats](docs/findings/service-boats-inflate-near-miss-counts.md) ·
 [tug hours](docs/findings/harbor-tugs-busier-than-inventory.md) ·
 [weather and trip time](docs/findings/weather-adds-little-to-coastal-trips.md) ·
-**Open benchmark:** [data card](docs/benchmark/README.md), with a sample in `docs/benchmark_sample/`
+**Open benchmark:** [download (release `encounters-v1`)](https://github.com/maxsondcook/HarborLedger/releases/tag/encounters-v1) · [data card](docs/benchmark/README.md), with a sample in `docs/benchmark_sample/`
 
 ## Weather, forecasts, fishing and the collision-risk model
 
@@ -21,8 +21,9 @@ python3 -I run.py fishing                  # fishing vs SST, fronts, chlorophyll
 python3 -I -c "import sys; sys.path.insert(0, '.'); from harborledger import collision, benchmark; collision.run(); benchmark.build()"
 ```
 
-The full benchmark (`data/benchmark/harborledger-encounters-v1.zip`, about 96 MB) is too large for
-git and is published as a GitHub Release asset.
+The full benchmark (`data/benchmark/harborledger-encounters-v1/`: 24 monthly Parquet files, scenario tracks,
+data card and checksums) is too large for git and is published as the
+[`encounters-v1` release](https://github.com/maxsondcook/HarborLedger/releases/tag/encounters-v1).
 
 **Website:** a React site in `site/` that reads static JSON exported from the graph.
 It has vessel and shipyard pages, the repair cost ledger, harbor activity, and a close-quarters

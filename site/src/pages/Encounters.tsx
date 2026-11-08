@@ -275,7 +275,7 @@ function RiskModel() {
               <HBar rows={r.importance_auc_drop.slice(0, 8).map((f) => ({ key: f.feature.replace(/_/g, " "), value: f.drop }))} fmt={(v) => v.toFixed(3)} color={SERIES[2]} label="Feature importance" />
             </div>
             <p className="small">
-              Data: <a href={REPO + "docs/benchmark/README.md"}>open encounter benchmark (data card)</a> · Write-up:{" "}
+              Data: <a href="https://github.com/maxsondcook/HarborLedger/releases/tag/encounters-v1">open encounter benchmark (download)</a> · <a href={REPO + "docs/benchmark/README.md"}>data card</a> · Write-up:{" "}
               <a href={REPO + "docs/findings/collision-alerts-real-traffic-baseline.md"}>collision alerts against a real-traffic baseline</a>
             </p>
           </>

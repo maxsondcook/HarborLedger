@@ -34,7 +34,7 @@ Maritime data is plentiful but fragmented. A Navy repair contract names a ship i
   ranks alerts much better than predicted CPA and TCPA alone: AUC **0.73 against 0.61**, trained on
   2024 and tested on 752,017 alerts from 2025. At the same 90% catch rate it raises about 17% fewer
   false alarms. It holds on vessel pairs never seen in training, and it is well calibrated. The
-  alerts are released as an **open benchmark** with a data card.
+  alerts are released as an **open benchmark** ([download](https://github.com/maxsondcook/HarborLedger/releases/tag/encounters-v1), [data card](benchmark/README.md)).
 - **Weather and trip time.** On 2,373 coastal legs, an archived NOAA wave forecast available at
   departure cuts trip-time error by 0.22 hours (95% CI 0.08–0.38). That is about 40% of the
   perfect-knowledge ceiling, against roughly 7 hours of scheduling-driven variation. Big ships lose

@@ -82,4 +82,4 @@ python3 -I run.py encounters 2024 2025
 python3 -I -c "import sys; sys.path.insert(0, '.'); from harborledger import collision; collision.run()"
 ```
 
-Results: `eval/collision_model_results.json`; data: `harborledger-encounters-v1` (see the data card).
+Results: `eval/collision_model_results.json`; data: [`harborledger-encounters-v1` release](https://github.com/maxsondcook/HarborLedger/releases/tag/encounters-v1) (see the data card).

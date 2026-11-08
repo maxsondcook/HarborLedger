@@ -9,6 +9,8 @@ whether they actually came that close.
 It is meant for evaluating collision-risk and alert-filtering methods against a real-traffic
 baseline, and for studying the gap between straight-line predictions and what vessels actually do.
 
+**Download:** [GitHub release `encounters-v1`](https://github.com/maxsondcook/HarborLedger/releases/tag/encounters-v1) (27 files, about 100 MB in total; check them with `shasum -a 256 -c SHA256SUMS`).
+
 ## Contents
 
 | File | Description |
@@ -98,4 +100,4 @@ Code: `harborledger/collision.py` in https://github.com/maxsondcook/HarborLedger
 
 Derived from public-domain U.S. federal data (MarineCadastre AIS, CC0). Released under CC BY 4.0.
 Cite as: HarborLedger close-quarters encounter benchmark v1 (2026),
-https://github.com/maxsondcook/HarborLedger.
+https://github.com/maxsondcook/HarborLedger/releases/tag/encounters-v1.
