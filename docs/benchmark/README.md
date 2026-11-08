@@ -13,7 +13,7 @@ baseline, and for studying the gap between straight-line predictions and what ve
 
 | File | Description |
 |---|---|
-| `alerts_2024.parquet`, `alerts_2025.parquet` | one row per alert event (schema below) |
+| `alerts_YYYY-MM.parquet` (24 files) | one row per alert event (schema below), one file per month |
 | `scenarios_tracks.parquet` | AIS reports (local metres around vessel A) for the closest large-vessel encounters |
 | `SHA256SUMS` | checksums |
 
@@ -23,6 +23,8 @@ baseline, and for studying the gap between straight-line predictions and what ve
 | 2025 | 1,533,461 | 865,576 | 57.1% |
 
 Suggested split: train on 2024, test on 2025 (time-based, no shuffling across years).
+
+Load a year with pandas: `pd.concat(pd.read_parquet(f) for f in sorted(glob.glob("alerts_2024-*.parquet")))`.
 
 ## Baselines (train 2024, test 2025)
 

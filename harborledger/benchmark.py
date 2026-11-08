@@ -1,7 +1,7 @@
 """Package the close-quarters encounter benchmark as an open, versioned dataset.
 
 Output: data/benchmark/harborledger-encounters-v1/
-  alerts_2024.parquet, alerts_2025.parquet   every traffic alert (one row per alert event) with
+  alerts_YYYY-MM.parquet (one per month)    every traffic alert (one row per alert event) with
                                               alert-time features, context and outcome labels
   scenarios_tracks.parquet                    1-minute-resolution AIS reports around the closest
                                               large-vessel encounters (the site's scenario pages)
@@ -9,7 +9,8 @@ Output: data/benchmark/harborledger-encounters-v1/
                                               baselines, limitations, citation
   SHA256SUMS                                  checksums
 A 2,000-row sample of each year goes to docs/benchmark_sample/ so the format is visible in the repo.
-The full files are too large for git and are published as a release asset instead.
+The full files are too large for git and are published as GitHub release assets (one file per
+month, each under 10 MB).
 """
 import hashlib
 import json
@@ -71,7 +72,12 @@ def build(years=(2024, 2025)):
         df = pd.read_csv(os.path.join(DERIVED, f"encounters_{y}.csv"))
         keep = [c for c in COLUMNS if c in df.columns]
         df = df[keep]
-        df.to_parquet(os.path.join(OUTDIR, f"alerts_{y}.parquet"), index=False, compression="zstd")
+        # one file per month (each well under 10 MB) so files can be downloaded selectively
+        for old in [f for f in os.listdir(OUTDIR) if f.startswith(f"alerts_{y}")]:
+            os.remove(os.path.join(OUTDIR, old))
+        month = df.day.str[:7]
+        for mth, part in df.groupby(month):
+            part.to_parquet(os.path.join(OUTDIR, f"alerts_{mth}.parquet"), index=False, compression="zstd")
         df.sample(min(2000, len(df)), random_state=7).to_csv(os.path.join(SAMPLE_DIR, f"alerts_{y}_sample.csv"), index=False)
         counts[y] = {"alerts": int(len(df)), "traffic_alerts": int((df.service == 0).sum()),
                      "realized_share_traffic": round(float(df[df.service == 0].realized.mean()), 3)}
@@ -135,7 +141,7 @@ baseline, and for studying the gap between straight-line predictions and what ve
 
 | File | Description |
 |---|---|
-| `alerts_2024.parquet`, `alerts_2025.parquet` | one row per alert event (schema below) |
+| `alerts_YYYY-MM.parquet` (24 files) | one row per alert event (schema below), one file per month |
 | `scenarios_tracks.parquet` | AIS reports (local metres around vessel A) for the closest large-vessel encounters |
 | `SHA256SUMS` | checksums |
 
@@ -144,6 +150,8 @@ baseline, and for studying the gap between straight-line predictions and what ve
 {cnt}
 
 Suggested split: train on 2024, test on 2025 (time-based, no shuffling across years).
+
+Load a year with pandas: `pd.concat(pd.read_parquet(f) for f in sorted(glob.glob("alerts_2024-*.parquet")))`.
 {base}
 ## Schema
 
