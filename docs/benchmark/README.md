@@ -1,5 +1,7 @@
 # HarborLedger close-quarters encounter benchmark (v1)
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24047861.svg)](https://doi.org/10.5281/zenodo.24047861)
+
 Real-traffic close-quarters alerts and outcomes for three California port areas (San Pedro Bay,
 San Francisco Bay, San Diego Bay) for 2024 and 2025, built from public AIS. Each row is one alert
 event: a pair of moving vessels whose straight-line projection (constant speed and course) put them
@@ -9,7 +11,7 @@ whether they actually came that close.
 It is meant for evaluating collision-risk and alert-filtering methods against a real-traffic
 baseline, and for studying the gap between straight-line predictions and what vessels actually do.
 
-**Download:** [GitHub release `encounters-v1`](https://github.com/maxsondcook/HarborLedger/releases/tag/encounters-v1) (27 files, about 100 MB in total; check them with `shasum -a 256 -c SHA256SUMS`).
+**Download:** [Zenodo, DOI 10.5281/zenodo.24047861](https://doi.org/10.5281/zenodo.24047861) or the [GitHub release `encounters-v1`](https://github.com/maxsondcook/HarborLedger/releases/tag/encounters-v1) (27 files, about 100 MB in total; check them with `shasum -a 256 -c SHA256SUMS`).
 
 ## Contents
 
@@ -99,5 +101,4 @@ Code: `harborledger/collision.py` in https://github.com/maxsondcook/HarborLedger
 ## Licence and citation
 
 Derived from public-domain U.S. federal data (MarineCadastre AIS, CC0). Released under CC BY 4.0.
-Cite as: HarborLedger close-quarters encounter benchmark v1 (2026),
-https://github.com/maxsondcook/HarborLedger/releases/tag/encounters-v1.
+Cite as: HarborLedger close-quarters encounter benchmark v1 (2026). Zenodo. https://doi.org/10.5281/zenodo.24047861

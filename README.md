@@ -8,7 +8,7 @@
 [service boats](docs/findings/service-boats-inflate-near-miss-counts.md) ·
 [tug hours](docs/findings/harbor-tugs-busier-than-inventory.md) ·
 [weather and trip time](docs/findings/weather-adds-little-to-coastal-trips.md) ·
-**Open benchmark:** [download (release `encounters-v1`)](https://github.com/maxsondcook/HarborLedger/releases/tag/encounters-v1) · [data card](docs/benchmark/README.md), with a sample in `docs/benchmark_sample/`
+**Open benchmark:** [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24047861.svg)](https://doi.org/10.5281/zenodo.24047861) · [download (release `encounters-v1`)](https://github.com/maxsondcook/HarborLedger/releases/tag/encounters-v1) · [data card](docs/benchmark/README.md), with a sample in `docs/benchmark_sample/`
 
 ## Weather, forecasts, fishing and the collision-risk model
 
