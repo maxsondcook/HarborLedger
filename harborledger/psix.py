@@ -21,7 +21,7 @@ import urllib.request
 
 import pandas as pd
 
-from .snapshot import RAW, record
+from .snapshot import RAW, USER_AGENT, record
 
 URL = "https://cgmix.uscg.mil/xml/PSIXData.asmx"
 CACHE = os.path.join(RAW, "psix")
@@ -52,7 +52,7 @@ def query(**kw):
             req = urllib.request.Request(URL, data=env.encode(), headers={
                 "Content-Type": "text/xml; charset=utf-8",
                 "SOAPAction": '"https://cgmix.uscg.mil/getVesselSummaryXMLString"',
-                "User-Agent": "harborledger/0.1 (research; throttled 1/s)"})
+                "User-Agent": USER_AGENT})
             t = html.unescape(urllib.request.urlopen(req, timeout=60).read().decode("utf-8", "replace"))
             res = [dict(re.findall(r"<(\w+)>([^<]*)</\1>", r))
                    for r in re.findall(r"<VesselSummary>(.*?)</VesselSummary>", t, re.S)]

@@ -10,6 +10,8 @@
 [weather and trip time](docs/findings/weather-adds-little-to-coastal-trips.md) ·
 **Open benchmark:** [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24047861.svg)](https://doi.org/10.5281/zenodo.24047861) · [download (release `encounters-v1`)](https://github.com/maxsondcook/HarborLedger/releases/tag/encounters-v1) · [data card](docs/benchmark/README.md), with a sample in `docs/benchmark_sample/`
 
+**Data sources:** every source, its terms, robots.txt findings and how it is collected are listed in the [data-source register](docs/data-sources.md).
+
 ## Weather, forecasts, fishing and the collision-risk model
 
 ```bash
@@ -308,11 +310,11 @@ A **likely launch** is a small (≤ 35 m or unknown length), non-pleasure vessel
 - **Recall misses:** hull ranges ("SSN 807-809"), LCAC craft numbers, bare follow-on numbers ("72 AND 74 PIAS"), and "LCS 2&4", which the class-lead rule now suppresses.
 - **Firm long tail:** 138 small recipients are not mapped. They hold 1.3% of dollars.
 - **Ownership dates:** some are approximate and rest on single trade-press sources (see the `source` column).
-- **Wikipedia:** ship names from Wikipedia are CC BY-SA. That only matters if this graph is redistributed commercially, and the licence column flags it.
+- **Wikipedia:** ship names come from Wikipedia lists under CC BY-SA 4.0. Any redistribution needs attribution (given on the site), and adaptations of the lists must stay CC BY-SA. The licence column flags these rows.
 - **USAspending lag:** DoD data runs about 90 days behind, so recent quarters are incomplete.
 - **Test-year bias:** the test years are biased toward short availabilities, because long FY24–26 jobs are still open (censored).
 - **Unmeasured costs:** growth is measured against obligations, not costs. Modifications record when money was committed, not when the work happened.
-- **One month of AIS:** July only, and annualized hours assume July is typical. They also run 2024 data against a 2023 benchmark.
+- **Inventory year:** tug hours for 2024 and 2025 are compared with the Port of LA's 2023 inventory figure. (The July-only estimate above was replaced by full years.)
 - **Hours that aren't engine hours:** AIS can't see engine state, so "active hours" are movement time.
 - **Uncertain disadvantaged-community boundaries:** the boundaries use tract polygons, which extend over water. CARB may measure "within 2 miles" differently, and that hasn't been checked with CARB.
 - **What would improve the model:** a partner label (the Navy's independent government estimate, schedule days or the causes of growth) would help more than more features.

@@ -56,9 +56,13 @@ def read_manifest():
         return [json.loads(line) for line in f if line.strip()]
 
 
+# Every automated request identifies the project and a contact point (see docs/data-sources.md).
+USER_AGENT = "harborledger/0.1 (public-data research; +https://github.com/maxsondcook/HarborLedger)"
+
+
 def http_json(url, body=None, timeout=90, retries=3, backoff=5.0):
     data = json.dumps(body).encode() if body is not None else None
-    headers = {"Content-Type": "application/json", "User-Agent": "harborledger/0.1 (research)"}
+    headers = {"Content-Type": "application/json", "User-Agent": USER_AGENT}
     last = None
     for attempt in range(retries):
         try:

@@ -16,7 +16,7 @@ import urllib.request
 
 import numpy as np
 
-from .snapshot import RAW, record
+from .snapshot import RAW, USER_AGENT, record
 
 BASE = "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.{d}/{h:02d}/wave/gridded/gfswave.t{h:02d}z.wcoast.0p16.f{f:03d}.grib2"
 CACHE = os.path.join(RAW, "gfswave")
@@ -27,7 +27,7 @@ def _get(url, rng=None, timeout=60, retries=3):
     last = None
     for i in range(retries):
         try:
-            h = {"User-Agent": "harborledger/0.1 (research)"}
+            h = {"User-Agent": USER_AGENT}
             if rng:
                 h["Range"] = f"bytes={rng[0]}-{rng[1]}"
             with urllib.request.urlopen(urllib.request.Request(url, headers=h), timeout=timeout) as r:

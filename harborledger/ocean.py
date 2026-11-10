@@ -14,7 +14,7 @@ import urllib.request
 import numpy as np
 import pandas as pd
 
-from .snapshot import RAW, record
+from .snapshot import RAW, USER_AGENT, record
 
 NDBC_DIR = os.path.join(RAW, "ndbc")
 URL = "https://www.ndbc.noaa.gov/data/historical/stdmet/{s}h{y}.txt.gz"
@@ -31,7 +31,7 @@ def _get(url, path, source_params):
     os.makedirs(os.path.dirname(path), exist_ok=True)
     if os.path.exists(path):
         return path
-    req = urllib.request.Request(url, headers={"User-Agent": "harborledger/0.1 (research)"})
+    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
     with urllib.request.urlopen(req, timeout=120) as r, open(path, "wb") as f:
         f.write(r.read())
     record(path, "ndbc", url, source_params)
@@ -111,7 +111,7 @@ def erddap_csv(server, dataset, query, name, retries=4):
     last = None
     for i in range(retries):
         try:
-            req = urllib.request.Request(url, headers={"User-Agent": "harborledger/0.1 (research)"})
+            req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
             with urllib.request.urlopen(req, timeout=300) as r, open(path, "wb") as f:
                 f.write(r.read())
             record(path, "erddap", url, {"dataset": dataset})

@@ -17,6 +17,7 @@
   - The released data card must stay byte-identical to its `SHA256SUMS` entry. So the release link is added only to the docs copy (`docs/benchmark/README.md`), not to `benchmark.py`'s generator.
   - `gh` is not installed; it was run from the session scratchpad and has since been logged out.
 - **Zenodo:** the same 27 files are published as a dataset, DOI 10.5281/zenodo.24047861 (all-versions DOI 10.5281/zenodo.24047860), record https://zenodo.org/records/24047861, CC BY 4.0. Uploaded by the user through the web form; sizes and MD5s were checked against the local files before publishing. A new version should go through "New version" on that record.
+- **Lessons-learned audit (2026-11-10):** checked against `~/Desktop/Crossr/lessons-learned.md`. No block bypass, no SSL changes, no secrets or research in pushed history, no third-party data the terms forbid. Added `docs/data-sources.md` (register), a shared honest `USER_AGENT`, `tests/test_fetch_policy.py`, and collection rules in `CLAUDE.md`. Open items: ERDDAP robots.txt judgement call (email erd.data@noaa.gov if it matters); OEHHA conditions of use not read (CAPTCHA).
 - **Deploy Actions** are pinned by SHA to their Node 24 majors (checkout v6, setup-node v6, configure-pages v6, upload-pages-artifact v5, deploy-pages v5).
 
 ## Decided

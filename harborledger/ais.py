@@ -12,7 +12,7 @@ import pyarrow as pa
 import pyarrow.compute as pc
 import pyarrow.parquet as pq
 
-from .snapshot import RAW, record
+from .snapshot import RAW, USER_AGENT, record
 
 URL = "https://ocmgeodatastor1.blob.core.windows.net/marinecadastre/ais{y}/ais-{d}.parquet"
 # 2025 onward is published as Zstd-compressed daily CSV (filtered to one report per minute)
@@ -91,7 +91,7 @@ def fetch_day(day, log=sys.stdout):
     t0 = time.time()
     for attempt in range(3):
         try:
-            req = urllib.request.Request(url, headers={"User-Agent": "harborledger/0.1 (research)"})
+            req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
             with urllib.request.urlopen(req, timeout=600) as r, open(tmp, "wb") as f:
                 while True:
                     chunk = r.read(1 << 22)
