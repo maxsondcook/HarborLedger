@@ -30,6 +30,14 @@ Coast Guard records, port activity), with a public static website planned on top
     only for organisations, and owner addresses are never kept.
   - One working copy (`~/Desktop/HarborLedger`) and one `main` branch. `archive/pre-public` is a
     local-only record of the pre-publication history and must never be pushed.
+- **Site story (decided 2026-11-19):** the data engineering is the headline for hiring managers.
+  Home = "One ship, many records": a scrolling picker of showcase vessels (`trace.py` picks Navy
+  ships bridged to AIS plus richly linked commercial vessels), each source record with the join rule,
+  confidence and evidence, then the resolved vessel's 2025 track, contracts and close calls, the
+  raw-to-entity funnel, and findings labelled by the joins they needed. `/data` (Data engineering)
+  replaced Methods (`/methods` redirects). Vessel, yard and encounter pages are the explore layer.
+- **Navy hull <-> AIS bridge** (`bridge.py`): linked only when the hull's Wikipedia infobox IMO and/or
+  MMSI equal the AIS record's (0.98 both, 0.95 one, conflicts never linked); names never used.
 - **Hosting target:** static site (GitHub Pages) built from exported JSON; no server.
 - **Website stack:** Vite + React + TypeScript in `site/`, HashRouter (works on Pages without
   rewrites), `base: "/HarborLedger/"`. Python `run.py export` writes `site/public/data/*.json`

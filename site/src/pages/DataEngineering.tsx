@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Async, useTitle } from "../components/ui";
-import { useData, type Meta, type YearsInfo } from "../data";
+import { useData, type Funnel, type Register, type Traces, type YearsInfo } from "../data";
+import { FunnelView, SourceDot } from "../components/story";
 import { num, pct } from "../format";
 
 // Every number below is read from the exported test results, so this page stays in step with the data.
@@ -26,9 +27,10 @@ const Section = ({ id, title, children }: { id: string; title: string; children:
 const ci = (c?: [number, number]) => (c ? `${Math.round(c[0] * 100)}–${Math.round(c[1] * 100)}%` : "—");
 const passBadge = (ok?: boolean) => ok === undefined ? null : <span className={`badge ${ok ? "good" : "bad"}`}>{ok ? "pass" : "miss"}</span>;
 
-export default function Methods() {
-  useTitle("Methods");
-  const meta = useData<Meta>("meta.json");
+export default function DataEngineering() {
+  useTitle("Data engineering");
+  const reg = useData<Register>("register.json");
+  const tr = useData<Traces>("traces.json");
   const id = useData<Identity>("identity_tests.json");
   const px = useData<Psix>("psix_match.json");
   const gm = useData<Model>("growth_model.json");
@@ -46,48 +48,62 @@ export default function Methods() {
 
   return (
     <>
-      <h1>Methods</h1>
+      <h1>Data engineering</h1>
       <p className="lede">
-        How HarborLedger is built, how each link and number is tested, and where it falls short. Success tests were
-        set before each step was run, and results are reported whether they passed or not. Everything is
-        reproducible from public sources with the commands in the project README.
+        How five public sources that share no key become one graph of vessels: where each source comes from and on what
+        terms, the rule behind every join, how each rule was tested on samples held out until after it was fixed, what it
+        still misses, and the provenance every link carries. The analyses further down are built on this graph.
       </p>
       <nav className="small" style={{ display: "flex", gap: 14, flexWrap: "wrap", margin: "4px 0 10px" }}>
-        {[["sources", "Sources"], ["pipeline", "Pipeline"], ["identity", "Entity resolution"], ["ledger", "Cost-growth ledger"],
-          ["activity", "Tug activity"], ["encounters", "Encounters"], ["risk", "Collision-risk model"], ["weather", "Weather and fishing"], ["tests", "Test scorecard"], ["limits", "Limitations"], ["privacy", "Privacy and licences"]]
-          .map(([a, t]) => <a key={a} href={`#/methods`} onClick={(e) => { e.preventDefault(); document.getElementById(a)?.scrollIntoView({ behavior: "smooth" }); }}>{t}</a>)}
+        {[["sources", "1 · Sources and terms"], ["pipeline", "2 · Pipeline"], ["identity", "3 · ID resolution"], ["tests", "4 · Held-out tests"],
+          ["misses", "5 · What it misses"], ["provenance", "6 · Provenance"], ["analysis", "Analyses built on the graph"], ["limits", "Limitations"], ["privacy", "Privacy and licences"]]
+          .map(([a, t]) => <a key={a} href={`#/data`} onClick={(e) => { e.preventDefault(); document.getElementById(a)?.scrollIntoView({ behavior: "smooth" }); }}>{t}</a>)}
       </nav>
 
-      <Section id="sources" title="Sources">
-        <p>Every raw file is snapshotted with its source, query, fetch time, SHA-256 hash and licence in a manifest. Raw files are not redistributed; the site serves derived tables.</p>
-        <Async state={meta}>
-          {(m) => (
-            <div className="tablewrap">
-              <table>
-                <thead><tr><th>Source</th><th className="num">Files</th><th>Latest fetch</th><th>Licence / terms</th></tr></thead>
-                <tbody>
-                  {Object.entries(m.sources).map(([k, s]) => (
-                    <tr key={k}><td className="mono">{k}</td><td className="num">{num(s.files)}</td><td>{s.latest_fetch.slice(0, 10)}</td><td className="small">{s.license}</td></tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+      <Section id="sources" title="1 · Sources and terms">
+        <p>Every source was checked before code was written: its terms of use, its robots.txt, and what may be republished. The table is generated from the project's <a href="https://github.com/maxsondcook/HarborLedger/blob/main/docs/data-sources.md">data-source register</a>, and a test fails if the code fetches from a host that isn't listed in it. No source's block was ever worked around, and every request identifies the project.</p>
+        <Async state={reg}>
+          {(r) => (
+            <>
+              <div className="tablewrap">
+                <table>
+                  <thead><tr><th>Source</th><th>Terms / licence</th><th>robots.txt</th><th>How collected</th><th>Published</th></tr></thead>
+                  <tbody>
+                    {r.sources.map((x) => {
+                      const robots = Object.keys(x).find((k) => k.startsWith("robots")) ?? "robots.txt";
+                      return (
+                        <tr key={x.Source}>
+                          <td><b>{x.Source}</b><div className="muted small mono">{x["Host(s)"]}</div></td>
+                          <td className="small">{x["Terms / licence"]}</td>
+                          <td className="small">{x[robots]}</td>
+                          <td className="small">{x["How collected"]}</td>
+                          <td className="small">{x["Published?"]}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+              <p className="small"><b>Open questions, recorded rather than assumed away</b> (register reviewed {r.reviewed}):</p>
+              <ul className="small">{r.open_items.map((o, i) => <li key={i}>{o}</li>)}</ul>
+            </>
           )}
         </Async>
-        <p className="muted small">Excluded on licence grounds: Global Fishing Watch and OpenSanctions (non-commercial only) and Equasis (forbids reproduction and bulk download). The Coast Guard register was downloaded by hand because its server blocks automated downloads.</p>
       </Section>
 
-      <Section id="pipeline" title="Pipeline">
+      <Section id="pipeline" title="2 · Pipeline">
         <ol>
-          <li><b>Snapshot</b> USAspending awards and every contract modification (keyless API), MarineCadastre AIS (national daily files filtered to California waters), USCG PSIX vessel records (keyless SOAP service, cached), the USCG register of documented vessels, SB 535 tract polygons and Wikipedia ship lists.</li>
+          <li><b>Snapshot</b> USAspending awards and every contract modification (keyless API), MarineCadastre AIS (national daily files filtered to California waters), USCG PSIX vessel records (keyless SOAP service, cached), the USCG register of documented vessels, SB 535 tract polygons, Wikipedia ship lists and the infoboxes of each contract hull's Wikipedia article.</li>
           <li><b>Build</b> a SQLite graph: typed nodes (contracts, modifications, legal entities, curated firms, vessels, identifiers, port areas) and one edge table in which every link carries <i>confidence, method, source record, validity window and licence</i>.</li>
           <li><b>Derive</b> the cost-growth ledger, the growth model, tug activity hours and the encounter dataset.</li>
           <li><b>Export</b> static JSON; this site (Vite + React + TypeScript) reads it with no server.</li>
         </ol>
       </Section>
 
-      <Section id="identity" title="Entity resolution">
-        <p>The same ship or company appears under different identifiers in every source, and no source shares a key with another. Each match below is a separate, tested rule.</p>
+      <Section id="identity" title="3 · ID resolution">
+        <p>The same ship or company appears under different identifiers in every source, and no source shares a key with another. Records become one vessel only through links of confidence 0.5 or more. Weaker candidates are stored with their evidence for audit, but they never merge records.</p>
+        <Async state={tr}>{(d) => <><FunnelView f={d.funnel} /><Rules f={d.funnel} /></>}</Async>
+        <p>How each kind of link was tested:</p>
         <div className="tablewrap">
           <table>
             <thead><tr><th>Link</th><th>Rule</th><th>Measured</th></tr></thead>
@@ -113,6 +129,11 @@ export default function Methods() {
                 </td>
               </tr>
               <tr>
+                <td>Navy hull → AIS vessel</td>
+                <td className="small">Contracts name hulls and AIS names MMSIs, so the two never meet directly. Each hull's Wikipedia article infobox lists its IMO and MMSI. A link is made only when those equal the AIS record's: 0.98 if both agree, 0.95 if one is listed and agrees. If they point at different vessels, no link is made. Names are never used.</td>
+                <td className="small">{tr.data?.funnel.bridge.links ? `${tr.data.funnel.bridge.links} links, 0 conflicts; the call sign (not used by the rule) agrees on ${tr.data.funnel.bridge.call_sign_agrees} of ${tr.data.funnel.bridge.links}` : "—"}</td>
+              </tr>
+              <tr>
                 <td>Coast Guard record → vessel register</td>
                 <td className="small">Exact official number (PSIX identification = register official number); otherwise call sign with the same name gate.</td>
                 <td className="small">Spot-checked; links agree on name, service type and builder.</td>
@@ -122,6 +143,51 @@ export default function Methods() {
         </div>
         <p className="muted small">The hull and register labels were made by one person reading the source text; a second labeller has not checked them.</p>
       </Section>
+
+      <Section id="tests" title="4 · Held-out tests (set before running)">
+        <div className="tablewrap">
+          <table>
+            <thead><tr><th>Test (set before running)</th><th>Target</th><th>Result</th><th /></tr></thead>
+            <tbody>
+              <tr><td>Hull precision, fresh hand sample</td><td>≥ 95%</td><td>{h27 ? `${Math.round(h27.precision * 100)}% (${h27.tp}/${h27.tp + h27.fp})` : "—"}</td><td>{passBadge(h27?.pass)}</td></tr>
+              <tr><td>Award dollars mapped to a curated firm</td><td>≥ 90%</td><td>{id.data ? pct(id.data.firm_coverage.dollar_share_mapped, 1).replace("+", "") : "—"}</td><td>{passBadge(id.data?.firm_coverage.pass)}</td></tr>
+              <tr><td>Early-warning model beats always-median by ≥ 15% (90 days)</td><td>≥ 15%</td><td>{w90 ? pct(w90.models.gbm.mae_vs_global_median) : "—"}</td><td>{passBadge(w90?.pass_preregistered)}</td></tr>
+              <tr><td>AIS → Coast Guard match precision</td><td>≥ 97%</td><td>{px.data ? `${Math.round(px.data.precision * 100)}% (${px.data.correct}/${px.data.n})` : "—"}</td><td>{passBadge(px.data ? px.data.precision >= 0.97 : undefined)}</td></tr>
+              <tr><td>AIS assist-tug hours vs Port of LA inventory, gap explained</td><td>explained</td><td>partly: jitter and season ruled out; selection, year and definitions remain</td><td><span className="badge warn">partial</span></td></tr>
+              <tr><td>Encounter label stable to time grid</td><td>—</td><td>{ev.data ? pct(ev.data.label_agreement, 1).replace("+", "") : "—"} agreement</td><td /></tr>
+            </tbody>
+          </table>
+        </div>
+      </Section>
+
+      <Section id="misses" title="5 · What it misses">
+        <p>Misses are counted and published next to the hits:</p>
+        <ul>
+          <li><b>AIS ↔ Coast Guard recall:</b> {px.data ? `${num(px.data.same_as)} of ${num(px.data.vessels)} commercial AIS vessels matched; foreign ${pct(px.data.recall_foreign, 0).replace("+", "")}, U.S. only ${pct(px.data.recall_us, 0).replace("+", "")}` : "—"}. Many small U.S. boats broadcast no call sign or IMO, and the rules won't fall back to names. {px.data ? `${px.data.possible_same_as_held_back} weaker candidates are held back.` : ""}</li>
+          <li><b>Hull numbers in contract text:</b> {h27 ? `recall ${pct(h27.recall, 0).replace("+", "")} on the held-out sample` : "—"}. Hull ranges ("SSN 807-809"), "LCS 2&4" and some carrier planning awards are missed.</li>
+          {tr.data?.funnel.bridge.outcomes && (
+            <li><b>Navy hull ↔ AIS:</b> of {tr.data.funnel.bridge.articles} articles checked, {tr.data.funnel.bridge.outcomes.linked ?? 0} linked; {tr.data.funnel.bridge.outcomes.not_in_ais ?? 0} list IDs that aren't in the commercial AIS set (warships mostly broadcast as military type or not at all); {tr.data.funnel.bridge.outcomes.no_ids ?? 0} articles give no IMO or MMSI.</li>
+          )}
+          <li><b>One labeller:</b> the hand-checked samples were labelled by one person; a second labeller has not checked them.</li>
+        </ul>
+      </Section>
+
+      <Section id="provenance" title="6 · Provenance on every link">
+        <p>Every edge in the graph stores the same seven fields, and every raw file is recorded in a manifest with its source URL, query, fetch time, SHA-256 and licence. Any number on this site can be traced back to the files it came from, and any source can be removed by its tag.</p>
+        <pre className="small" style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 8, padding: 12, overflowX: "auto" }}>{`src         hull:AO-194
+rel         SAME_AS
+dst         mmsi:367221000
+confidence  0.98
+method      wikipedia_imo_mmsi
+source_ref  data/raw/wikipedia/articles/AO-194.json   (sha256 in data/raw/manifest.jsonl)
+license     CC BY-SA 4.0 (Wikipedia; attribution + share-alike)
+evidence    article='USNS John Ericsson' infobox imo=8511512 mmsi=367221000;
+            ais imo=8511512 mmsi=367221000; call_sign agrees`}</pre>
+        <p className="muted small">Links also carry a validity window where the source gives one (for example ownership dates, or the days a vessel was seen).</p>
+      </Section>
+
+      <h2 id="analysis" style={{ marginTop: 34 }}>Analyses built on the graph</h2>
+      <p className="muted small">Each of these depends on the joins above.</p>
 
       <Section id="ledger" title="Cost-growth ledger and early-warning model">
         <p>
@@ -209,22 +275,6 @@ export default function Methods() {
         {fi && <p className="small">Fishing: AUC gain from ocean conditions in predicting which cells are fished, 95% CI +{fi.auc_gain_from_ocean_ci95[0]} to +{fi.auc_gain_from_ocean_ci95[1]}.</p>}
       </Section>
 
-      <Section id="tests" title="Test scorecard">
-        <div className="tablewrap">
-          <table>
-            <thead><tr><th>Test (set before running)</th><th>Target</th><th>Result</th><th /></tr></thead>
-            <tbody>
-              <tr><td>Hull precision, fresh hand sample</td><td>≥ 95%</td><td>{h27 ? `${Math.round(h27.precision * 100)}% (${h27.tp}/${h27.tp + h27.fp})` : "—"}</td><td>{passBadge(h27?.pass)}</td></tr>
-              <tr><td>Award dollars mapped to a curated firm</td><td>≥ 90%</td><td>{id.data ? pct(id.data.firm_coverage.dollar_share_mapped, 1).replace("+", "") : "—"}</td><td>{passBadge(id.data?.firm_coverage.pass)}</td></tr>
-              <tr><td>Early-warning model beats always-median by ≥ 15% (90 days)</td><td>≥ 15%</td><td>{w90 ? pct(w90.models.gbm.mae_vs_global_median) : "—"}</td><td>{passBadge(w90?.pass_preregistered)}</td></tr>
-              <tr><td>AIS → Coast Guard match precision</td><td>≥ 97%</td><td>{px.data ? `${Math.round(px.data.precision * 100)}% (${px.data.correct}/${px.data.n})` : "—"}</td><td>{passBadge(px.data ? px.data.precision >= 0.97 : undefined)}</td></tr>
-              <tr><td>AIS assist-tug hours vs Port of LA inventory, gap explained</td><td>explained</td><td>partly: jitter and season ruled out; selection, year and definitions remain</td><td><span className="badge warn">partial</span></td></tr>
-              <tr><td>Encounter label stable to time grid</td><td>—</td><td>{ev.data ? pct(ev.data.label_agreement, 1).replace("+", "") : "—"} agreement</td><td /></tr>
-            </tbody>
-          </table>
-        </div>
-      </Section>
-
       <Section id="limits" title="Limitations">
         <ul>
           <li><b>AIS is not ground truth.</b> Positions are antenna positions, not hull outlines; most small craft and many warships do not broadcast; MarineCadastre thins reports and freezes each vessel's name and identifiers for the year.</li>
@@ -243,5 +293,25 @@ export default function Methods() {
         </ul>
       </Section>
     </>
+  );
+}
+
+function Rules({ f }: { f: Funnel }) {
+  return (
+    <div className="tablewrap">
+      <table>
+        <thead><tr><th>Join rule</th><th>Links</th><th className="num">Count</th><th className="num">Confidence</th></tr></thead>
+        <tbody>
+          {f.by_method.map((m) => (
+            <tr key={m.method + m.rel}>
+              <td className="small">{m.rule}<div className="muted mono">{m.method}</div></td>
+              <td className="small">{m.rel === "ABOUT_VESSEL" ? <><SourceDot s="usaspending" /> → <SourceDot s="wikipedia" /></> : m.method.startsWith("wikipedia") ? <><SourceDot s="wikipedia" /> → <SourceDot s="ais" /></> : m.method.includes("mvus") || m.method === "official_number" ? <>{m.method === "official_number" ? <SourceDot s="psix" /> : <SourceDot s="ais" />} → <SourceDot s="mvus" /></> : <><SourceDot s="ais" /> → <SourceDot s="psix" /></>}</td>
+              <td className="num">{num(m.n)}</td>
+              <td className="num">{m.min_conf === m.max_conf ? m.min_conf.toFixed(2) : `${m.min_conf.toFixed(2)}–${m.max_conf.toFixed(2)}`}{m.max_conf < 0.5 ? " (audit only)" : ""}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }

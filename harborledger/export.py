@@ -215,6 +215,12 @@ def export(out=OUT):
                        "availabilities": count("SELECT COUNT(*) FROM availability") if has("availability") else 0},
             "sources": srcs}
     _w(os.path.join(out, "meta.json"), meta)
+
+    # ---------- data engineering story: traces, funnel, register, coastline ----------
+    from . import basemap, trace
+    print("traces:", trace.export(con, out, _w))
+    _w(os.path.join(out, "register.json"), trace.register())
+    print("coastline:", basemap.export())
     n_files = sum(len(fs) for _, _, fs in os.walk(out))
     size = sum(os.path.getsize(os.path.join(d, f)) for d, _, fs in os.walk(out) for f in fs)
     print(f"exported {n_files} files, {size / 1e6:.1f} MB -> {out}")

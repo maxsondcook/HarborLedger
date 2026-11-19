@@ -151,6 +151,8 @@ def build(verbose=True):
     con.commit()
     n_reg = build_registry(con)
     con.commit()
+    from . import bridge
+    n_bridge = bridge.link(con, log=print if verbose else (lambda s: None))
     if verbose:
         print("maritime layer:", n_mar)
         print("registry layer:", n_reg)

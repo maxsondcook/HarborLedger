@@ -111,3 +111,29 @@ export function useYear(): [number | null, (y: number) => void, number[]] {
   };
   return [year, set, years];
 }
+
+// ---------- data-engineering story (harborledger/trace.py) ----------
+export type SourceKey = "usaspending" | "wikipedia" | "ais" | "psix" | "mvus";
+export type Join = { rule: string; method: string; confidence: number; evidence: string | null };
+export type TraceRecord = { source: SourceKey; id: string; names_it_as: string | null; fields: Record<string, string | number | null>; join?: Join };
+export type TraceIndexRow = { slug: string; kind: "navy" | "commercial"; name: string | null; hull: string | null; group: string | null; sources: SourceKey[]; n_sources: number; hours: number; alerts: number; contracts: number };
+export type Trace = {
+  slug: string; kind: "navy" | "commercial"; name: string | null; hull: string | null; group: string | null; sources: SourceKey[];
+  nodes: string[]; records: TraceRecord[]; held_back: { src: string; dst: string; confidence: number; method: string; evidence: string }[];
+  contracts: { n: number; total: number; list: { piid: string; description: string; recipient: string; start: string; amount: number; confidence: number; method: string; evidence: string }[] };
+  track: null | { hours: number; days: number; first: string; last: string; points: [number, number, number][] }; track_year: number;
+  encounters: { alerts: number; realized: number; traffic_alerts: number; service_share?: number; regions?: Record<string, number>;
+    closest: { day: string; other: string; min_sep_m: number; pred_cpa_m: number; geometry: string; region: string }[] };
+  vessel_page: string;
+};
+export type Funnel = {
+  raw: { source: SourceKey; label: string; n: number }[];
+  identifiers: number; records: number; links: number; links_asserted: number; links_held_back: number;
+  entities: number; entities_multi_source: number;
+  by_method: { method: string; rel: string; n: number; min_conf: number; max_conf: number; rule: string }[];
+  accuracy: { test: string; correct: number; n: number; ci95: [number, number] | null; recall: number | null }[];
+  bridge: { articles?: number; outcomes?: Record<string, number>; linked_hulls?: number; by_method?: Record<string, number>; call_sign_agrees?: number; links?: number };
+};
+export type Traces = { funnel: Funnel; vessels: TraceIndexRow[]; sources: Record<SourceKey, string> };
+export type Register = { sources: Record<string, string>[]; open_items: string[]; reviewed: string | null };
+export type Coast = { bbox: [number, number, number, number]; lines: [number, number][][] };

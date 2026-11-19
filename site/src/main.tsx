@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { HashRouter, NavLink, Route, Routes } from "react-router-dom";
+import { HashRouter, Navigate, NavLink, Route, Routes } from "react-router-dom";
 import "./styles.css";
 import Home from "./pages/Home";
 import Vessels from "./pages/Vessels";
@@ -11,7 +11,7 @@ import Placeholder from "./pages/Placeholder";
 import Ledger from "./pages/Ledger";
 import Activity from "./pages/Activity";
 import Encounters, { EncounterPage } from "./pages/Encounters";
-import Methods from "./pages/Methods";
+import DataEngineering from "./pages/DataEngineering";
 import Ocean from "./pages/Ocean";
 
 function App() {
@@ -22,13 +22,15 @@ function App() {
         <div className="bar">
           <NavLink to="/" className="brand">HarborLedger</NavLink>
           <nav>
+            <NavLink to="/" end className={link}>One ship, many records</NavLink>
+            <NavLink to="/data" className={link}>Data engineering</NavLink>
+            <span className="muted small" aria-hidden="true">|</span>
             <NavLink to="/vessels" className={link}>Vessels</NavLink>
             <NavLink to="/yards" className={link}>Shipyards</NavLink>
             <NavLink to="/ledger" className={link}>Repair ledger</NavLink>
             <NavLink to="/activity" className={link}>Harbor activity</NavLink>
             <NavLink to="/encounters" className={link}>Encounters</NavLink>
             <NavLink to="/ocean" className={link}>Weather &amp; fishing</NavLink>
-            <NavLink to="/methods" className={link}>Methods</NavLink>
           </nav>
         </div>
       </header>
@@ -44,12 +46,13 @@ function App() {
           <Route path="/encounters" element={<Encounters />} />
           <Route path="/encounters/:id" element={<EncounterPage />} />
           <Route path="/ocean" element={<Ocean />} />
-          <Route path="/methods" element={<Methods />} />
+          <Route path="/data" element={<DataEngineering />} />
+          <Route path="/methods" element={<Navigate to="/data" replace />} />
           <Route path="*" element={<Placeholder title="Not found" />} />
         </Routes>
         <footer className="foot">
           Built from public data: USAspending, NOAA/BOEM MarineCadastre AIS, USCG PSIX and Merchant Vessels of
-          the U.S., CalEPA SB 535 tracts, and Wikipedia ship lists (CC BY-SA). Every link shows its confidence
+          the U.S., CalEPA SB 535 tracts, Wikipedia ship lists and articles (CC BY-SA), and the Natural Earth coastline (public domain). Every link shows its confidence
           and method. Not affiliated with any agency.
         </footer>
       </main>

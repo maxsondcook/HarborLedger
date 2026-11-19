@@ -2,6 +2,12 @@
 
 **Live site:** https://maxsondcook.github.io/HarborLedger/
 
+**What it shows:** five public sources (Navy contracts, Wikipedia, AIS ship tracking, Coast Guard
+inspections and the federal vessel register) that share no key, resolved into one graph of vessels.
+The home page walks one vessel's records through every join, with the rule, confidence and evidence;
+the [Data engineering](https://maxsondcook.github.io/HarborLedger/#/data) page covers sources, rules,
+held-out tests, misses and provenance.
+
 **Case study and résumé bullets:** [docs/CASE_STUDY.md](docs/CASE_STUDY.md)
 
 **Write-ups:** [collision alerts](docs/findings/collision-alerts-real-traffic-baseline.md) ·
@@ -58,14 +64,18 @@ npm --prefix site run dev          # http://localhost:5173/HarborLedger/ (hot re
 All commands use isolated Python (`-I`); `run.py` adds the project to `sys.path` itself.
 
 ```bash
-python3 -I harborledger/run.py pull-txns harborledger/data/raw/usaspending/awards/navy_336611_US_ge5m_FY15-26.json
-python3 -I harborledger/run.py build
-python3 -I harborledger/run.py evaluate
-python3 -I -m pytest -q harborledger/tests
+python3 -I run.py pull-txns data/raw/usaspending/awards/navy_336611_US_ge5m_FY15-26.json
+python3 -I run.py pull-wiki-ids   # Wikipedia infobox IMO/MMSI for each contract hull (1 request/s, cached)
+python3 -I run.py build           # graph from scratch, including the Navy hull <-> AIS bridge
+python3 -I run.py growth          # adds the availability table
+python3 -I run.py export          # site JSON, incl. traces.json, trace/<slug>.json, register.json, coast.json
+python3 -I run.py evaluate
+python3 -I -m pytest -q tests
 ```
 
 `pull-txns` can be resumed, and a second worker can run with `--reverse`. `build` rebuilds
-`data/harborledger.sqlite` from scratch, using the raw snapshots and the curated tables.
+`data/harborledger.sqlite` from scratch, using the raw snapshots and the curated tables. Run `build`
+before `pull-wiki-ids` on a fresh checkout (it needs the contract-to-hull links), then `build` again.
 
 ## Layout
 

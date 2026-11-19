@@ -21,6 +21,7 @@ LICENSES = {
     "ndbc": "U.S. federal data, public domain (NOAA National Data Buoy Center)",
     "erddap": "U.S. federal data, public domain (NOAA CoastWatch / SWFSC ERDDAP)",
     "calepa":"CalEPA/OEHHA public data (SB 535 disadvantaged communities; verify terms)",
+    "naturalearth": "Public domain (Natural Earth)",
     "derived": "Derived from sources listed on edge",
 }
 

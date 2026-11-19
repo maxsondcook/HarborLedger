@@ -103,6 +103,10 @@ def main(argv):
         out = fc.leg_features(legs, route)
         out.to_parquet(os.path.join(HERE, "data", "derived", "coastal_legs_forecast.parquet"), index=False)
         print(len(out), "legs;", int((out.fc_steps > 0).sum()), "with forecasts", flush=True)
+    elif cmd == "pull-wiki-ids":
+        from harborledger import bridge, db
+        con = db.connect()
+        bridge.fetch(con, log=lambda s: print(s, flush=True))
     elif cmd == "export":
         from harborledger import export
         export.export()

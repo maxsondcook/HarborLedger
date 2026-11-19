@@ -1,0 +1,9 @@
+{
+ "articles": 254,
+ "outcomes": {
+  "not_in_ais": 147,
+  "linked": 7,
+  "no_ids": 99,
+  "no_article": 1
+ }
+}

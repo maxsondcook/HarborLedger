@@ -5,7 +5,7 @@ checked. Add a row **before** writing code for a new source; `tests/test_fetch_p
 code fetches from a host not listed here. Each raw file's source, URL, fetch time, sha256 and licence
 are also recorded per file in `data/raw/manifest.jsonl`.
 
-Last reviewed 2026-11-10 (against the CROSSR lessons-learned checklist).
+Last reviewed 2026-11-19 (against the CROSSR lessons-learned checklist).
 
 ## Collection rules
 
@@ -39,6 +39,8 @@ Last reviewed 2026-11-10 (against the CROSSR lessons-learned checklist).
 | NOAA GFS-Wave forecast archive | `noaa-gfs-bdp-pds.s3.amazonaws.com` | NOAA Open Data Dissemination on AWS, public domain | none (S3) | byte-range requests from `.idx` files, 8 workers, cached | trip-time forecast | derived values |
 | SB 535 disadvantaged communities (2022) | `geodata.dot.ca.gov` (Caltrans ArcGIS service; credits OEHHA/CalEPA) | California's site policy treats state information as generally public domain. **OEHHA's own conditions-of-use page sits behind a CAPTCHA and was not read** (see note) | none served | one ArcGIS REST query, cached | "near a disadvantaged community" share of tug hours | derived shares only; polygons not published |
 | Wikipedia ship lists | `en.wikipedia.org` | CC BY-SA 4.0: attribution, and share-alike for adaptations | API allowed | MediaWiki API, 2 pages | Navy and MSC hull names | committed raw copy, credited on the site |
+| Wikipedia ship articles (infobox IDs) | `en.wikipedia.org` | CC BY-SA 4.0. Only the IMO, MMSI and call-sign facts are used | API allowed | MediaWiki API, one cached request per Navy hull that has contracts, 1 s apart | links Navy hulls to AIS on stable IDs (`bridge`) | the IDs and the link; credited |
+| Natural Earth 1:10m coastline | `raw.githubusercontent.com` (official `nvkelso/natural-earth-vector` repo) | Public domain ("no permission is needed") | none served (404) | one GeoJSON download, clipped to California and simplified | base map for vessel tracks | clipped coastline |
 | Excluded: Global Fishing Watch, OpenSanctions, Equasis | n/a | non-commercial only / no reproduction or bulk download | n/a | not used | n/a | no |
 
 ## Open items and judgement calls
