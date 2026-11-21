@@ -36,6 +36,13 @@ Coast Guard records, port activity), with a public static website planned on top
   confidence and evidence, then the resolved vessel's 2025 track, contracts and close calls, the
   raw-to-entity funnel, and findings labelled by the joins they needed. `/data` (Data engineering)
   replaced Methods (`/methods` redirects). Vessel, yard and encounter pages are the explore layer.
+- **Home in three steps (decided 2026-11-20):** (1) uniting the data: `JoinMap` in `story.tsx` shows
+  each source, its native ID and the key joining each pair, plus a rule table built from
+  `funnel.by_method` and held-out tests; then the ship trace and funnel. (2) What the unified data makes
+  possible: the analyses as options, each tagged with the sources it needs. (3) What I built: the Navy
+  repair cost ledger is the featured application (hardest join, public money, honest time-split
+  tests), including where its early-warning model fell short. Other analyses are "explored".
+  Nav: Overview, Data engineering, Repair cost ledger, then the explore pages.
 - **Navy hull <-> AIS bridge** (`bridge.py`): linked only when the hull's Wikipedia infobox IMO and/or
   MMSI equal the AIS record's (0.98 both, 0.95 one, conflicts never linked); names never used.
 - **Hosting target:** static site (GitHub Pages) built from exported JSON; no server.

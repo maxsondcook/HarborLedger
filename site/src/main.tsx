@@ -22,12 +22,12 @@ function App() {
         <div className="bar">
           <NavLink to="/" className="brand">HarborLedger</NavLink>
           <nav>
-            <NavLink to="/" end className={link}>One ship, many records</NavLink>
+            <NavLink to="/" end className={link}>Overview</NavLink>
             <NavLink to="/data" className={link}>Data engineering</NavLink>
+            <NavLink to="/ledger" className={link}>Repair cost ledger</NavLink>
             <span className="muted small" aria-hidden="true">|</span>
             <NavLink to="/vessels" className={link}>Vessels</NavLink>
             <NavLink to="/yards" className={link}>Shipyards</NavLink>
-            <NavLink to="/ledger" className={link}>Repair ledger</NavLink>
             <NavLink to="/activity" className={link}>Harbor activity</NavLink>
             <NavLink to="/encounters" className={link}>Encounters</NavLink>
             <NavLink to="/ocean" className={link}>Weather &amp; fishing</NavLink>
