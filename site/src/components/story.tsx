@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { Fragment, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useData, type Coast, type Funnel, type SourceKey, type Trace, type TraceIndexRow } from "../data";
 import { GROUP_LABEL, money, num } from "../format";
@@ -245,5 +245,101 @@ export function FunnelView({ f }: { f: Funnel }) {
         <div className="small muted">{num(f.entities_multi_source)} of them joined across two or more sources</div>
       </div>
     </div>
+  );
+}
+
+/* ---------- source-level join map ---------- */
+
+type Pair = { a: SourceKey; b: SourceKey; key: string; methods: string[]; test?: RegExp };
+/** Each pair of sources the graph joins, the identifier that does it, and the build methods that assert those edges. */
+const PAIRS: Pair[] = [
+  { a: "usaspending", b: "wikipedia", key: "hull number", methods: ["regex_hull", "gazetteer", "gazetteer_short", "regex_hull_classlead"], test: /hull/i },
+  { a: "wikipedia", b: "ais", key: "IMO + MMSI", methods: ["wikipedia_imo_mmsi"] },
+  { a: "ais", b: "psix", key: "call sign or IMO", methods: ["callsign_gated", "name_plus_imo", "callsign_weak_name"], test: /AIS to Coast Guard/i },
+  { a: "psix", b: "mvus", key: "official number", methods: ["official_number", "callsign_gated_mvus"] },
+];
+const NATIVE_ID: Record<SourceKey, string> = {
+  usaspending: "Contract ID; the ship is only named in free text",
+  wikipedia: "Hull number and name; infobox IMO and MMSI",
+  ais: "MMSI; also broadcasts name, call sign, IMO",
+  psix: "Own vessel ID; call sign; IMO or official no.",
+  mvus: "Official number; call sign",
+};
+/** Methods whose edge runs between a different pair than the row they are listed under. */
+const ROUTE_NOTE: Record<string, string> = { callsign_gated_mvus: "AIS → register directly, for ships PSIX did not return: " };
+
+export function JoinMap({ f }: { f: Funnel }) {
+  const rawBy = Object.fromEntries(f.raw.map((r) => [r.source, r.n])) as Record<SourceKey, number>;
+  const byMethod = Object.fromEntries(f.by_method.map((m) => [m.method, m]));
+  const conf = (lo: number, hi: number) => (lo === hi ? lo.toFixed(2) : `${lo.toFixed(2)}–${hi.toFixed(2)}`);
+  return (
+    <>
+      <div className="joinmap" role="list" aria-label="How the five sources are joined">
+        {SOURCE_ORDER.map((s, i) => {
+          const p = PAIRS.find((x) => x.a === s);
+          return (
+            <div key={s} className="jm-step" role="listitem">
+              <div className={`jm-node src-${s}`}>
+                <b><SourceDot s={s} label /></b>
+                <span className="small">{num(rawBy[s] ?? 0)} raw records</span>
+                <span className="small muted">{NATIVE_ID[s]}</span>
+              </div>
+              {p && i < SOURCE_ORDER.length - 1 && (
+                <div className="jm-edge" aria-label={`joined to ${SOURCE_SHORT[p.b]} on ${p.key}`}>
+                  <span className="jm-key">{p.key}</span>
+                  <span className="jm-arrow" aria-hidden="true" />
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+      <div className="tablewrap" style={{ marginTop: 14 }}>
+        <table>
+          <thead>
+            <tr><th>Rule</th><th className="num">Links</th><th className="num">Confidence</th><th>Use</th></tr>
+          </thead>
+          <tbody>
+            {PAIRS.map((p) => {
+              const t = p.test ? f.accuracy.find((a) => p.test!.test(a.test)) : undefined;
+              const bridge = p.a === "wikipedia" && f.bridge.links ? f.bridge : undefined;
+              return (
+                <Fragment key={p.a}>
+                  <tr className="jm-group">
+                    <td colSpan={4}>
+                      <SourceDot s={p.a} label /> <span aria-hidden="true">↔</span> <SourceDot s={p.b} label />
+                      <span className="muted"> · key: {p.key}</span>
+                      {t && (
+                        <span className="badge good" style={{ marginLeft: 8 }}>
+                          held-out test {t.correct}/{t.n}
+                          {t.ci95 ? ` (95% CI ${Math.round(t.ci95[0] * 100)}–${Math.round(t.ci95[1] * 100)}%)` : ""}
+                          {t.recall !== null && t.recall !== undefined ? `, recall ${Math.round(t.recall * 100)}%` : ""}
+                        </span>
+                      )}
+                      {bridge && (
+                        <span className="badge" style={{ marginLeft: 8 }}>
+                          call sign, not used by the rule, agrees on {bridge.call_sign_agrees}/{bridge.links}
+                        </span>
+                      )}
+                    </td>
+                  </tr>
+                  {p.methods.map((m) => byMethod[m]).filter(Boolean).map((m) => {
+                    const audit = m.rel.startsWith("POSSIBLE") || m.max_conf < 0.5;
+                    return (
+                      <tr key={m.method}>
+                        <td>{ROUTE_NOTE[m.method] ?? ""}{m.rule}</td>
+                        <td className="num">{num(m.n)}</td>
+                        <td className="num">{conf(m.min_conf, m.max_conf)}</td>
+                        <td>{audit ? <span className="badge warn">audit only</span> : <span className="badge">merged</span>}</td>
+                      </tr>
+                    );
+                  })}
+                </Fragment>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 }
