@@ -1,6 +1,14 @@
 """Entry point. Run with isolated Python from anywhere:
 
-    python3 -I harborledger/run.py <command> [args]
+    python3 -I run.py <command> [args]
+
+Rebuild everything from local raw data in dependency order (no network calls):
+    python3 -I run.py all                 # build -> growth -> analyses -> export -> check
+    python3 -I run.py all --list          # show the steps without running them
+    python3 -I run.py all --from export   # resume from a step
+Fetch steps (pull-*, match-psix, forecast-fetch) are separate: they are throttled, cached and
+partly manual. `pull-wiki-ids` needs a built database, so on a fresh checkout run
+`build`, then `pull-wiki-ids`, then `all`.
 
 Commands:
     register-awards FILE   record an existing award-search JSON in the manifest
@@ -20,12 +28,65 @@ Commands:
     forecast-legs          GFS-Wave forecast features along the reference route for each leg's departure
     export                 write static JSON for the website to site/public/data/
     growth                 build the availability ledger and run the weeks 3-4 growth model
+    collision              collision-risk model (train 2024, test 2025)
+    benchmark              write the open encounter benchmark files to data/benchmark/
+    results                headline results table with confidence intervals (eval/headline_results.*)
+    check                  integrity checks on the graph and the site JSON (exit 1 on any error)
+    all [--list] [--from STEP]   the whole offline pipeline, in order
 """
 import os
 import sys
+import time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)  # -I drops the script dir from sys.path; add the project explicitly
+
+
+# Offline pipeline, in dependency order. Each step is a run.py command.
+PIPELINE = [
+    ("tug-activity", "AIS tug hours per year (build reads these for ACTIVE_IN edges)"),
+    ("build", "graph from raw snapshots, curated tables, PSIX matches and tug hours"),
+    ("growth", "availability ledger and growth model (needs build)"),
+    ("evaluate", "hull-extraction success tests (needs build)"),
+    ("encounters", "close-quarters encounters and validation per year"),
+    ("weather-join", "vessel-hours joined to NOAA buoys per year"),
+    ("weather", "speed loss, small craft; writes the coastal legs (needs weather-join)"),
+    ("forecast-legs", "GFS-Wave features per coastal leg (needs weather + cached forecasts)"),
+    ("weather-final", "re-run weather so the leg model uses the fresh forecast features"),
+    ("fishing", "fishing vs ocean conditions"),
+    ("collision", "collision-risk model (needs encounters)"),
+    ("benchmark", "open encounter benchmark files (needs collision)"),
+    ("export", "site JSON (needs build, growth and the analyses)"),
+    ("results", "headline results table with CIs (needs the eval outputs)"),
+    ("check", "integrity checks on the graph and site JSON"),
+]
+ALIASES = {"weather-final": "weather"}
+
+
+def run_all(args):
+    names = [n for n, _ in PIPELINE]
+    if "--list" in args:
+        for i, (n, d) in enumerate(PIPELINE, 1):
+            print(f"{i:2}. {n:<14} {d}")
+        return 0
+    start = 0
+    if "--from" in args:
+        step = args[args.index("--from") + 1]
+        if step not in names:
+            print(f"unknown step {step!r}; steps: {', '.join(names)}")
+            return 1
+        start = names.index(step)
+    t_all = time.time()
+    for n in names[start:]:
+        print(f"\n=== {n}", flush=True)
+        t = time.time()
+        rc = main([ALIASES.get(n, n)])
+        print(f"=== {n} done in {time.time() - t:.0f} s", flush=True)
+        if rc:
+            print(f"stopped at {n} (exit {rc}); resume with: python3 -I run.py all --from {n}")
+            return rc
+    print(f"\npipeline finished in {(time.time() - t_all) / 60:.1f} min")
+    return 0
 
 
 def main(argv):
@@ -113,6 +174,21 @@ def main(argv):
     elif cmd == "growth":
         from harborledger import model
         model.run()
+    elif cmd == "collision":
+        from harborledger import collision
+        r = collision.run()
+        print({m["model"]: m["auc"] for m in r["models"]}, flush=True)
+    elif cmd == "benchmark":
+        from harborledger import benchmark
+        benchmark.build()
+    elif cmd == "results":
+        from harborledger import results
+        results.run()
+    elif cmd == "check":
+        from harborledger import checks
+        return 1 if checks.run() else 0
+    elif cmd == "all":
+        return run_all(args)
     elif cmd == "evaluate":
         from harborledger import evaluate
         evaluate.run()

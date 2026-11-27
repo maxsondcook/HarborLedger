@@ -52,5 +52,11 @@ Coast Guard records, port activity), with a public static website planned on top
   two weeks old and checked on npm for real maintainers before adding.
 - **Multi-hull contracts:** value is split equally across the hulls they name on vessel pages, and
   labelled as such.
+- **Reproducibility and checks (decided 2026-11-26):** `run.py all` runs the offline pipeline in
+  dependency order (`--list`, `--from STEP`); `run.py check` (`checks.py`) enforces the graph rules
+  in `docs/schema.md`; `run.py results` (`results.py`) writes `docs/RESULTS.md` with a 95% CI and
+  method for every headline number (day-block bootstrap for alert data). `.github/workflows/test.yml`
+  runs pytest and the site type-check. Code MIT, derived data CC BY 4.0 (`LICENSE-DATA.md`).
+  The old week-by-week README is `docs/BUILD_LOG.md`.
 - **Encounter dataset is in scope** (decided 2026-11-07): close-quarters encounters (CPA/TCPA) from
   California AIS, aimed at autonomy-oriented employers such as Saronic.

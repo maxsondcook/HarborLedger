@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use this software or its data, please cite it as below."
+title: "HarborLedger: a public-data graph of California's working waterfront"
+type: software
+authors:
+  - family-names: Cook
+    given-names: Maxson
+    alias: maxsondcook
+repository-code: "https://github.com/maxsondcook/HarborLedger"
+url: "https://maxsondcook.github.io/HarborLedger/"
+license: MIT
+date-released: "2026-11-07"
+keywords:
+  - entity resolution
+  - AIS
+  - maritime
+  - record linkage
+  - collision risk
+references:
+  - type: dataset
+    title: "HarborLedger close-quarters encounter benchmark v1"
+    authors:
+      - family-names: Cook
+        given-names: Maxson
+    doi: "10.5281/zenodo.24047861"
+    license: CC-BY-4.0
+    year: 2026
+    repository: "https://zenodo.org/records/24047861"

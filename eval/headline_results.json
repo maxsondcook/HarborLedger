@@ -1,0 +1,233 @@
+[
+  {
+    "area": "Entity resolution",
+    "metric": "Hull extraction precision (held-out 2027 sample)",
+    "value": 1.0,
+    "ci95": [
+      0.871,
+      1.0
+    ],
+    "n": 26,
+    "method": "wilson",
+    "note": "Target was >= 0.95; the CI lower bound (0.87) is below it, so the sample is too small to confirm the target."
+  },
+  {
+    "area": "Entity resolution",
+    "metric": "Hull extraction recall (held-out 2027 sample)",
+    "value": 0.867,
+    "ci95": [
+      0.703,
+      0.947
+    ],
+    "n": 30,
+    "method": "wilson",
+    "note": ""
+  },
+  {
+    "area": "Entity resolution",
+    "metric": "AIS -> Coast Guard match precision (3 review samples)",
+    "value": 1.0,
+    "ci95": [
+      0.979,
+      1.0
+    ],
+    "n": 180,
+    "method": "wilson",
+    "note": "Reviewer checked the same fields the rule uses (name, IMO, call sign), so this tests the rule's implementation more than true identity."
+  },
+  {
+    "area": "Entity resolution",
+    "metric": "AIS -> Coast Guard match recall (auto-merged / all vessels)",
+    "value": 0.836,
+    "ci95": [
+      0.826,
+      0.847
+    ],
+    "n": 4922,
+    "method": "wilson",
+    "note": "U.S.-flag recall 0.503, foreign 0.947."
+  },
+  {
+    "area": "Entity resolution",
+    "metric": "Navy hulls linked to AIS (infobox IMO/MMSI)",
+    "value": 7,
+    "ci95": null,
+    "n": 254,
+    "method": "count",
+    "note": "7 of 254 hull articles; 0 conflicts. 147 have IDs not in the commercial AIS set."
+  },
+  {
+    "area": "Encounters",
+    "metric": "Straight-line alert precision, all traffic alerts (2024)",
+    "value": 0.568,
+    "ci95": [
+      0.561,
+      0.574
+    ],
+    "n": 895503,
+    "method": "day-block",
+    "note": "Includes pairs already within 0.25 nm at the first alert; 366 days resampled."
+  },
+  {
+    "area": "Encounters",
+    "metric": "Label agreement with report-time recomputation (2024)",
+    "value": 0.902,
+    "ci95": [
+      0.869,
+      0.928
+    ],
+    "n": 400,
+    "method": "wilson",
+    "note": "Measures sensitivity to the 1-minute grid, not independent ground truth."
+  },
+  {
+    "area": "Encounters",
+    "metric": "Straight-line alert precision, all traffic alerts (2025)",
+    "value": 0.571,
+    "ci95": [
+      0.563,
+      0.581
+    ],
+    "n": 865576,
+    "method": "day-block",
+    "note": "Includes pairs already within 0.25 nm at the first alert; 365 days resampled."
+  },
+  {
+    "area": "Encounters",
+    "metric": "Label agreement with report-time recomputation (2025)",
+    "value": 0.912,
+    "ci95": [
+      0.881,
+      0.936
+    ],
+    "n": 400,
+    "method": "wilson",
+    "note": "Measures sensitivity to the 1-minute grid, not independent ground truth."
+  },
+  {
+    "area": "Collision risk",
+    "metric": "Straight-line alert precision, open alerts (> 0.25 nm at first alert, 2025)",
+    "value": 0.507,
+    "ci95": [
+      0.5,
+      0.514
+    ],
+    "n": 752017,
+    "method": "day-block",
+    "note": "This is the 51% in the collision write-up; the 57% elsewhere includes already-close pairs."
+  },
+  {
+    "area": "Collision risk",
+    "metric": "Model AUC, trained 2024, tested 2025",
+    "value": 0.732,
+    "ci95": null,
+    "n": 752017,
+    "method": "point only",
+    "note": "See the gain row for the interval."
+  },
+  {
+    "area": "Collision risk",
+    "metric": "Kinematic baseline AUC (logistic on CPA, TCPA)",
+    "value": 0.61,
+    "ci95": null,
+    "n": 752017,
+    "method": "point only",
+    "note": "Baseline omits current separation, the model's top feature; a stronger baseline would shrink the gain."
+  },
+  {
+    "area": "Collision risk",
+    "metric": "AUC gain over kinematic baseline",
+    "value": 0.122,
+    "ci95": [
+      0.117,
+      0.127
+    ],
+    "n": 752017,
+    "method": "day-block",
+    "note": "The stored iid bootstrap gave [0.121, 0.123]; resampling days widens it."
+  },
+  {
+    "area": "Repair cost ledger",
+    "metric": "Error cut vs global median, day 90",
+    "value": 0.147,
+    "ci95": [
+      0.04,
+      0.251
+    ],
+    "n": 160,
+    "method": "paired-bootstrap",
+    "note": "Pre-set target 0.15: missed on the point estimate."
+  },
+  {
+    "area": "Repair cost ledger",
+    "metric": "MAE gain over persistence (growth so far), day 90",
+    "value": 0.0122,
+    "ci95": [
+      -0.003,
+      0.027
+    ],
+    "n": 160,
+    "method": "paired-bootstrap",
+    "note": "CI includes 0: not significantly better than carrying forward the growth seen so far."
+  },
+  {
+    "area": "Repair cost ledger",
+    "metric": "Error cut vs global median, day 180",
+    "value": 0.499,
+    "ci95": [
+      0.405,
+      0.599
+    ],
+    "n": 159,
+    "method": "paired-bootstrap",
+    "note": "Pre-set target 0.15: met on the point estimate."
+  },
+  {
+    "area": "Repair cost ledger",
+    "metric": "MAE gain over persistence (growth so far), day 180",
+    "value": 0.002,
+    "ci95": [
+      -0.004,
+      0.008
+    ],
+    "n": 159,
+    "method": "paired-bootstrap",
+    "note": "CI includes 0: not significantly better than carrying forward the growth seen so far."
+  },
+  {
+    "area": "Weather",
+    "metric": "Trip-time MAE gain from observed sea conditions (upper bound), hours",
+    "value": 0.52,
+    "ci95": [
+      0.38,
+      0.66
+    ],
+    "n": 1195,
+    "method": "iid-bootstrap",
+    "note": "Measured against the model without conditions (7.11 h). Against the best simple baseline (6.99 h) the gain is 0.4 h. Legs cluster by ship."
+  },
+  {
+    "area": "Weather",
+    "metric": "Trip-time MAE gain from archived forecasts, hours",
+    "value": 0.22,
+    "ci95": [
+      0.08,
+      0.38
+    ],
+    "n": 1195,
+    "method": "iid-bootstrap",
+    "note": "Measured against the model without conditions (7.11 h). Against the best simple baseline (6.99 h) the gain is 0.1 h. Legs cluster by ship."
+  },
+  {
+    "area": "Fishing",
+    "metric": "AUC gain from ocean conditions",
+    "value": 0.022,
+    "ci95": [
+      0.019,
+      0.027
+    ],
+    "n": 14872,
+    "method": "iid-bootstrap",
+    "note": "Cell-weeks cluster in space; the fishing label (1-5 kn plus turning) is not hand-validated."
+  }
+]
